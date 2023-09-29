@@ -14,3 +14,15 @@ Course of Python basic. Exercise and practice with Python.
 
 [Dev:python](https://devguide.python.org/getting-started/)
 [Python.org](https://www.python.org/)
+
+### Developer Project Python
+
+> Terminal (Bash or ZSH)
+
+> Para correr el juego debes seguir las siguientes instrucciones en las terminal: 
+
+'''sh
+cd game
+python3 game.py
+python3 main.py
+'''
