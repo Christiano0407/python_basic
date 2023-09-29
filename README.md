@@ -21,8 +21,8 @@ Course of Python basic. Exercise and practice with Python.
 
 > Para correr el juego debes seguir las siguientes instrucciones en las terminal: 
 
-´´´sh
+```sh
 cd game
 python3 game.py
 python3 main.py
-´´´
+```
