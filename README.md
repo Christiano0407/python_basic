@@ -7,8 +7,10 @@ Course of Python basic. Exercise and practice with Python.
 ## Tool Developer 
 
 > Gitignore
+
 [gitignore.io](https://www.toptal.com/developers/gitignore/)
 
 > Python Docs
+
 [Dev:python](https://devguide.python.org/getting-started/)
 [Python.org](https://www.python.org/)
