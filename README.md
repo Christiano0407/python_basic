@@ -26,3 +26,9 @@ cd game
 python3 game.py
 python3 main.py
 ```
+
+> Gestor de paquetes de Python (Pip)
+
+> Python pip == npm 
+
+[pypi](https://pypi.org/)
