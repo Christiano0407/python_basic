@@ -32,3 +32,10 @@ python3 main.py
 > Python pip == npm 
 
 [pypi](https://pypi.org/)
+
+### Tools Code Python 
+
+> Google Colab & Replit
+
+[Google Colab](https://colab.research.google.com/?hl=es)
+[Replit](https://replit.com/)
