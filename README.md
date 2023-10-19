@@ -1,10 +1,11 @@
 # python_basic
 Course of Python basic. Exercise and practice with Python. 
 
-## Python With Platzi 
+## Python con Platzi
 > Root Complete Python in I.A
+> platzi.com
 
-## Tool Developer 
+## Herramienta Gitignore para Python
 
 > Gitignore
 
@@ -33,7 +34,50 @@ python3 main.py
 
 [pypi](https://pypi.org/)
 
-### Tools Code Python 
+### Comandos para instalar Python
+
+> Verificar python en tu terminal de Windos e Linux
+
+```python
+# Verificar que existe Python (terminal):
+python
+python3
+exit() 
+# Para salir de la interfaz de Python
+```
+
+> Instalación 
+
+```python
+# Actualizar la terminal
+apt update
+sudo apt update
+sudo apt -y upgrade
+```
+
+> Verificar instalación de Python
+
+```python
+python3 -V
+```
+
+> Instalación de gestor de paquetes de dependencias
+
+[pypi](https://pypi.org/)
+
+```python
+sudo apt insstall -y python3-pip
+# Verificar instalación
+pip3 -V
+```
+
+> Dependencias en entorno profesional
+
+```python
+apt install -y build-essential libssl-dev libffi-dev python3-dev
+```
+
+### Herramientas para código en Python 
 
 > Google Colab & Replit
 
