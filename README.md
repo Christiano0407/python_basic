@@ -16,6 +16,27 @@ Course of Python basic. Exercise and practice with Python.
 [Dev:python](https://devguide.python.org/getting-started/)
 [Python.org](https://www.python.org/)
 
+## Virtual Environments
+
+> Create Virtual Environments for work in Python
+
+```python
+# Verificar donde esta python y pip
+which python3
+which pip3
+# Si estas en linux o wsl debes instalar
+sudo apt install -y python3-venv
+# Poner cada proyecto en su propio ambiente, entrar en cada carpeta.
+python3 -m venv env
+# Activar el ambiente
+source env/bin/activate
+# Salir del ambiente virtual
+deactivate
+# Verificar las instalaciones
+pip3 freeze
+
+```
+
 ### Developer Project Python
 
 > Terminal (Bash or ZSH)
