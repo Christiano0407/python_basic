@@ -16,7 +16,13 @@ def get_categories():
 
 #Products
 def get_products(): 
-  response = requests.get('https://api.escuelajs.co/api/v1/products')
-  print(response.status_code)
-  print(response.text)
+  response = requests.get(' https://api.escuelajs.co/api/v1/products')
+  if response.status_code == 200:
+     print(response.text)
+  else: 
+    print(f"Error: {response.status_code}")
+    
+  products = response.json()
+  for product in products: 
+    print(product["title"])
 
