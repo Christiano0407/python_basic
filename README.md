@@ -1,9 +1,16 @@
-# python_basic
-Course of Python basic. Exercise and practice with Python. 
+# Python
+
+> Basic Python
+
+> Course of Python basic. Exercise and practice with Python. 
 
 ## Python con Platzi
+
 > Root Complete Python in I.A
+
 > platzi.com
+
+[Platzi](https://platzi.com/)
 
 ## Herramienta Gitignore para Python
 
@@ -14,6 +21,7 @@ Course of Python basic. Exercise and practice with Python.
 > Python Docs
 
 [Dev:python](https://devguide.python.org/getting-started/)
+
 [Python.org](https://www.python.org/)
 
 ## Virtual Environments
