@@ -1,7 +1,6 @@
 ## ==== Data Frames with Pandas ==== ##
 import pandas as pd
 
-
 df = pd.read_csv("./data/amazon_laptop_prices_v01.csv")
 
 

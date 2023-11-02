@@ -152,3 +152,44 @@ if __name__ == "__main__":
 
 
 ```
+
+### Web Server with Uvicorn and FastAPI
+
+> Framework and Web Server
+
+[FastAPI](https://fastapi.tiangolo.com/)
+[Uvicorn](https://www.uvicorn.org/)
+
+```python
+# Install FastAPI
+pip install fastapi
+
+# Install Uvicorn
+pip install "uvicorn[standard]"
+
+```
+
+> HTML Response With Python and FastAPI
+
+```python
+
+#from fastapi import FastAPI
+#from fastapi.responses import HTMLResponse
+
+#app = FastAPI()
+
+
+@app.get("/items/", response_class=HTMLResponse)
+async def read_items():
+    return """
+    <html>
+        <head>
+            <title>Some HTML in here</title>
+        </head>
+        <body>
+            <h1>Look ma! HTML!</h1>
+        </body>
+    </html>
+    """
+
+```
