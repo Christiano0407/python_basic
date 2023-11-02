@@ -54,6 +54,7 @@ python3 main.py
 > Python pip == npm 
 
 [pypi](https://pypi.org/)
+[pypi_requests](https://pypi.org/project/requests/)
 
 ### Comandos para instalar Python
 
@@ -104,3 +105,31 @@ apt install -y build-essential libssl-dev libffi-dev python3-dev
 
 [Google Colab](https://colab.research.google.com/?hl=es)
 [Replit](https://replit.com/)
+
+### Requests Python
+```python
+import requests
+
+#Categories
+def get_categories():
+  r = requests.get('') #Request
+  print(r.status_code)
+  print(r.text)
+  #print(type(r.text)) #str
+  categories = r.json()
+  for category in categories:
+    print(category[""]) #Index
+    #print(type(category)) #dic
+
+# === Main === 
+import request
+
+
+def run():
+  request.get_categories()
+
+
+if __name__ == "__main__":
+  run()
+
+```
