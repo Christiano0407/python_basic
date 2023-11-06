@@ -281,41 +281,6 @@ persona.saludar()
 
 ```
 
-> POO en Python con accesos y no accesos:
-
-```python
-
-class Prestamo:
-    def __init__(self, monto, tasa_de_interes, plazo):
-        self.monto = monto
-        self.tasa_de_interes = tasa_de_interes
-        self.plazo = plazo
-
-    # Acceso público
-    def calcular_pago_mensual(self):
-        return self.monto * self.tasa_de_interes / 12 / (1 - (1 + self.tasa_de_interes / 12) ** -self.plazo)
-
-    # Acceso protegido
-    def _calcular_pago_total(self):
-        return self.calcular_pago_mensual() * self.plazo
-
-    # Acceso privado
-    def _calcular_intereses(self):
-        return self.monto * self.tasa_de_interes * self.plazo
-
-
-prestamo = Prestamo(100000, 0.08, 24)
-
-print(prestamo.calcular_pago_mensual())
-# 5000
-print(prestamo._calcular_pago_total())
-# 120000
-print(prestamo._calcular_intereses())
-# 96000
-
-
-```
-
 ```python
 # Instancia == Self (Instancia Actual) > Cuenta Bancaria (Class) == POO
 class CuentaBancaria:
@@ -391,7 +356,44 @@ class Lenguaje:
 
 ```
 
-> Aplicar modificadores de acceso en Python:
+> POO en Python con accesos y no accesos:
+
+> Aplicar modificadores de acceso en Python: Principio de Encapsulamiento ("_")
+
+```python
+
+class Prestamo:
+    def __init__(self, monto, tasa_de_interes, plazo):
+        self.monto = monto
+        self.tasa_de_interes = tasa_de_interes
+        self.plazo = plazo
+
+    # Acceso público
+    def calcular_pago_mensual(self):
+        return self.monto * self.tasa_de_interes / 12 / (1 - (1 + self.tasa_de_interes / 12) ** -self.plazo)
+
+    # Acceso protegido
+    def _calcular_pago_total(self):
+        return self.calcular_pago_mensual() * self.plazo
+
+    # Acceso privado
+    def _calcular_intereses(self):
+        return self.monto * self.tasa_de_interes * self.plazo
+
+
+prestamo = Prestamo(100000, 0.08, 24)
+
+print(prestamo.calcular_pago_mensual())
+# 5000
+print(prestamo._calcular_pago_total())
+# 120000
+print(prestamo._calcular_intereses())
+# 96000
+
+
+```
+
+> Aplicar modificadores de acceso en Python: Getters y Setters
 
 ```python
 
@@ -429,6 +431,58 @@ prestamo.set_monto(200000)
 
 print(prestamo.get_monto())
 # 200000
+
+
+```
+
+> Aplicar modificadores de acceso en Python: Modificador de acceso público & Modificador de acceso privado
+
+```python
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    # Modificador de acceso público
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, nombre):
+        self._nombre = nombre
+
+    # Modificador de acceso privado
+
+    def _edad(self):
+        return self._edad
+
+    def _edad_setter(self, edad):
+        self._edad = edad
+
+
+persona = Persona("Juan Pérez", 30)
+
+# Acceso público
+
+print(persona.nombre)
+# Juan Pérez
+
+persona.nombre = "María García"
+
+print(persona.nombre)
+# María García
+
+# Acceso privado
+
+# print(persona.edad)
+# AttributeError: 'Persona' object has no attribute 'edad'
+
+persona._edad_setter(40)
+
+print(persona._edad())
+# 40
 
 
 ```
