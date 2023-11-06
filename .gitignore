@@ -81,4 +81,5 @@ $RECYCLE.BIN/
 env/
 
 # PyCache
+__pycache__
 __pycache__/*.pyc
