@@ -79,3 +79,6 @@ $RECYCLE.BIN/
 
 # Virtual Envioroment
 env/
+
+# PyCache
+__pycache__/*.pyc

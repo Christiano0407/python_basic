@@ -231,3 +231,126 @@ async def get_home():
    return HTMLResponse(content=html_content, status_code=200)
 
 ```
+### Programación Orientada a Objetos en Python (POO)
+
+> La programación orientada a objetos (POO) es un paradigma de programación que organiza el código en torno a objetos. Los objetos son entidades que tienen un estado y un comportamiento. El estado de un objeto se representa mediante sus atributos, y su comportamiento se representa mediante sus métodos.
+
+> La POO se basa en cuatro conceptos fundamentales:
+
+Clases: Las clases son plantillas que definen el estado y el comportamiento de los objetos.
+Objetos: Los objetos son instancias de clases.
+Atributos: Los atributos definen el estado de un objeto.
+Métodos: Los métodos definen el comportamiento de un objeto.
+
+```python
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        print("Hola, mi nombre es", self.nombre)
+
+
+persona = Persona("Juan", 30)
+print(persona.nombre)
+```
+
+```python
+
+# Ejemplo de clase
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        print("Hola, mi nombre es", self.nombre)
+
+# Ejemplo de instanciación de una clase
+persona = Persona("Juan", 30)
+
+# Ejemplo de acceso a un atributo
+print(persona.nombre)
+
+# Ejemplo de llamada a un método
+persona.saludar()
+
+```
+
+> POO en Python con accesos y no accesos:
+
+```python
+
+class Prestamo:
+    def __init__(self, monto, tasa_de_interes, plazo):
+        self.monto = monto
+        self.tasa_de_interes = tasa_de_interes
+        self.plazo = plazo
+
+    # Acceso público
+    def calcular_pago_mensual(self):
+        return self.monto * self.tasa_de_interes / 12 / (1 - (1 + self.tasa_de_interes / 12) ** -self.plazo)
+
+    # Acceso protegido
+    def _calcular_pago_total(self):
+        return self.calcular_pago_mensual() * self.plazo
+
+    # Acceso privado
+    def _calcular_intereses(self):
+        return self.monto * self.tasa_de_interes * self.plazo
+
+
+prestamo = Prestamo(100000, 0.08, 24)
+
+print(prestamo.calcular_pago_mensual())
+# 5000
+print(prestamo._calcular_pago_total())
+# 120000
+print(prestamo._calcular_intereses())
+# 96000
+
+
+```
+
+> Aplicar modificadores de acceso en Python:
+
+```python
+
+class Prestamo:
+    def __init__(self, monto, tasa_de_interes, plazo):
+        self._monto = monto
+        self.tasa_de_interes = tasa_de_interes
+        self.plazo = plazo
+
+    def calcular_pago_mensual(self):
+        return self._monto * self.tasa_de_interes / 12 / (1 - (1 + self.tasa_de_interes / 12) ** -self.plazo)
+
+    def calcular_pago_total(self):
+        return self.calcular_pago_mensual() * self.plazo
+
+    # Método getter para el atributo monto
+
+    def get_monto(self):
+        return self._monto
+
+    # Método setter para el atributo monto
+
+    def set_monto(self, monto):
+        self._monto = monto
+
+
+prestamo = Prestamo(100000, 0.08, 24)
+
+print(prestamo._monto)
+# 100000
+print(prestamo.get_monto())
+# 100000
+
+prestamo.set_monto(200000)
+
+print(prestamo.get_monto())
+# 200000
+
+
+```
