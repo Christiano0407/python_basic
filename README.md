@@ -238,8 +238,11 @@ async def get_home():
 > La POO se basa en cuatro conceptos fundamentales:
 
 > Clases: Las clases son plantillas que definen el estado y el comportamiento de los objetos.
+
 > Objetos: Los objetos son instancias de clases.
+
 > Atributos: Los atributos definen el estado de un objeto.
+
 > Métodos: Los métodos definen el comportamiento de un objeto.
 
 ```python
