@@ -486,3 +486,40 @@ print(persona._edad())
 
 
 ```
+
+> Herencia en POO con Python:
+
+```python
+class Country(Player): 
+  def __init__(self, name, team, selection, brand, stadium, salary): 
+     super().__init__(name, team) #super is Father
+     self.selection = selection
+     self.brand = brand
+     self.stadium = stadium
+     self.__salary = salary
+```
+
+> Herencia & Polimorfismo(heredar y llamar de acurdo al contexto) 
+
+```python
+  # Player:
+  def teams(self):
+     return f"Player in: {self.team}"
+  # Country:
+  def teams(self):
+     return super().teams() + " The Brand: " + self.brand + " Stadium: " + self.stadium + " and players wining in salary: " + str(self.__salary)
+```
+
+> En POO en Python, un @staticmethod es un decorador que se usa para definir un método estático. Los métodos estáticos son métodos que pertenecen a una clase, pero no dependen ni de la clase ni de una instancia de esta. Por lo tanto, no tienen acceso a los atributos de instancia de la clase y no pueden modificar el estado de la clase o de sus instancias.
+
+> Para definir un @staticmethod, simplemente agregamos el decorador @staticmethod a la definición del método. Por ejemplo:
+
+```python
+class Country:
+    @staticmethod
+    def stadium():
+        return "Estadio Azteca"
+
+
+print(Country.stadium())  # Prints "Estadio Azteca"
+```
