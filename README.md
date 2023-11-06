@@ -523,3 +523,52 @@ class Country:
 
 print(Country.stadium())  # Prints "Estadio Azteca"
 ```
+
+> Multi Herencia 
+
+```python
+
+class Player:
+  def __init__(self, name, team):
+    self.__name = name
+    self.team = team
+
+  def score(self):
+    return F"Goal!! {self.__name}"
+  
+  def teams(self):
+     return f"Player in: {self.team}"
+  
+
+## < 2) Multi Herencia > ##
+class Merchandise:
+   def __init__(self, product):
+      self.product = product
+
+   def payProduct(self):
+      return "I Use this boots: " + self.product 
+  
+
+## < 1) Herencia > ##
+class Country(Player, Merchandise): 
+  def __init__(self,name,team,product,selection,brand,stadium,salary): 
+     super().__init__(name, team) #super is Father
+     Merchandise.__init__(self,product) # Sí, cuando lo pasas por nombre (self).
+     self.selection = selection
+     self.brand = brand
+     self.stadium = stadium
+     self.__salary = salary
+
+```
+
+> Podemos llamarlo igual con super 
+
+```python
+# Multi Herencia
+  def products(self):
+     return super().payProduct
+```
+
+> Referencia: Héctor de León (Youtube)
+
+[Hdeleon](https://www.youtube.com/watch?v=Z3XYBjQjZ9g&t=32s)
