@@ -12,6 +12,9 @@
 
 [Platzi](https://platzi.com/)
 
+> Roadmap
+[roadmap](https://roadmap.sh/python)
+
 ## Herramienta Gitignore para Python
 
 > Gitignore
@@ -572,3 +575,13 @@ class Country(Player, Merchandise):
 > Referencia: Héctor de León (Youtube)
 
 [Hdeleon](https://www.youtube.com/watch?v=Z3XYBjQjZ9g&t=32s)
+
+> Getters and Setters
+```python
+  #Getters
+  def get_approved(self): 
+    return self._approved_money
+    #Setters
+  def set_approved(self, approved_money): 
+    self._approved_money = approved_money
+```
