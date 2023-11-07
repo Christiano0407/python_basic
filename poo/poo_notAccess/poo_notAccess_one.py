@@ -1,7 +1,7 @@
 ## POO : Not Access Two & Herencia ##
 ### Préstamo en un sistema bancario ##
 
-class approved_pay:
+class Approved_pay:
   def __init__(self, approved_money):
     self._approved_money = approved_money
 
@@ -14,7 +14,7 @@ class approved_pay:
 
 
 
-class Pay(approved_pay):
+class Pay(Approved_pay):
   def __init__(self, money, interest_rate, time_pay, balance, approved_money):
     super().__init__(approved_money)
     self.money = money # Monto del préstamo
@@ -42,26 +42,34 @@ class Pay(approved_pay):
     return  self.calculate_pay_month() + self._calculate_iva()
   #Getters & Setters
   def set_approved(self, approved_money):
-    return super().set_approved(approved_money)
+    super().set_approved(approved_money)
 
-# Variables = Users # 
+# Variables - Class = Users # 
 user_credit = Pay(2000, 0.08, 12, 6000, 2500)
 user_bank = Pay(8000, 0.10, 12, 10000, 2500)
 user_one = Pay(15000, 0.15, 18, 5000, 2500)
 user_two = Pay(35000, 0.20, 24, 30000, 2500)
 user_three = Pay(50000, 0.25, 36, 10000, 2500)
+user_four = Approved_pay(5000)
+
+
 # Call Pay #
 if __name__ == "__main__": 
   user = f"Fred: Monto de su préstamo: {user_one.money:.2f} y pago total: {user_one._calculate_total_pay():.2f}, por mes pagaría: {user_one.calculate_pay_month():.2f} y los interéses del préstamo: {user_one._calculate_interest_rate():.2f}"
   user_house = f"Alma: préstamo para su casa: {user_three.money:.2f} y pago total: {user_three._calculate_total_pay():.2f} por mes pagaría: {user_three.calculate_pay_month():.2f} y su primer pago se le suma iva: {user_three.first_pay():.2f} y los interéses del préstamo: {user_three._calculate_interest_rate():.2f}"
-  
   #print(f"Monto que se prestó: {user_credit.money:.2f}")
   #print(f"Pamela pay for month: {user_credit.calculate_pay_month():.2f}")
   #print(f"Pamela pay Total: {user_credit._calculate_total_pay():.2f}")
   #print(f"Interéses del préstamo: {user_credit._calculate_interest_rate():.2f}")
   print(user)
   print(user_house)
-  print(user_credit.set_approved(25000))
+  print(user_one.get_approved())
+  
+  print(user_four.get_approved())
+  user_three.set_approved(25000)
+  user_approved = user_three.get_approved()
+  print(f"Approved Pay:{user_approved}")
+
 
 
     
