@@ -42,7 +42,7 @@ def payments_for_months(borrow, months):
     print(f"My payments (months): {', '.join(formatted_payments)}")
 
 
-#Variables 
+#Variables - Class
 user_one = Borrow(8000, 0.05, 6)
 
 ## Call Borrow ###
