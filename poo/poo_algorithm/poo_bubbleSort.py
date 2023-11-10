@@ -43,7 +43,7 @@ class Borrow:
       return self.balance_borrow
     
   # Add Payments - list 
-  def add_payments(self, payment): 
+  def add_payments(self, payment):
     self.payments.append(payment)
     return self.payments
   
