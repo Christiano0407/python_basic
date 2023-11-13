@@ -1,6 +1,8 @@
-### POO - Singleton - Getters y Setters - Herencia ###
+#### POO - Singleton - Getters y Setters - Herencia ###
 # El patrón de diseño Singleton garantiza que solo puede existir una instancia de una clase en un momento dado.
-# Algoritmo O(n) lineal 
+# Algoritmo O(n) lineal -  El algoritmo O(n) lineal funciona iterando sobre todos los días del año y calculando los intereses diarios. El número de días en un año es constante, por lo que el algoritmo tiene una complejidad de O(n).
+# La expresión (1 + self.tasa_interes) ** (-dia / 365) es una función exponencial que representa el factor de descuento de los intereses diarios. El factor de descuento es un valor que se utiliza para calcular los intereses diarios, teniendo en cuenta el hecho de que los intereses se acumulan a lo largo del tiempo.
+#####
 class CuentaBancaria: 
   __instance = None #Pattern Singleton
 
@@ -47,11 +49,13 @@ class CuentaAhorros(CuentaBancaria):
     if cls.__instance is None: 
       cls.__instance = cls("040205789", 25000, "Gold", 0.05, 12)
     return cls.__instance
-  
+  #Algorithm: O(n)Lineal
   def calcularInteres(self): 
     intereses = 0
     for dia in range(365): 
       intereses += self.saldo * self.tasa_intereses * (1 + self.tasa_intereses) ** (-dia / 365)
+      #intereses += self.saldo * self.tasa_intereses * (1 + self.tasa_intereses) ** (-dia / 30)
+      #intereses += self.saldo * self.tasa_intereses * (1 + self.tasa_intereses) ** (-dia / 7)
     return intereses
   
 
