@@ -585,3 +585,44 @@ class Country(Player, Merchandise):
   def set_approved(self, approved_money): 
     self._approved_money = approved_money
 ```
+
+> Usar Patrones de Diseño (Singleton) e y Herencia (Polimorfismo)
+```python
+class CuentaBancaria: 
+  __instance = None #Pattern Singleton
+
+  def __init__(self, numero_cuenta, saldo, tipo_cuenta): 
+    self.numero_cuenta = numero_cuenta
+    self.saldo = saldo
+    self.tipo_cuenta = tipo_cuenta
+  # Pattern Singleton
+  @classmethod
+  def getInstance(cls): 
+    if cls.__instance is None: 
+      cls.__instance = cls("041234567", 5000, "platinum")
+    return cls.__instance
+
+```
+
+```python
+class CuentaAhorros(CuentaBancaria): 
+  __instance = None
+
+  def __init__(self, numero_cuenta, saldo, tipo_cuenta, tasa_intereses): 
+    super().__init__(numero_cuenta, saldo, tipo_cuenta)
+    self.tasa_intereses = tasa_intereses
+
+  def tasasIntereses(self):
+    return self.saldo * self.tasa_intereses
+  
+  @classmethod #Patterns Singleton
+  def getInstance(cls): 
+    if cls.__instance is None: 
+      cls.__instance = cls("040205789", 25000, "Gold", 0.05)
+    return cls.__instance
+```
+
+```python
+cuenta = CuentaBancaria.getInstance()
+cuentaUser = CuentaAhorros.getInstance()
+```
