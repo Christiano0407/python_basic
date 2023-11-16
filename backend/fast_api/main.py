@@ -17,7 +17,7 @@ async def get_home():
         <body>
             <h1>Hello Dev! HTML & Python!</h1>
             <h2>Python Backend </h2>
-            <p>Developer Web Content</p>
+            <p>Developer</p>
         </body>
     </html>
     """
