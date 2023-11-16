@@ -626,7 +626,7 @@ class CuentaAhorros(CuentaBancaria):
 cuenta = CuentaBancaria.getInstance()
 cuentaUser = CuentaAhorros.getInstance()
 ```
-## Backend 
+### Backend 
 
 > Type Hints: Nos Ayudan al tipado en Python. / Python es un lenguaje de tipado dinámico.
 
@@ -650,4 +650,66 @@ if __name__ == "__main__":
   print(type(plus_sum)) # Tipo: "int"
   print(plus_sum)
   print(type(message)) #Tipo: "str"
+```
+
+### Backend Web Server With Fast API
+
+> Fast API & Uvicorn
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get('/')
+
+def get_list():
+  lst:[str] = list([2,4,7])
+  return f"My list: {lst}"
+```
+
+> Call HTML with FastAPI
+
+```python
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
+
+# App Server #
+app = FastAPI()
+
+@app.get('/', response_class=HTMLResponse)
+async def get_home():
+   html_content =  """
+    <html>
+        <head>
+            <title>Some HTML in here</title>
+            <meta charset="utf-8" />
+        </head>
+        <body>
+            <h1>Hello Dev! HTML & Python!</h1>
+            <h2>Python Backend </h2>
+        </body>
+    </html>
+    """
+   return HTMLResponse(content=html_content, status_code=200)
+
+##HomePage
+@app.get('/home', response_class=HTMLResponse)
+async def get_page(): 
+   html_content = """
+    <html>
+        <head>
+            <title>Some HTML in here</title>
+            <meta charset="utf-8" />
+        </head>
+        <body>
+            <h1>Home Page</h1>
+            <p>Hello World! Python In Backend!!! Amazing</p>
+        </body>
+    </html>
+   """
+   return HTMLResponse(content=html_content, status_code=200)
+
+
 ```
