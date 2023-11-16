@@ -5,10 +5,17 @@ def sum (a:int, b:int) -> int:
   return a + b
 
 message:[str] = "Hello, World"
+new_message: str = "New Message"
+new_message.index
 
-List:[str] = ["Alma", "Natalia", "Pamela"]
+lst:List[str] = ["Alma", "Natalia", "Pamela"]
 
 lst_people:[int] = list([4, 7, 15, 25])
+
+ages:Optional[int] = None
+numbers:Optional[int] = 7
+number_plus: int = 10
+
 ##POO
 class Person: 
   def __init__(self, name:str, work:str, age:int) -> None:
@@ -27,10 +34,12 @@ if __name__ == "__main__":
   print(plus_sum)
   print(type(message))
   print(message)
-  print(type(list))
-  print(List)
+  print(new_message)
+  print(type(lst))
+  print(lst)
   print(type(lst_people))
   print(lst_people)
+  print(f"{ages} & {numbers}")
 
   people = Person("Luisa", "Journalist", 32)
   print(people.hello())
