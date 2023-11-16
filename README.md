@@ -626,3 +626,28 @@ class CuentaAhorros(CuentaBancaria):
 cuenta = CuentaBancaria.getInstance()
 cuentaUser = CuentaAhorros.getInstance()
 ```
+## Backend 
+
+> Type Hints: Nos Ayudan al tipado en Python. / Python es un lenguaje de tipado dinámico.
+
+> En general, los Type Hints en Python son similares a TypeScript para JavaScript. Ambos son sistemas de tipado estático que permiten especificar el tipo de datos de las variables y expresiones en el código.
+
+> Sin embargo, hay algunas diferencias importantes entre los dos sistemas. En TypeScript, las anotaciones de tipos son obligatorias, mientras que en Python son opcionales. Además, TypeScript tiene un conjunto más amplio de tipos que Python.
+
+```python
+# Type Hints - Python es un lenguaje de tipado dinámico. #
+def sum (a:int, b:int):
+  return a + b
+
+message:[str] = "Hello, World"
+
+lst:[str] = list(["Alma", "Natalia", "Pamela"])
+
+
+## === ##
+if __name__ == "__main__":
+  plus_sum = sum(4, 7)
+  print(type(plus_sum)) # Tipo: "int"
+  print(plus_sum)
+  print(type(message)) #Tipo: "str"
+```
