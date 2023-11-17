@@ -1,41 +1,17 @@
-#####
-#Fast API & Uvicorn
-####
+########## 
+# Fast API & Uvicorn 
+#! Siempre que llamamos a un Servidor tiene que ser Asíncrona 
+#? Use: /home/?query_param=Home
+######### 
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+#from fastapi.responses import HTMLResponse
 
 app = FastAPI()
-#HomePage
-@app.get('/', response_class=HTMLResponse)
-async def get_home():
-  html_content = """
-    <html>
-        <head>
-            <title>Some HTML in here</title>
-            <meta charset="utf-8" />
-        </head>
-        <body>
-            <h1>Hello Dev! HTML & Python!</h1>
-            <h2>Python Backend </h2>
-            <p>Developer</p>
-        </body>
-    </html>
-    """
-  return HTMLResponse(content=html_content, status_code=200)
-
-#Content
-@app.get('/content', response_class=HTMLResponse)
-async def get_content():
-  html_content = """
-    <html>
-        <head>
-            <title>Some HTML in here</title>
-            <meta charset="utf-8" />
-        </head>
-        <body>
-            <h1>Content Page</h1>
-            <p>Hello World! Python In Backend!!! Amazing Content</p>
-        </body>
-    </html>
-   """
-  return HTMLResponse(content=html_content, status_code=200)
+#Root
+@app.get("/")
+async def root():
+  return {"message": "Hello World"}
+#HomePage - Type Hints
+@app.get("/home/") 
+async def root_home(query_param: str = None):
+  return {"query_param": query_param}
