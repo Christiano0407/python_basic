@@ -46,6 +46,9 @@ deactivate
 # Verificar las instalaciones
 pip3 freeze
 
+# Correr el Servidor Web (Uvicorn & FastAPI)
+uvicorn main:app --reload
+
 ```
 
 ### Developer Project Python
@@ -717,3 +720,12 @@ async def get_page():
 > API (APIFAST) Documentation With Swagger UI
 
 [Swagger-ui](https://github.com/swagger-api/swagger-ui)
+[Swagger](https://swagger.io/)
+
+> Postman & Thunder Client & iNSOMNIA
+
+[Postman](https://www.postman.com/)
+
+[Thunder Client](https://www.thunderclient.com/)
+
+[Insomnia](https://insomnia.rest/)
