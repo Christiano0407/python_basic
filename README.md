@@ -717,7 +717,7 @@ async def get_page():
 
 ```
 
-> API (APIFAST) Documentation With Swagger UI
+> API REST & API CRUD (APIFAST) Documentation With Swagger UI
 
 [Swagger-ui](https://github.com/swagger-api/swagger-ui)
 [Swagger](https://swagger.io/)
@@ -729,3 +729,41 @@ async def get_page():
 [Thunder Client](https://www.thunderclient.com/)
 
 [Insomnia](https://insomnia.rest/)
+
+> POO And API (FastAPI)
+
+> Pydantic es una biblioteca de Python para la validación de datos y la gestión de configuraciones. Se basa en la notación de tipos de Python para especificar los tipos y restricciones de los datos.
+
+[FastAPI: Request Body](https://fastapi.tiangolo.com/tutorial/body/#create-your-data-model)
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+# === POO (Instancia y Entidad del Objeto) ===
+#A)
+class User(BaseModel):
+  name: str
+  url: str 
+  age: int
+
+app = FastAPI()
+
+#GET 
+@app.get("/")
+async def root():
+  return {"message": str("Hello Users")}
+
+@app.get("/usersClass/")
+async def usersClass():
+  user_instance = User(name="Mouredev", url="http://mouredev.dev", age=35)
+  return user_instance
+
+#POST
+@app.post("/users/")
+async def create_users(user: User):
+  return user
+```
+
+```python
+
+```
