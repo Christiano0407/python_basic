@@ -1,4 +1,6 @@
-# Type Hints - Python es un lenguaje de tipado dinámico. 
+#### 
+#*Type Hints - Python es un lenguaje de tipado dinámico. 
+####
 from typing import List, Optional
 
 def sum (a:int, b:int) -> int:

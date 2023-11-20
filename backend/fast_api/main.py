@@ -1,7 +1,7 @@
 ########## 
 # Fast API & Uvicorn 
 #! Siempre que llamamos a un Servidor tiene que ser Asíncrona 
-#? Use: /home/?query_param=Home
+#* Use: /home/?query_param=Home
 ######### 
 from fastapi import FastAPI
 #from fastapi.responses import HTMLResponse

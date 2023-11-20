@@ -713,3 +713,7 @@ async def get_page():
 
 
 ```
+
+> API (APIFAST) Documentation With Swagger UI
+
+[Swagger-ui](https://github.com/swagger-api/swagger-ui)

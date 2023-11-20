@@ -1,7 +1,7 @@
 #########
-#Use: POO (Programming Oriented Object)
-#? Use: O(n log n) Log lineal: crecerá de forma logarítmica pero junto con una constante.
-#! Este código implementa el algoritmo Merge Sort, que es un algoritmo de ordenamiento divide y vencerás que funciona dividiendo la lista en dos mitades, ordenando cada mitad recursivamente y luego fusionando las dos mitades ordenadas en una lista ordenada.
+#*Use: POO (Programming Oriented Object)
+#* Use: O(n log n) Log lineal: crecerá de forma logarítmica pero junto con una constante.
+#TODO Este código implementa el algoritmo Merge Sort, que es un algoritmo de ordenamiento divide y vencerás que funciona dividiendo la lista en dos mitades, ordenando cada mitad recursivamente y luego fusionando las dos mitades ordenadas en una lista ordenada.
 #? Use: Patrón de diseño Strategy
 #########
 class MergeSort: 
