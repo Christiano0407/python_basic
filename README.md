@@ -766,6 +766,10 @@ async def create_users(user: User):
 
 > Path & Query (Parameters)
 
+> TODO En general, los path parameters se utilizan para identificar un recurso específico en tu API, mientras que los query parameters se utilizan para filtrar o ordenar los resultados de una consulta.
+
+> /userQuery/?query_param=Midudev (My Example)
+
 ```python
 #GET: Path Parameter (int:id)
 @app.get("/user/{id}")
@@ -788,4 +792,29 @@ async def user_query(query_param: str = None):
     return {"users": [user.__dict__ for user in filter_user]}
   else: 
     return {"users": [user.__dict__ for user in users_list]}
+```
+
+```python
+#GET: Query Parameter (str:name)
+@app.get("/userDev/")
+async def user_query(id: int, name: str):
+  return searchUser(id, name)
+
+def searchUser(id: int, name: str): 
+    '''
+     #users = filter(lambda user: user.id == id, users_list) 
+     #user == "u"
+     /userDev/?id=2&name=Midudev
+     Se agregó un name: str al parámetro de la función user_query para permitir la búsqueda por name en los query parameters.
+     Se utilizó la expresión generadora next para buscar el usuario de manera más eficiente.
+     Se comparan los nombres de manera insensible a mayúsculas y minúsculas (name.lower()) para hacer la búsqueda del usuario no sensible a mayúsculas/minúsculas.
+    '''
+    user = next((u for u in users_list if u.id == id and u.name.lower() == name.lower()), None)
+    try:
+      if user:
+        return user.__dict__
+      else: 
+        return {"error": "Error 404. Not Found User"}
+    except: 
+      return {"error": "Add a new User"}
 ```

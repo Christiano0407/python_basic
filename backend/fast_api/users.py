@@ -1,8 +1,10 @@
-#======================#
+'''
 #TODO Create My First API  with Framework fastApi, With Server Uvicorn and Insomnia (CRUD)
 #TODO Used: POO ( Programming Oriented Objects) & API CRUD
+#TODO En general, los path parameters se utilizan para identificar un recurso específico en tu API, mientras que los query parameters se utilizan para filtrar o ordenar los resultados de una consulta.
 #* Use: Path Parameters & Query Parameters
-#=====================#
+#* /userQuery/?query_param=Midudev (My Example)
+'''
 from fastapi import FastAPI
 from pydantic import BaseModel
 # === POO (Instancia y Entidad del Objeto) ===
@@ -51,9 +53,27 @@ async def user(id: int):
     return {"error": "Add a new User"}
 
 #GET: Query Parameter (str:name)
-""" @app.get("/userQuery/")
-async def user_query(query_param: str = None):
-  return {"query_param": query_param} """
+@app.get("/userDev/")
+async def user_query(id: int, name: str):
+  return searchUser(id, name)
+
+def searchUser(id: int, name: str): 
+    '''
+     #users = filter(lambda user: user.id == id, users_list) 
+     #user == "u"
+     /userDev/?id=2&name=Midudev
+     Se agregó un name: str al parámetro de la función user_query para permitir la búsqueda por name en los query parameters.
+     Se utilizó la expresión generadora next para buscar el usuario de manera más eficiente.
+     Se comparan los nombres de manera insensible a mayúsculas y minúsculas (name.lower()) para hacer la búsqueda del usuario no sensible a mayúsculas/minúsculas.
+    '''
+    user = next((u for u in users_list if u.id == id and u.name.lower() == name.lower()), None)
+    try:
+      if user:
+        return user.__dict__
+      else: 
+        return {"error": "Error 404. Not Found User"}
+    except: 
+      return {"error": "Add a new User"}
 
 @app.get("/userQuery/")
 async def user_query(query_param: str = None):
