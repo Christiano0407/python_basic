@@ -764,6 +764,28 @@ async def create_users(user: User):
   return user
 ```
 
-```python
+> Path & Query (Parameters)
 
+```python
+#GET: Path Parameter (int:id)
+@app.get("/user/{id}")
+async def user(id: int):
+  users = filter(lambda user: user.id == id, users_list)
+  try:
+    return list(users)[0]#[0]
+  except: 
+    return {"error": "Add a new User"}
+
+#GET: Query Parameter (str:name)
+""" @app.get("/userQuery/")
+async def user_query(query_param: str = None):
+  return {"query_param": query_param} """
+
+@app.get("/userQuery/")
+async def user_query(query_param: str = None):
+  if query_param: 
+    filter_user = [user for user in users_list if query_param.lower() in user.name.lower()]
+    return {"users": [user.__dict__ for user in filter_user]}
+  else: 
+    return {"users": [user.__dict__ for user in users_list]}
 ```
