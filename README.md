@@ -818,3 +818,17 @@ def searchUser(id: int, name: str):
     except: 
       return {"error": "Add a new User"}
 ```
+
+> Algunos Ejemplos para Path & Query Parameters: 
+
+```python
+#### Path parameters:
+#/users/{user_id}
+#/files/{file_path}
+#/products/{product_id}
+
+#### Query parameters:
+#/users?q=John
+#/products?sort_by=price
+#/orders?limit=10
+```
