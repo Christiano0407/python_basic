@@ -25,7 +25,7 @@ class User(BaseModel):
   def __repr__(self) -> str:
     return f"User name: {self.name} and his url: {self.url}" """
 
-
+# My List Users 
 users_list =  [User(id= 1, name="Mouredev", url="http://mouredev.dev", age=35), 
                User(id= 2, name="Midudev", url="http://midudev.dev", age=38), 
                User(id= 3, name="Fazt", url="http://fazt.dev", age=28), 
@@ -55,9 +55,9 @@ async def user(id: int):
 #GET: Query Parameter (str:name)
 @app.get("/userDev/")
 async def user_query(id: int, name: str):
-  return searchUser(id, name)
+  return search_user(id, name)
 
-def searchUser(id: int, name: str): 
+def search_user(id: int, name: str): 
     '''
      #users = filter(lambda user: user.id == id, users_list) 
      #user == "u"
@@ -84,9 +84,12 @@ async def user_query(query_param: str = None):
     return {"users": [user.__dict__ for user in users_list]}
 
 #POST
-@app.post("/usersData/")
+@app.post("/users/")
 async def create_users(user: User):
-  return user
+    if type(search_user(user.id)) == User:
+     return {"error": "User Exist."}
+    else:
+     users_list.append(user)
 
 #B)
 """ @app.get("/users")
