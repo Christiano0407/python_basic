@@ -29,8 +29,9 @@ class User(BaseModel):
 users_list =  [User(id= 1, name="Mouredev", url="http://mouredev.dev", age=35), 
                User(id= 2, name="Midudev", url="http://midudev.dev", age=38), 
                User(id= 3, name="Fazt", url="http://fazt.dev", age=28), 
-               User(id= 4, name="Oscar", url="http://oscardev.dev", age=34), 
-               User(id= 5, name="DeGranda", url="http://deGrandadev.dev", age=33)]
+               User(id= 4, name="Oscar", url="http://GNDX.dev", age=34), 
+               User(id= 5, name="DeGranda", url="http://deGranda.dev", age=33),
+               User(id= 6, name="Alarcon", url="http://alarcondev.dev", age=32)]
 
 # ==== App Web Server with FastAPI ====
 app = FastAPI()
@@ -46,7 +47,7 @@ async def users():
   return users_list
 
 #GET: Path Parameter (int:id)
-@app.get("/user/{id}")
+@app.get("/users/{id}")
 async def user(id: int):
   users = filter(lambda user: user.id == id, users_list)
   try:
@@ -54,7 +55,19 @@ async def user(id: int):
   except: 
     return {"error": "Add a new User"}
 
+""" @app.get("/user/{id}")
+async def user(id: int):
+  users = filter(lambda user: user.id == id, users_list)
+  try:
+    return list(users)[0]#[0]
+  except: 
+    return {"error": "Add a new User"} """
+
 #GET: Query Parameter (str:name) / (To read data)
+""" @app.get("/users/")
+async def user_query(id: int, name: str):
+  return search_user(id, name) """
+
 @app.get("/userDev/")
 async def user_query(id: int, name: str):
   return search_user(id, name)
@@ -115,8 +128,30 @@ async def user(user: User):
 
   if not user_found: 
      return {"error": "Sorry! This User Not Exist. Add a new User."}
+  
+  return user
+
+#Delete
+@app.delete("/users/")
+async def user_delete(id: int, name: str):
+  '''
+  A) En este código, enumerate() se utiliza para obtener tanto el usuario como su índice en la lista users_list. (índice y elemento)
+  B) Usamos pop(index) para eliminar el usuario de la lista en base a su índice.
+  C) Este enfoque asegura que el usuario correcto se elimine en caso de que haya usuarios duplicados con el mismo id y name.
+  '''
+  for index, user in enumerate(users_list): 
+    if user.id == id and user.name.lower() == name.lower():
+      try: 
+        users_list.pop(index)
+        return { "message": str("User Delete successfully")}
+      except Exception as e: 
+        return {"error":  f"{str(e)}"}
+      
+  return {"Error": "User Not Found"}
+      
 
 
+# ===== Other Forms Applications ==== #
 #B)
 """ @app.get("/users")
 async def get_users():
