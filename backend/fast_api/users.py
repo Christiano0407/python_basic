@@ -40,9 +40,11 @@ app = FastAPI()
 async def root():
   return {"message": str("Hello Users")}
 
+
 @app.get("/users/")
 async def users():
   return users_list
+
 #GET: Path Parameter (int:id)
 @app.get("/user/{id}")
 async def user(id: int):
@@ -52,10 +54,11 @@ async def user(id: int):
   except: 
     return {"error": "Add a new User"}
 
-#GET: Query Parameter (str:name)
+#GET: Query Parameter (str:name) / (To read data)
 @app.get("/userDev/")
 async def user_query(id: int, name: str):
   return search_user(id, name)
+
 
 def search_user(id: int, name: str): 
     '''
@@ -74,6 +77,7 @@ def search_user(id: int, name: str):
         return {"error": "Error 404. Not Found User"}
     except: 
       return {"error": "Add a new User"}
+    
 
 @app.get("/userQuery/")
 async def user_query(query_param: str = None):
@@ -83,13 +87,35 @@ async def user_query(query_param: str = None):
   else: 
     return {"users": [user.__dict__ for user in users_list]}
 
-#POST
+#POST (To create data)
 @app.post("/users/")
 async def create_users(user: User):
-    if type(search_user(user.id)) == User:
-     return {"error": "User Exist."}
+    if type(search_user(user.id, user.name)) == User:
+     return {"error": str("User Exist.")}
     else:
      users_list.append(user)
+#=== Other Option ===    
+""" @app.post("/users/")
+async def create_user(user: User): 
+  if search_user(user.id, user.name):
+    return { "error": str("User already exist")}
+  else :
+    users_list.append(user)
+    return { "Message": str("New User Created successfully.")} """
+
+#PUT (To update data)
+@app.put("/users/")
+async def user(user: User): 
+  user_found = False
+
+  for index, saved_user in enumerate(users_list):
+    if saved_user.id == user.id:
+      users_list[index] = user
+      user_found = True
+
+  if not user_found: 
+     return {"error": "Sorry! This User Not Exist. Add a new User."}
+
 
 #B)
 """ @app.get("/users")

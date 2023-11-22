@@ -832,3 +832,30 @@ def searchUser(id: int, name: str):
 #/products?sort_by=price
 #/orders?limit=10
 ```
+
+> POST & PUT (API)
+
+```python
+#POST (To create data)
+@app.post("/users/")
+async def create_users(user: User):
+    if type(search_user(user.id, user.name)) == User:
+     return {"error": str("User Exist.")}
+    else:
+     users_list.append(user)
+```
+
+```python
+#PUT (To update data)
+@app.put("/users/")
+async def user(user: User): 
+  user_found = False
+
+  for index, saved_user in enumerate(users_list):
+    if saved_user.id == user.id:
+      users_list[index] = user
+      user_found = True
+
+  if not user_found: 
+     return {"error": "Sorry! This User Not Exist. Add a new User."}
+```
