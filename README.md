@@ -835,7 +835,7 @@ def searchUser(id: int, name: str):
 
 > POST & PUT (API) 
 
-> DOCS => Read in JSON (API)
+> Docs => Read in JSON (API) / (exampleAPI:8000/docs/) 
 
 ```python
 #POST (To create data)
