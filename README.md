@@ -833,7 +833,9 @@ def searchUser(id: int, name: str):
 #/orders?limit=10
 ```
 
-> POST & PUT (API)
+> POST & PUT (API) 
+
+> DOCS => Read in JSON (API)
 
 ```python
 #POST (To create data)

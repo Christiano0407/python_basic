@@ -11,7 +11,7 @@ from pydantic import BaseModel
 #A)
 class User(BaseModel):
   id: int
-  name: str
+  name: str 
   url: str 
   age: int
 
