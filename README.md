@@ -730,7 +730,7 @@ async def get_page():
 
 [Insomnia](https://insomnia.rest/)
 
-> POO And API (FastAPI)
+> POO And API (FastAPI) (endpoints) 
 
 > Pydantic es una biblioteca de Python para la validación de datos y la gestión de configuraciones. Se basa en la notación de tipos de Python para especificar los tipos y restricciones de los datos.
 
@@ -882,4 +882,38 @@ async def read_item(item_id: str):
     if item_id not in items:
         raise HTTPException(status_code=404, detail="Item not found")
     return {"item": items[item_id]}
+```
+
+### Roouters & FastAPI
+
+[APIRouter](https://fastapi.tiangolo.com/reference/apirouter/?h=apirou)
+
+[APIRouter_Request ](https://fastapi.tiangolo.com/how-to/custom-request-and-route/?h=apirou)
+
+> Beneficios de usar Routers en FastAPI: Organización modular: Los routers le permiten dividir su API en unidades más pequeñas y manejables, promoviendo la reutilización de código y mejorando la mantenibilidad.
+
+> Mejor legibilidad: Los routers mejoran la legibilidad y comprensibilidad del código de su API, especialmente para aplicaciones más grandes con numerosos endpoints.
+
+> Agrupación de endpoints relacionados: Los routers le permiten agrupar las operaciones de ruta en función de la funcionalidad o el dominio, lo que facilita la navegación y la comprensión de la estructura de la API.
+
+> Encapsulación y espacios de nombres: Los routers proporcionan encapsulación al agrupar las operaciones de ruta relacionadas dentro de un espacio de nombres específico, lo que reduce la probabilidad de conflictos de nombres y mejora la organización del código.
+
+> Implementación modular: Los routers se pueden implementar de forma independiente, lo que le permite implementar o actualizar selectivamente partes específicas de su API sin afectar a toda la aplicación.
+
+> FastAPI proporciona una poderosa característica llamada routers que le permite organizar y estructurar su API de manera modular y mantenible. Los routers son esencialmente clases que agrupan operaciones de ruta (endpoints) relacionadas, lo que facilita la gestión y el escalado de su API a medida que crece en complejidad.
+
+```python
+from fastapi import APIRouter, FastAPI
+
+app = FastAPI()
+router = APIRouter()
+
+
+@router.get("/users/", tags=["users"])
+async def read_users():
+    return [{"username": "Rick"}, {"username": "Morty"}]
+
+
+app.include_router(router)
+
 ```

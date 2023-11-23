@@ -4,6 +4,7 @@
 #TODO En general, los path parameters se utilizan para identificar un recurso específico en tu API, mientras que los query parameters se utilizan para filtrar o ordenar los resultados de una consulta.
 #* Use: Path Parameters & Query Parameters
 #* /userQuery/?query_param=Midudev (My Example)
+#*El response_model se utiliza para definir el modelo de datos que la ruta devuelve, y en tu caso, estás devolviendo una lista de objetos User.
 '''
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -102,7 +103,7 @@ async def user_query(query_param: str = None):
     return {"users": [user.__dict__ for user in users_list]}
 
 #POST (To create data)
-@app.post("/users/", status_code=201)
+@app.post("/users/", response_model=User, status_code=201)
 async def create_users(user: User):
     if type(search_user(user.id, user.name)) == User:
       raise HTTPException(status_code=204, detail="User Not Found")
