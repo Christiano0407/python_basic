@@ -1,11 +1,3 @@
-'''
-#TODO Create My First API  with Framework fastApi, With Server Uvicorn and Insomnia (CRUD)
-#TODO Used: POO ( Programming Oriented Objects) & API CRUD
-#TODO En general, los path parameters se utilizan para identificar un recurso específico en tu API, mientras que los query parameters se utilizan para filtrar o ordenar los resultados de una consulta.
-#* Use: Path Parameters & Query Parameters
-#* /userQuery/?query_param=Midudev (My Example)
-#*El response_model se utiliza para definir el modelo de datos que la ruta devuelve, y en tu caso, estás devolviendo una lista de objetos User.
-'''
 from fastapi import FastAPI, HTTPException 
 from pydantic import BaseModel
 #import pandas as pd
@@ -17,17 +9,6 @@ class User(BaseModel):
   url: str 
   age: int
 
-# === CSV ===
-#df = pd.read_csv("/data/amazon_laptop_prices_v01.csv")
-
-#B)
-""" class User:
-  def __init__(self, name, url):
-    self.name = name
-    self.url = url
-
-  def __repr__(self) -> str:
-    return f"User name: {self.name} and his url: {self.url}" """
 
 # My List Users 
 users_list =  [User(id= 1, name="Mouredev", url="http://mouredev.dev", age=35), 
@@ -61,18 +42,6 @@ async def user(id: int):
      raise HTTPException(status_code=404, detail="These Users not founds. Sorry!!")
     #return {"error": "Add a new User"}
 
-""" @app.get("/user/{id}")
-async def user(id: int):
-  users = filter(lambda user: user.id == id, users_list)
-  try:
-    return list(users)[0]#[0]
-  except: 
-    return {"error": "Add a new User"} """
-
-#GET: Query Parameter (str:name) / (To read data)
-""" @app.get("/users/")
-async def user_query(id: int, name: str):
-  return search_user(id, name) """
 
 @app.get("/userDev/", status_code=200)
 async def user_query(id: int, name: str):
@@ -115,14 +84,6 @@ async def create_users(user: User):
      #return {"error": str("User Exist.")}
     else:
      users_list.append(user)
-#=== Other Option ===    
-""" @app.post("/users/")
-async def create_user(user: User): 
-  if search_user(user.id, user.name):
-    return { "error": str("User already exist")}
-  else :
-    users_list.append(user)
-    return { "Message": str("New User Created successfully.")} """
 
 #PUT (To update data)
 @app.put("/users/")
@@ -157,26 +118,3 @@ async def user_delete(id: int, name: str):
       
   return {"Error": "User Not Found"}
       
-
-
-# ===== Other Forms Applications ==== #
-#B)
-""" @app.get("/users")
-async def get_users():
-  users = [
-    User("MoureDev", "http://moure.dev"),
-    User("MiduDev", "http://midudev.dev")
-  ]
-  return users """
-#Post
-""" @app.post("/users")
-async def create_users(user: User):
-  return user """
-#Type Hints
-""" @app.get("/usersjson/")
-async def usersjson():
-  return [{"name": "MoureDev","language": "Kotlin" ,"url": "http://moure.dev","message": str("Hello, Users loved code with Kotlin.")},
-           {"name": "MiduDev","language": "Javascript","url": "http://midudev.dev","message": str("Hello, I loved Javascript.")},
-           {"name": "Fazt","language": "Rust" ,"url": "http://fazt.dev","message": str("I loved Backend Programming")},
-           {"name": "Oscar","language": "Python","url": "http://oscar.dev","message": str("I love Python.")}
-          ] """
