@@ -861,3 +861,25 @@ async def user(user: User):
   if not user_found: 
      return {"error": "Sorry! This User Not Exist. Add a new User."}
 ```
+
+> HTTP Status Code
+
+[MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+[FastAPI_HTTP](https://fastapi.tiangolo.com/reference/exceptions/?h=http+ex)
+
+```python
+
+from fastapi import FastAPI, HTTPException
+
+app = FastAPI()
+
+items = {"foo": "The Foo Wrestlers"}
+
+
+@app.get("/items/{item_id}")
+async def read_item(item_id: str):
+    if item_id not in items:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"item": items[item_id]}
+```

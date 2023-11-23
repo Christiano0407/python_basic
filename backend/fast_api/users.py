@@ -5,7 +5,7 @@
 #* Use: Path Parameters & Query Parameters
 #* /userQuery/?query_param=Midudev (My Example)
 '''
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 # === POO (Instancia y Entidad del Objeto) ===
 #A)
@@ -37,23 +37,24 @@ users_list =  [User(id= 1, name="Mouredev", url="http://mouredev.dev", age=35),
 app = FastAPI()
 
 #GET 
-@app.get("/")
+@app.get("/", status_code=200)
 async def root():
   return {"message": str("Hello Users")}
 
 
-@app.get("/users/")
+@app.get("/users/", status_code=200)
 async def users():
   return users_list
 
 #GET: Path Parameter (int:id)
-@app.get("/users/{id}")
+@app.get("/users/{id}", status_code=200)
 async def user(id: int):
   users = filter(lambda user: user.id == id, users_list)
   try:
     return list(users)[0]#[0]
   except: 
-    return {"error": "Add a new User"}
+     raise HTTPException(status_code=404, detail="These Users not founds. Sorry!!")
+    #return {"error": "Add a new User"}
 
 """ @app.get("/user/{id}")
 async def user(id: int):
@@ -68,7 +69,7 @@ async def user(id: int):
 async def user_query(id: int, name: str):
   return search_user(id, name) """
 
-@app.get("/userDev/")
+@app.get("/userDev/", status_code=200)
 async def user_query(id: int, name: str):
   return search_user(id, name)
 
@@ -87,12 +88,12 @@ def search_user(id: int, name: str):
       if user:
         return user.__dict__
       else: 
-        return {"error": "Error 404. Not Found User"}
+         raise HTTPException(status_code=404, detail="These Users not founds. Sorry!!")
     except: 
       return {"error": "Add a new User"}
     
 
-@app.get("/userQuery/")
+@app.get("/userQuery/", status_code=200)
 async def user_query(query_param: str = None):
   if query_param: 
     filter_user = [user for user in users_list if query_param.lower() in user.name.lower()]
@@ -101,10 +102,11 @@ async def user_query(query_param: str = None):
     return {"users": [user.__dict__ for user in users_list]}
 
 #POST (To create data)
-@app.post("/users/")
+@app.post("/users/", status_code=201)
 async def create_users(user: User):
     if type(search_user(user.id, user.name)) == User:
-     return {"error": str("User Exist.")}
+      raise HTTPException(status_code=204, detail="User Not Found")
+     #return {"error": str("User Exist.")}
     else:
      users_list.append(user)
 #=== Other Option ===    
@@ -127,7 +129,7 @@ async def user(user: User):
       user_found = True
 
   if not user_found: 
-     return {"error": "Sorry! This User Not Exist. Add a new User."}
+     raise HTTPException(status_code=204, detail="User Not Found")
   
   return user
 
