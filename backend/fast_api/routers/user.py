@@ -1,7 +1,7 @@
 ###
 #*2)
 ###
-from fastapi import FastAPI, HTTPException 
+from fastapi import APIRouter, FastAPI, HTTPException 
 from pydantic import BaseModel
 #import pandas as pd
 # === POO (Instancia y Entidad del Objeto) ===
@@ -23,20 +23,22 @@ users_list =  [User(id= 1, name="Mouredev", url="http://mouredev.dev", age=35),
 
 # ==== App Web Server with FastAPI ====
 app = FastAPI()
-#router = APIRouter()
+router = APIRouter()
+
+
 
 #GET 
-@app.get("/", status_code=200)
+""" @router.get("/", status_code=200)
 async def root():
-  return {"message": str("Hello Users", list)}
+  return {"message": str("Hello Users", list)} """
 
 
-@app.get("/users/", status_code=200)
+@router.get("/users/")
 async def users():
   return users_list
 
 #GET: Path Parameter (int:id)
-@app.get("/users/{id}", status_code=200)
+@router.get("/users/{id}", status_code=200)
 async def user(id: int):
   users = filter(lambda user: user.id == id, users_list)
   try:
@@ -46,7 +48,7 @@ async def user(id: int):
     #return {"error": "Add a new User"}
 
 
-@app.get("/userDev/", status_code=200)
+@router.get("/userDev/", status_code=200)
 async def user_query(id: int, name: str):
   return search_user(id, name)
 
@@ -70,7 +72,7 @@ def search_user(id: int, name: str):
       return {"error": "Add a new User"}
     
 
-@app.get("/userQuery/", status_code=200)
+@router.get("/userQuery/", status_code=200)
 async def user_query(query_param: str = None):
   if query_param: 
     filter_user = [user for user in users_list if query_param.lower() in user.name.lower()]
@@ -80,7 +82,7 @@ async def user_query(query_param: str = None):
 
 
 #POST (To create data)
-@app.post("/users/", response_model=User, status_code=201)
+@router.post("/users/", response_model=User, status_code=201)
 async def create_users(user: User):
     if type(search_user(user.id, user.name)) == User:
       raise HTTPException(status_code=204, detail="User Not Found")
@@ -89,7 +91,7 @@ async def create_users(user: User):
      users_list.append(user)
 
 #PUT (To update data)
-@app.put("/users/")
+@router.put("/users/")
 async def user(user: User): 
   user_found = False
 
@@ -104,7 +106,7 @@ async def user(user: User):
   return user
 
 #Delete
-@app.delete("/users/")
+@router.delete("/users/")
 async def user_delete(id: int, name: str):
   '''
   A) En este código, enumerate() se utiliza para obtener tanto el usuario como su índice en la lista users_list. (índice y elemento)
@@ -121,3 +123,6 @@ async def user_delete(id: int, name: str):
       
   return {"Error": "User Not Found"}
       
+
+
+app.include_router(router)
