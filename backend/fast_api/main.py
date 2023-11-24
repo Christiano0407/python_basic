@@ -12,7 +12,7 @@ from routers.products import router as product_router
 app = FastAPI()
 #router = products.router
 
-#Router from Products
+#Router from Products (Reference)
 app.include_router(product_router)
 
 #GET => Root

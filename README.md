@@ -937,3 +937,7 @@ from routers.products import router as product_router
 ```python
 app.include_router(product_router)
 ```
+
+> Para Obtener e trabajar con Data (CSV)
+
+[Kaggle](https://www.kaggle.com/)
