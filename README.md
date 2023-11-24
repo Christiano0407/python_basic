@@ -917,3 +917,23 @@ async def read_users():
 app.include_router(router)
 
 ```
+
+> Import in Fast API
+
+> Recuerda: "__init__.py", para que te pueda leer e puedas tu paquete (todos tus módulos)
+```python
+ routers
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── products.py
+│   └── user.py
+```
+
+```python
+#Una forma de importar e leer tu archivo que estás importando. 
+from routers.products import router as product_router
+```
+
+```python
+app.include_router(product_router)
+```

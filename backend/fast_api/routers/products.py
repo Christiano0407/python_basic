@@ -18,8 +18,8 @@ app = FastAPI()
 router = APIRouter()
 
 # === Call Products ===
-@router.get("/product/")
-async def get_product(): 
+@router.get("/products/")
+async def product(): 
   return products_list
 
 
