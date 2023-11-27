@@ -5,6 +5,7 @@
 #* OS: Path => System Operator
 #? Prefixed => Ya no es necesario poner todo el "output".
 #? Tags => Dividir por parámetros la documentación (API) y ("path operations in this router").
+#TODO: Query Parameters: Los parámetros de consulta son aquellos que se incluyen en la URL después del signo de interrogación ? y se separan por el símbolo &.
 #######
 from fastapi import APIRouter,FastAPI, HTTPException
 from pydantic import BaseModel
@@ -17,7 +18,7 @@ class Product(BaseModel):
   name: str
   price: int
 
-## List Products
+##List Products
 #products_list = [Product(id=1, name="MacBook", price=25000)]
 
 # === Fast & Router ===
@@ -36,10 +37,11 @@ async def product():
 
 @router.get("/", status_code=200)
 async def products(): 
-  return {"products": df.head(5).to_dict(orient="records")}
+  return {"products": df.head(15).to_dict(orient="records")}
 
-#Path Parameters
-@router.get("/{id}")
+# ===Path Parameters ====
+#Id
+@router.get("/{id}", status_code=200)
 async def products(id: int):
   '''
   En este código, he utilizado next junto con una expresión generadora para encontrar el primer producto con el ID correspondiente. Si no se encuentra ningún producto con ese ID, se lanza una HTTPException con un código de estado 404.
@@ -51,11 +53,28 @@ async def products(id: int):
   if product_id: 
     return {"product": product_id}
   else: 
-    raise HTTPException(status_code=404, detail="Sorry! Your product with the ID {id} it's not found or Not exist.")
+    raise HTTPException(status_code=404, detail=f"Sorry! Your product with the ID {id} it's not found or Not exist.")
+  
+#Brand
+@router.get("/{brand}", status_code=200)
+async def brand_products(brand: str): 
+  '''
+  /products/brand(Adidas)
+  '''
+  brand_company = "Brand"
+  brand_merchandising = next((b for b in df.to_dict(orient="records") if b[brand_company].lower() == brand.lower()), None)
+  if brand_merchandising: 
+    return {"brand": brand_merchandising}
+  else: 
+    raise HTTPException(status_code=404, detail=f"Sorry! The product or Brand {brand} not exist.")
   
 
+# ==== Query Parameters ====
 @router.get("/",status_code=200)
 async def product_brand(id:int, name: str, brand: str):
+  '''
+  /products?id=1&name=Dress&brand=Adidas
+  '''
   id_product = "Product ID"
   product_name = "Product Name"
   brands = "Brand"
@@ -69,7 +88,7 @@ async def product_brand(id:int, name: str, brand: str):
   except: 
     return {"error:" "Add your search product."}
 
-#Query Parameters
+
 
 ## ==== Include ====
 app.include_router(router)
