@@ -38,7 +38,7 @@ async def users():
   return users_list
 
 #GET: Path Parameter (int:id)
-@router.get("/users/{id}", status_code=200)
+@router.get("/users/{id}", tags=["users"], status_code=200)
 async def user(id: int):
   users = filter(lambda user: user.id == id, users_list)
   try:
@@ -82,7 +82,7 @@ async def user_query(query_param: str = None):
 
 
 #POST (To create data)
-@router.post("/users/", response_model=User, status_code=201)
+@router.post("/users/", tags=["users"], response_model=User, status_code=201)
 async def create_users(user: User):
     if type(search_user(user.id, user.name)) == User:
       raise HTTPException(status_code=204, detail="User Not Found")
@@ -91,7 +91,7 @@ async def create_users(user: User):
      users_list.append(user)
 
 #PUT (To update data)
-@router.put("/users/")
+@router.put("/users/", tags=["users"])
 async def user(user: User): 
   user_found = False
 
@@ -106,7 +106,7 @@ async def user(user: User):
   return user
 
 #Delete
-@router.delete("/users/")
+@router.delete("/users/", tags=["users"])
 async def user_delete(id: int, name: str):
   '''
   A) En este código, enumerate() se utiliza para obtener tanto el usuario como su índice en la lista users_list. (índice y elemento)
