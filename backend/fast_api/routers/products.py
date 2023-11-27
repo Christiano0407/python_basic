@@ -17,6 +17,9 @@ class Product(BaseModel):
   id: int 
   name: str
   price: int
+  brand: str
+  category: str
+  size: str
 
 ##List Products
 #products_list = [Product(id=1, name="MacBook", price=25000)]
@@ -87,6 +90,39 @@ async def product_brand(id:int, name: str, brand: str):
       raise HTTPException(status_code=404, detail="Sorry, These products not founds.")
   except: 
     return {"error:" "Add your search product."}
+  
+
+@router.get("/", status_code=200)
+async def product_category(price: int, name: str, category: str, size: str):
+  '''
+  price=100&name=Product1&category=Category1&size=XL"
+  /products/?price=100&name=Product1&category=Category1&size=XL
+  ?category=Women%27s%20Fashion
+  /products/?price=44&Dress&Women%27s%20Fashion&XL
+  '''
+  price_category = "Price"
+  name_category = "Product Name"
+  category_all = "Category"
+  size_category = "Size"
+
+  products_categories = next(
+    (
+        c for c in df.to_dict(orient="records") if (
+            c[price_category] == price and
+            c[name_category].lower() == name.lower() and
+            c[category_all].lower() == category.lower() and
+            c[size_category].lower() == size.lower()
+        )
+    ),
+  None
+)
+  try:
+    if products_categories:
+      return {"Products_categories": products_categories}
+    else: 
+      raise HTTPException(status_code=404, detail=f"Sorry! Your Products and Categories {category} is spend")
+  except: 
+    return{"error", "Add Category in your product"}
 
 
 
