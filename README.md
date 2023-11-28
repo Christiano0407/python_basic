@@ -948,6 +948,20 @@ app.include_router(product_router)
 
 [StaticFiles](https://fastapi.tiangolo.com/tutorial/static-files/?h=stati)
 
+> Cuando tienes muchos archivos (imágenes) y vas a usar StaticFiles, es importante tener en cuenta el rendimiento. El StaticFiles de FastAPI está diseñado para ser eficiente con archivos pequeños, pero puede ser menos eficiente con archivos grandes.
+
+> CDN (Content Delivery Network)
+
+[Cloudinary](https://cloudinary.com/)
+
+> puedes usar Cloudinary para mejorar el rendimiento de los archivos estáticos en tu aplicación FastAPI. Cloudinary es un servicio CDN que proporciona una amplia gama de funciones para optimizar el rendimiento de los archivos multimedia.
+
+> Cloudinary puede ayudarte a mejorar el rendimiento de los archivos estáticos de las siguientes maneras:
+
+> Almacenamiento en caché en la nube. Cloudinary almacena los archivos multimedia en caché en la nube, lo que puede reducir significativamente el tiempo de carga de los archivos.
+> Optimización de imágenes. Cloudinary puede optimizar las imágenes para reducir su tamaño y mejorar su rendimiento.
+> CDN global. Cloudinary tiene una red de servidores CDN global, lo que puede mejorar el rendimiento de los archivos multimedia para los usuarios que se encuentran lejos del servidor web.
+
 ```python
 #Import StaticFiles.
 #from fastapi.staticfiles import StaticFiles
@@ -959,3 +973,26 @@ app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 ```
+
+### Security oAuth2
+
+> FastAPI
+
+> OAuth 2.0 es un protocolo de autorización que permite a los usuarios autorizar a aplicaciones de terceros a acceder a sus datos sin tener que compartir sus credenciales de inicio de sesión.OAuth 2.0 funciona mediante la creación de un flujo de autorización en el que el usuario autoriza a la aplicación de terceros a acceder a sus datos.
+
+[FastAPI_Security](https://fastapi.tiangolo.com/tutorial/security/)
+
+[FastAPI_oAuth2](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
+
+> Instalar Bibliotecas
+> Configura el proveedor de identidad.
+> Añade los middlewares de OAuth 2.0. Para proteger tus rutas con OAuth 2.0, necesitas añadir los middlewares de OAuth 2.0 a tu aplicación FastAPI. 
+
+```
+pip install fastapi-oauth2 pydantic
+```
+
+```python
+from fastapi import FastAPI
+from fastapi_oauth2 import OAuth2, OAuth2Settings
+```python

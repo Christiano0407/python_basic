@@ -1,4 +1,4 @@
-#######
+###########
 #*3)
 #TODO: @app.get("/") define una ruta en la raíz de tu aplicación. async def read_csv(): es la función que se ejecutará cuando se realice una solicitud GET a la ruta especificada. return {"data": df.head(5).to_dict(orient="records")} devuelve las primeras 5 filas del DataFrame df como un diccionario JSON.
 #TODO: En el contexto de la función to_dict de pandas, el parámetro orient especifica el formato en el que se devolverá el diccionario. El valor "records" significa que los datos se representarán como una lista de registros, donde cada registro es un diccionario que contiene los datos de una fila del DataFrame.
@@ -6,7 +6,7 @@
 #? Prefixed => Ya no es necesario poner todo el "output".
 #? Tags => Dividir por parámetros la documentación (API) y ("path operations in this router").
 #TODO: Query Parameters: Los parámetros de consulta son aquellos que se incluyen en la URL después del signo de interrogación ? y se separan por el símbolo &.
-#######
+###########
 from fastapi import APIRouter,FastAPI, HTTPException
 from pydantic import BaseModel
 import os 
