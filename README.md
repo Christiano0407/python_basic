@@ -974,7 +974,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 ```
 
-### Security oAuth2
+### Security oAuth2 & Mildware
 
 > FastAPI
 
@@ -995,4 +995,9 @@ pip install fastapi-oauth2 pydantic
 ```python
 from fastapi import FastAPI
 from fastapi_oauth2 import OAuth2, OAuth2Settings
-```python
+```
+
+> Mildware
+
+[FastAPI_Mildware](https://fastapi.tiangolo.com/tutorial/middleware/)
+
