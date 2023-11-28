@@ -988,6 +988,26 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 > Configura el proveedor de identidad.
 > Añade los middlewares de OAuth 2.0. Para proteger tus rutas con OAuth 2.0, necesitas añadir los middlewares de OAuth 2.0 a tu aplicación FastAPI. 
 
+> OpenAPI define los siguientes esquemas de seguridad:
+
+> apiKey: una clave específica de la aplicación que puede provenir de:
+> Un parámetro de consulta.
+> Un encabezado.
+> Una galleta.
+> http: sistemas de autenticación HTTP estándar, que incluyen:
+> bearer: un encabezado Authorizationcon un valor de Bearermás un token. Esto se hereda de OAuth2.
+> Autenticación básica HTTP.
+> Resumen HTTP, etc.
+> oauth2: todas las formas de OAuth2 para manejar la seguridad (llamadas "flujos").
+> Varios de estos flujos son apropiados para crear un proveedor de autenticación OAuth 2.0 (como Google, Facebook, Twitter, GitHub, etc.):
+> implicit
+> clientCredentials
+> authorizationCode
+> Pero hay un "flujo" específico que se puede utilizar perfectamente para manejar la autenticación directamente en la misma aplicación:
+> password: algunos de los próximos capítulos cubrirán ejemplos de esto.
+> openIdConnect: tiene una forma de definir cómo descubrir datos de autenticación OAuth2 automáticamente.
+> Este descubrimiento automático es lo que se define en la especificación OpenID Connect.
+
 ```
 pip install fastapi-oauth2 pydantic
 ```
