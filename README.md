@@ -941,3 +941,21 @@ app.include_router(product_router)
 > Para Obtener e trabajar con Data (CSV)
 
 [Kaggle](https://www.kaggle.com/)
+
+> StaticFiles 
+
+[StaticFiles](https://fastapi.tiangolo.com/reference/staticfiles/?h=static#fastapi.staticfiles.StaticFiles)
+
+[StaticFiles](https://fastapi.tiangolo.com/tutorial/static-files/?h=stati)
+
+```python
+#Import StaticFiles.
+#from fastapi.staticfiles import StaticFiles
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+```
