@@ -2,12 +2,13 @@
 #TODO: FastAPI: Authentic oAuth2 & Open ID Connect
 #? OAuth2PasswordBearer : Se encarga de gestionar la autenticación (usuario e contraseña)
 #? OAuth2PasswordRequestForm: La forma en como se va a mandar nuestros criterios de autenticación.
-#? Token: TokeUrl => Se encarga de gestionar la validación. 
+#? Token: TokeUrl => Se encarga de gestionar la validación. Un "token" es solo una cadena con algún contenido que podemos usar más adelante para verificar a este usuario. Un "token" es solo una cadena con algún contenido que podemos usar más adelante para verificar a este usuario.Normalmente, un token caduca después de un tiempo. Por lo tanto, el usuario deberá volver a iniciar sesión en algún momento posterior.Y si roban el token, el riesgo es menor. No es como una clave permanente que funcionará para siempre (en la mayoría de los casos).
 #TODO: La declaración Annotated toma un tipo de dato existente y un objeto de anotación. El objeto de anotación puede ser cualquier objeto que proporcione el método __call__. El método __call__ se utiliza para obtener los metadatos asociados con el tipo de datos anotado.
 ########
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from typing_extensions import Annotated
 
 #=== App ===
 app = FastAPI()
@@ -84,7 +85,7 @@ def search_user(username: str):
     return UserDB(users_db[username])
   
 # Validation User Token (Criterio de dependencia)
-async def current_user(token: str = Depends(oauth2_scheme)):
+async def current_user(token: Annotated[str, Depends(oauth2_scheme)]):
   '''
   #Status 401 User Not Authorization but yes authentic user(Usuario sí está autenticado pero, no tiene autorización).
   '''
