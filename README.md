@@ -1031,7 +1031,26 @@ from fastapi import FastAPI
 from fastapi_oauth2 import OAuth2, OAuth2Settings
 ```
 
+> Install Multipart
+
+```
+pip install python-multipart
+```
+
+```python
+En Python, el módulo multipart proporciona una clase MultipartEncoder para crear solicitudes HTTP multipart. Las solicitudes multipart se utilizan para enviar datos que contienen tanto datos de formulario como archivos.
+
+La clase MultipartEncoder toma un diccionario como argumento. El diccionario contiene los datos de formulario que se enviarán en la solicitud. Los datos de formulario se pueden especificar como cadenas, números, listas o diccionarios.
+
+Para enviar archivos con una solicitud multipart, utilice el método add_file() de la clase MultipartEncoder. El método add_file() toma dos argumentos: el nombre del archivo y el contenido del archivo.
+```
+
+[Guide_multipart](https://andrew-d.github.io/python-multipart/)
+
 > Mildware
 
 [FastAPI_Mildware](https://fastapi.tiangolo.com/tutorial/middleware/)
 
+> JWT (Jason Web Token)
+
+[JWT](https://jwt.io/)
