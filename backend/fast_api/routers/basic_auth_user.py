@@ -4,6 +4,11 @@
 #? OAuth2PasswordRequestForm: La forma en como se va a mandar nuestros criterios de autenticación.
 #? Token: TokeUrl => Se encarga de gestionar la validación. Un "token" es solo una cadena con algún contenido que podemos usar más adelante para verificar a este usuario. Un "token" es solo una cadena con algún contenido que podemos usar más adelante para verificar a este usuario.Normalmente, un token caduca después de un tiempo. Por lo tanto, el usuario deberá volver a iniciar sesión en algún momento posterior.Y si roban el token, el riesgo es menor. No es como una clave permanente que funcionará para siempre (en la mayoría de los casos).
 #TODO: La declaración Annotated toma un tipo de dato existente y un objeto de anotación. El objeto de anotación puede ser cualquier objeto que proporcione el método __call__. El método __call__ se utiliza para obtener los metadatos asociados con el tipo de datos anotado.
+#HTTP/1.1 200 OK
+ #date: Wed, 29 Nov 2023 17:43:52 GMT
+ #server: uvicorn
+ #content-length: 49
+ #content-type: application/json
 ########
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
@@ -81,8 +86,13 @@ async def get_user():
   return users_db """
 # Search User Token
 def search_user(username: str): 
+  '''
+   Los dos asteriscos (**) antes de users_db en la línea return UserDB(**users_db[username]) indican que se está utilizando el desempaquetado de diccionarios. El desempaquetado de diccionarios es una característica de Python que permite desempaquetar los pares clave-valor de un diccionario en una llamada a una función.
+
+   En este caso, el diccionario users_db se está desempaquetando en los argumentos del constructor de la clase UserDB. Esto significa que los pares clave-valor del diccionario users_db se pasan como argumentos de posición al constructor de la clase UserDB.
+  '''
   if username in users_db: 
-    return UserDB(users_db[username])
+    return UserDB(**users_db[username]) #return UserDB(username="mouredev", password="123456")
   
 # Validation User Token (Criterio de dependencia)
 async def current_user(token: Annotated[str, Depends(oauth2_scheme)]):
@@ -92,10 +102,16 @@ async def current_user(token: Annotated[str, Depends(oauth2_scheme)]):
   user = search_user(token)
   if not user:
     raise HTTPException(
-      status_code=status.HTTP_401_UNAUTHORIZED, 
+      status_code=401, 
       detail="User not Authorization.", 
       headers={"WWW-Authenticate": "Bearer"})
-
+  
+  if user.disabled:
+    raise HTTPException(
+      status_code=400, 
+      detail="User inactive"
+    )
+  
   return user
 
 #POST (Mandar user & password)
@@ -114,7 +130,7 @@ async def token(form: OAuth2PasswordRequestForm = Depends()):
   '''
   user_db = users_db.get(form.username)
   if not user_db:
-    raise HTTPException(status_code=404, detail="This user is not correct.")
+    raise HTTPException(status_code=404, detail="This user not correct.")
   
   user = search_user(form.username)
   if not form.password == user.password:
