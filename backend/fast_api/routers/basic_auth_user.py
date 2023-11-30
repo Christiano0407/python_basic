@@ -28,7 +28,7 @@ class User(BaseModel):
   username: str
   full_name: str
   email:str
-  disabled: Union[bool, None] = None
+  disabled: bool
 
 # =Herencia=
 class UserDB(User): 
