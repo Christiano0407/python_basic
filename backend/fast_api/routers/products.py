@@ -77,20 +77,39 @@ async def brand_products(brand: str):
 async def product_brand(id:int, name: str, brand: str):
   '''
   /products?id=1&name=Dress&brand=Adidas
+  next para encontrar el primer elemento que cumple con las condiciones especificadas.
+  2) Esta modificación utiliza una lista de comprensión para filtrar los productos que cumplen con las condiciones y luego verifica la longitud de la lista resultante. Si hay exactamente un resultado, ese resultado se devuelve; de lo contrario, se generan excepciones para los casos de ningún resultado o múltiples resultados. Esto debería asegurar que solo obtienes el producto que estás buscando.
   '''
   id_product = "Product ID"
   product_name = "Product Name"
   brands = "Brand"
 
-  products_brands = next((p for p in df.to_dict(orient="records") if p[id_product] == id and p[product_name].lower() == name.lower and p[brands].lower() == brand.lower()), None)
+  """ products_brands = next((p for p in df.to_dict(orient="records") if p[id_product] == id and p[product_name].lower() == name.lower() and p[brands].lower() == brand.lower()), None)
   try: 
     if products_brands: 
       return {"products_brands": products_brands}#__dict__
     else: 
       raise HTTPException(status_code=404, detail="Sorry, These products not founds.")
   except: 
-    return {"error:" "Add your search product."}
+    return {"error:" "Add your search product."} """
   
+  products_brands = [
+    product for product in df.to.dict(orient="records") if ( 
+      product[id_product] == id and 
+      product[product_name].lower() == name.lower() and 
+      product[brands].lower() == brand.lower()
+      )
+  ]
+  try: 
+     if len(products_brands) == 1: 
+       return {"products", products_brands[0]}
+     elif len(products_brands) == 0: 
+       raise HTTPException(status_code=404, detail="Sorry! This products was not found.")
+     else: 
+       raise HTTPException(status_code=400, detail="Multiples Match products and founds.")
+  except Exception as e: 
+      return {"error": f"Error processing your request: {str(e)}"}
+
 
 @router.get("/", status_code=200)
 async def product_category(price: int, name: str, category: str, size: str):
