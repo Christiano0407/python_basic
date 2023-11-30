@@ -14,6 +14,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing_extensions import Annotated
+#from typing import Union
 
 #=== App ===
 app = FastAPI()
@@ -21,13 +22,13 @@ app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # ========= Crear un modelo de usuario ========
-#=== POO User === 
+#=== POO User === (Instancia)
 class User(BaseModel):
   client_id: int
   username: str
   full_name: str
   email:str
-  disabled: bool
+  disabled: Union[bool, None] = None
 
 # =Herencia=
 class UserDB(User): 
