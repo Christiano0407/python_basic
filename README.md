@@ -29,7 +29,7 @@
 
 ## Virtual Environments
 
-> Create Virtual Environments for work in Python
+> Create Virtual Environments for work in Python (Entorno Virtual)
 
 ```python
 # Verificar donde esta python y pip
@@ -46,8 +46,34 @@ deactivate
 # Verificar las instalaciones
 pip3 freeze
 
+
+```
+
+> Correr el servidor (Pruebas)
+
+```python
 # Correr el Servidor Web (Uvicorn & FastAPI)
 uvicorn main:app --reload
+
+# Port (Puerto)
+uvicorn main:app --reload --port 5000 
+
+# Red (Solo poner el puerto)
+uvicorn main:app --reload --port 5000 --host 0.0.0.0
+
+#Swagger (FastAPI)
+
+http://127.0.0.1:8000/docs
+
+```
+
+> Métodos HTTP
+
+```
+POST: crear un recurso nuevo.
+PUT: modificar un recurso existente.
+GET: consultar información de un recurso.
+DELETE: eliminar un recurso.
 
 ```
 
