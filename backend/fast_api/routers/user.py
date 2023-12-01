@@ -47,7 +47,7 @@ async def user(id: int):
      raise HTTPException(status_code=404, detail="These Users not founds. Sorry!!")
     #return {"error": "Add a new User"}
 
-
+#GET: QueryP Parameter
 @router.get("/userDev/", status_code=200)
 async def user_query(id: int, name: str):
   return search_user(id, name)
