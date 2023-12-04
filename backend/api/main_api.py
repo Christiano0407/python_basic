@@ -1,8 +1,10 @@
 ###########
 #* 1)
+#? "**": Son los operadores de expansión de diccionario. Estos operadores permiten pasar todos los valores de un diccionario a un objeto de Pydantic.
 ###########
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 import os 
 import pandas as pd
 # === Instance App API ===
@@ -10,6 +12,15 @@ app = FastAPI()
 app.title = "My API with FastAPI"
 app.version = "0.0.1"
 
+# === POO ===
+class Movies(BaseModel): 
+  id: int 
+  title: str
+  overview: str
+  year: int
+  rating: float
+  category: str
+  
 # === Data Frame Data ===
 script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, "data_movies", "disney_movies.csv")
@@ -33,6 +44,8 @@ movies_api = [
     "category": "Acción" 
   }
 ]
+
+movies = Movies.parse_obj(movies_api)
 
 # === API CRUD ===
 # ===GET

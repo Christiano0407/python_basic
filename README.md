@@ -1102,3 +1102,10 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 > JWT (Jason Web Token)
 
 [JWT](https://jwt.io/)
+
+> Validación de Datos con Pydantic
+
+> Pydantic es la biblioteca de validación de datos más utilizada para Python.
+
+[Pydantic](https://docs.pydantic.dev/latest/)
+
