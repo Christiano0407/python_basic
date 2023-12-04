@@ -1,7 +1,7 @@
 ###########
 #* 1)
 ###########
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 import os 
 import pandas as pd
@@ -94,7 +94,7 @@ async def get_year(year: int):
 async def query_movie(id: int, title: str, category: str):
   '''
   WebServer (Endpoints): http://127.0.0.1:8000/movie/?id=1&title=Avatar or movie/?id=1&title=Avatar&category=Acci%C3%B3n (Acción)
-
+  titles => O(n) Algorithm Lineal 
   ''' 
   titles = next((t for t in movies_api if t["id"] == id and t["title"] == title and t["category"] == category), None)
   try: 
@@ -104,3 +104,40 @@ async def query_movie(id: int, title: str, category: str):
       raise HTTPException(status_code=404, detail=f"Sorry! your movie tittle {title} it's not searching")
   except Exception as e:
     raise HTMLResponse(status_code=500, detail=f"Server Error..., {str(e)}")
+  
+
+@app.get("/movie/", status_code=200, tags=["movie"])
+async def get_movies_category(category: str): 
+  return {item for item in movies_api if item["category"] == category}
+
+
+#===POST
+# = BaseModel = 
+""" @app.post("/movie/", tags=["movie"])
+async def create_movies(id: int = Body(), title: str = Body(), overview: str = Body(), year: int = Body(), rating: float = Body(), category: str = Body()): 
+  movie.append({
+  "id": id, 
+  "title": title, 
+  "overview": overview, 
+  "year": year,
+  "rating": rating, 
+  "category": category
+  })
+  return movie """
+
+@app.post('/movie/', status_code=200, tags=['movie'])
+async def create_movie(request: Request):
+    '''
+    movies_api.append(movie_data) para agregar la nueva película al final de la lista movies_api. Ahora, la nueva película se agrega correctamente a la lista existente.
+    '''
+    movie_data = await request.json()
+
+     # = Validación de datos (puedes agregar más validaciones según tus necesidades) =
+    required_fields = ["id", "title", "overview", "year", "rating", "category"]
+    if not all(item in movie_data for item in required_fields):
+      raise HTTPException(status_code=400, detail="Missing required fields in movie data") 
+
+     # = Agregar la nueva película a la lista movies_api =
+    movies_api.append(movie_data)
+
+    return movie_data

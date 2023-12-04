@@ -872,6 +872,28 @@ async def create_users(user: User):
     else:
      users_list.append(user)
 ```
+> Otra forma de hacer POST:
+
+```python
+# Previa Base de Movies.
+@app.post('/movie/', status_code=200, tags=['movie'])
+async def create_movie(request: Request):
+    '''
+    movies_api.append(movie_data) para agregar la nueva película al final de la lista movies_api. Ahora, la nueva película se agrega correctamente a la lista existente.
+    '''
+    movie_data = await request.json()
+
+     # = Validación de datos (puedes agregar más validaciones según tus necesidades) =
+    required_fields = ["id", "title", "overview", "year", "rating", "category"]
+    if not all(item in movie_data for item in required_fields):
+      raise HTTPException(status_code=400, detail="Missing required fields in movie data") 
+
+     # = Agregar la nueva película a la lista movies_api =
+    movies_api.append(movie_data)
+
+    return movie_data
+
+```
 
 ```python
 #PUT (To update data)
