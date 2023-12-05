@@ -195,7 +195,9 @@ async def create_movie(request: Request):
 async def created_movies(movies: Movies): 
   movie_dict = movies.dict()
   movie_dict["id"] = max((m["id"] for m in movie_singleton.get_movies_object()), default=0) + 1
-  movies_api.append(movie_dict)
+  movie_singleton.get_movies_object().append(movie_dict)
+  #movies_pattern = movie_singleton.get_movies_object()
+  #movies_pattern.append(movie_dict)
   return movie_dict
 
 #===PUT

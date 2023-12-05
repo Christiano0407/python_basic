@@ -1137,3 +1137,52 @@ movies_objects = [Movies.parse_obj(movie) for movie in movies_api] #List[Movies]
 for movie_obj in movies_objects:
   print(movie_obj.dict())
 ```
+
+> Field Validation (Pydantic)
+
+> En Pydantic, el atributo Field se utiliza para proporcionar configuraciones adicionales a un campo de un modelo. Puedes usar Field para especificar reglas de validación, valores predeterminados y otras opciones para personalizar el comportamiento de un campo específico. 
+
+```python
+
+from typing import List
+from pydantic import BaseModel, Field, ValidationError
+
+class Person(BaseModel):
+    name: str
+    age: int = Field(..., gt=0, description="Age of the person (must be greater than 0)")
+    email: str = Field(..., regex=r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", description="Valid email address")
+
+class Employee(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., max_length=50)
+    skills: List[str] = Field(..., min_items=1, max_items=10)
+
+# Ejemplo de uso
+try:
+    person_data = {"name": "John", "age": 30, "email": "john@example.com"}
+    person = Person(**person_data)
+    print(person)
+except ValidationError as e:
+    print(e.json())
+
+try:
+    employee_data = {"id": 1, "name": "Alice", "skills": ["Python", "FastAPI", "SQL"]}
+    employee = Employee(**employee_data)
+    print(employee)
+except ValidationError as e:
+    print(e.json())
+
+
+```
+
+> ValidationError
+
+```python 
+try:
+    person_data = {"name": "John", "age": 30, "email": "john@example.com"}
+    person = Person(**person_data)
+    print(person)
+except ValidationError as e:
+    print(e.json())
+
+```
