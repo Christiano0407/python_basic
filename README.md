@@ -77,6 +77,10 @@ DELETE: eliminar un recurso.
 
 ```
 
+> Status Code in FastAPI
+
+[status](https://fastapi.tiangolo.com/es/reference/status/?h=status#fastapi.status.HTTP_404_NOT_FOUND)
+
 ### Developer Project Python
 
 > Terminal (Bash or ZSH)
@@ -1109,3 +1113,27 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 
 [Pydantic](https://docs.pydantic.dev/latest/)
 
+> Podemos usar typing, para pasar una lista (List); para mejorar el tipado del código (usas una versión más vieja de Python) con Union. 
+
+
+```python
+from typing import List, Union, Optional
+```
+
+> Podemos pasar "status", en fastapi 
+
+```python
+from fastapi import FastAPI, HTTPException, Request, status
+```
+
+[status](https://fastapi.tiangolo.com/es/reference/status/?h=status#fastapi.status.HTTP_404_NOT_FOUND)
+
+> Para pasar de JSON (tienes datos) e utilizar una instancia (POO), puedes pasar toda esa información a un dict()
+
+```python
+# Parsear la lista movies_api en una lista de objetos Movies
+movies_objects = [Movies.parse_obj(movie) for movie in movies_api] #List[Movies] = []
+# Ahora, movies_objects es una lista de objetos de la clase Movies
+for movie_obj in movies_objects:
+  print(movie_obj.dict())
+```
