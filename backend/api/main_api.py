@@ -179,7 +179,7 @@ async def created_movies(movies: Movies):
 
 #===PUT
 #Function getMovieIndex
-def get_movie_index(movie_id):
+""" def get_movie_index(movie_id):
    '''
    Se ha agregado la función get_movie_index para buscar el índice de una película en la lista según su ID.
    Sí, enumerate es una función incorporada en Python que se utiliza para agregar un contador a un iterable y devolverlo como un objeto enumerado. Este objeto enumerado contiene pares de índices y elementos del iterable.
@@ -188,10 +188,10 @@ def get_movie_index(movie_id):
    for i, movie in enumerate(movies_api): 
      if movie["id"] == movie_id:
        return i
-   return None
+   return None """
 
-# = El método PUT generalmente se utiliza para actualizar un recurso existente =
-@app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
+# = El método PUT generalmente se utiliza para actualizar un recurso existente / Usando JSON =
+""" @app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
 async def update_movie(movie_id: int, request: Request):
     '''
     Actualiza una película existente en la lista movies_api.
@@ -206,11 +206,22 @@ async def update_movie(movie_id: int, request: Request):
       # = Actualizar los campos de la película con los nuevos datos =
       movies_api[movie_index].update(movie_data)
     else: 
-      raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.")
+      raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.") """
+    
+
+#=== PUT => Usando POO (Instancia) / Esquema ===
+@app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
+async def update_movie(movie_id: int, update_movies: Movies): 
+  for i, movie in enumerate(movies_api): 
+    if movie["id"] == movie_id: 
+        movies_api[i] = update_movies.dict()
+        return movies_api[i]
+    
+  raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.")
 
 
 #===DELETE
-@app.delete("/movie/{movie_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["movie"])
+""" @app.delete("/movie/{movie_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["movie"])
 async def delete_movie(movie_id: int): 
   '''
    a) Elimina (delete) una película de la lista movies_api.
@@ -218,7 +229,7 @@ async def delete_movie(movie_id: int):
    c) Se devuelve una respuesta con un código de estado 204 (No Content), que indica que la operación de eliminación fue exitosa y no hay contenido para devolver.
   '''
   
-  """ data_movie = await request.json() """
+  #data_movie = await request.json()
 
   index_movie = get_movie_index(movie_id)
 
@@ -226,6 +237,15 @@ async def delete_movie(movie_id: int):
     delete_movie = movies_api.pop(index_movie)
     return None
   else: 
-    raise HTMLResponse(status_code=404, detail=f"Movie with this ID {movie_id} not found.")
+    raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with this ID {movie_id} not found.") """
 
 
+#=== DELETE => Usando POO (Instancia) / Esquema ===
+@app.delete("/movie/{movie_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["movie"])
+async def delete_movie(movie_id: int): 
+  for i, movie in enumerate(movies_api):
+    if movie["id"] == movie_id:
+        del movies_api[i]
+        return None
+  
+  raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with this ID {movie_id} not found.")
