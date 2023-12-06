@@ -4,12 +4,13 @@
 #?: Union es una herramienta en el módulo typing de Python que permite indicar que una variable, parámetro o atributo puede tener uno de varios tipos posibles. 
 #?: Optional es otra construcción útil del módulo typing en Python y se utiliza para indicar que una variable o parámetro puede ser de un tipo específico o None.  es útil para expresar la posibilidad de que una variable pueda tener un valor o no, y ayuda a mejorar la claridad en la lectura del código y en el sistema de tipado estático.
 #? Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
+#* __new__ es un método especial en Python que se utiliza para crear una nueva instancia de una clase.
 ###########
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
 import os 
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Union, Optional
 
 # === Instance App API ===
@@ -26,16 +27,27 @@ df = pd.read_csv(file_path)
 # === POO ===
 # Instancia de Objeto
 class Movies(BaseModel): 
-  id: Optional[int] = None
-  title: Union[str, None] = None
-  overview: str
-  year: int
+  id: Union[int, None] = Field(..., gt=0) #Valor Requerido y Mayor a "0".
+  title: Union[str, None] = Field(description="Titles of movies", max_length=150)
+  overview: Union[str, None] = Field(default=None, title="Overview of Movies", description="The Overview of movies", max_length=600)
+  year: int = Field(gt=0, description="The year of movie in Cinemas")
   rating: Union[float, int, None] = None
   category: str
 
 # === Movies DataAPI & Pattern Singleton & Herencia => Polimorfirmo === 
 class MovieSingleton: 
   _instance = None
+
+  def __new__(cls): 
+    if not cls._instance:
+      cls._instance = super().__new__(cls) # Herencia Polimorfismo
+      cls._instance.movies_objects = [Movies.parse_obj(movie) for movie in cls.movies_api] # Json => Parsear a Obj / dict
+      return cls._instance  
+  
+
+  def get_movies_object(self):
+    return self.movies_objects
+
   movies_api = [
   {
     "id": 1, 
@@ -54,19 +66,6 @@ class MovieSingleton:
     "category": "Acción" 
   }
 ]
-  
-def __new__(cls): 
-  '''
-  __new__ es un método especial en Python que se utiliza para crear una nueva instancia de una clase.
-  '''
-  if not cls._instance:
-    #cls._instance = super().__new__(cls) # Herencia Polimorfismo
-    cls._instance.movies_objects = [Movies.parse_obj(movie) for movie in cls.movies_api] # Json => Parsear a Obj / dict
-    return cls._instance  
-  
-
-def get_movies_object(self):
-  return self.movies_objects
   
 #===#
 movie_singleton = MovieSingleton()
@@ -113,8 +112,9 @@ async def get_movie(id: int):
   '''
   movie_id = filter(lambda movie: movie.id == id, movies_api)
   Web Server (Endpoints): http://127.0.0.1:8000/movie/1
+  Reemplacé m["id"] con m.id para acceder al atributo id de la instancia de la clase Movies.
   '''
-  movie_id = next((m for m in movie_singleton.get_movies_object() if m["id"] == id), None)
+  movie_id = next((m for m in movie_singleton.get_movies_object() if m.id == id), None)
   try: 
     if movie_id: 
       return movie_id
@@ -126,7 +126,7 @@ async def get_movie(id: int):
 
 @app.get("/movie/year/{year}", status_code=status.HTTP_200_OK, tags=["movie"])
 async def get_year(year: int):
-  year_movie = next((y for y in movie_singleton.get_movies_object() if y["year"] == year), None)
+  year_movie = next((y for y in movie_singleton.get_movies_object() if y.year == year), None)
   try: 
     if year_movie:
       return year_movie
@@ -143,7 +143,7 @@ async def query_movie(id: int, title: str, category: str):
   WebServer (Endpoints): http://127.0.0.1:8000/movie/?id=1&title=Avatar or movie/?id=1&title=Avatar&category=Acci%C3%B3n (Acción)
   titles => O(n) Algorithm Lineal 
   ''' 
-  titles = next((t for t in movie_singleton.get_movies_object() if t["id"] == id and t["title"] == title and t["category"] == category), None)
+  titles = next((t for t in movie_singleton.get_movies_object() if t.id == id and t.title == title and t.category == category), None)
   try: 
     if titles: 
       return titles
@@ -193,12 +193,21 @@ async def create_movie(request: Request):
 # === Esquema e Usar Mi instancia (Class) ===
 @app.post("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
 async def created_movies(movies: Movies): 
-  movie_dict = movies.dict()
-  movie_dict["id"] = max((m["id"] for m in movie_singleton.get_movies_object()), default=0) + 1
-  movie_singleton.get_movies_object().append(movie_dict)
-  #movies_pattern = movie_singleton.get_movies_object()
-  #movies_pattern.append(movie_dict)
-  return movie_dict
+  try: 
+    # Obtener el máximo ID existente y asignar uno nuevo
+    new_id = max((m.id for m in movie_singleton.get_movies_object()), default=0) + 1
+    # Asignar el nuevo ID al objeto Movies
+    movies.id = new_id
+    # Convertir el objeto Movies a un diccionario
+    #movie_dict = movies.dict()
+    # Agregar el nuevo diccionario a la lista de movies_object
+    movie_singleton.get_movies_object().append(movies)
+    #movies_pattern = movie_singleton.get_movies_object()
+    #movies_pattern.append(movie_dict)
+    return movies.dict()
+
+  except Exception as e: 
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error creating movie: {str(e)}")
 
 #===PUT
 #Function getMovieIndex
@@ -232,15 +241,31 @@ async def update_movie(movie_id: int, request: Request):
       raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.") """
     
 
-#=== PUT => Usando POO (Instancia) / Esquema ===
-@app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
+#=== PUT => Usando POO (Instancia) / Esquema === & POO 
+""" @app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
 async def update_movie(movie_id: int, update_movies: Movies): 
   for i, movie in enumerate(movie_singleton.get_movies_object()): 
     if movie["id"] == movie_id: 
         movie_singleton.get_movies_object()[i] = update_movies.dict()
         return movie_singleton.get_movies_object()[i]
     
-  raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.")
+  raise HTMLResponse(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} Not Exist.") """
+
+
+@app.put("/movie/{movie_id}", status_code=status.HTTP_200_OK, tags=["movie"])
+async def update_movie(movie_id: int, update_movies: Movies): 
+  try: 
+    index = next((i for i, movie in enumerate(movie_singleton.get_movies_object()) if movie.id == movie_id), None)
+    if index is not None: 
+      # Actualizar el elemento en la lista con los datos de update_movies
+      movie_singleton.get_movies_object()[index] = update_movies
+      # Devolver el elemento actualizado
+      return movie_singleton.get_movies_object()[index]
+    else:
+      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie with ID {movie_id} does not exist.")
+  # Lanzar una excepción en caso de un error interno del servidor
+  except Exception as e: 
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error creating movie: {str(e)}")
 
 
 #===DELETE

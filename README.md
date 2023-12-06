@@ -899,6 +899,30 @@ async def create_movie(request: Request):
 
 ```
 
+> POST Usando POO (Instancia de Objeto)
+
+```python
+# === Esquema e Usar Mi instancia (Class) ===
+@app.post("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
+async def created_movies(movies: Movies): 
+  try: 
+    # Obtener el máximo ID existente y asignar uno nuevo
+    new_id = max((m.id for m in movie_singleton.get_movies_object()), default=0) + 1
+    # Asignar el nuevo ID al objeto Movies
+    movies.id = new_id
+    # Convertir el objeto Movies a un diccionario
+    movie_dict = movies.dict()
+    # Agregar el nuevo diccionario a la lista de movies_object
+    movie_singleton.get_movies_object().append(movie_dict)
+    #movies_pattern = movie_singleton.get_movies_object()
+    #movies_pattern.append(movie_dict)
+    return movie_dict
+
+  except Exception as e: 
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error creating movie: {str(e)}")
+
+```
+
 ```python
 #PUT (To update data)
 @app.put("/users/")
