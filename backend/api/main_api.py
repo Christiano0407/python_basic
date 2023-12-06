@@ -292,7 +292,7 @@ async def delete_movie(movie_id: int):
 @app.delete("/movie/{movie_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["movie"])
 async def delete_movie(movie_id: int): 
   for i, movie in enumerate(movie_singleton.get_movies_object()):
-    if movie["id"] == movie_id:
+    if movie.id == movie_id:
         del movie_singleton.get_movies_object()[i]
         return None
   
