@@ -6,7 +6,7 @@
 #? Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
 #* __new__ es un método especial en Python que se utiliza para crear una nueva instancia de una clase.
 ###########
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import FastAPI, HTTPException, Request, status, Path
 from fastapi.responses import HTMLResponse
 import os 
 import pandas as pd
@@ -31,8 +31,8 @@ class Movies(BaseModel):
   title: Union[str, None] = Field(description="Titles of movies", max_length=150)
   overview: Union[str, None] = Field(default=None, title="Overview of Movies", description="The Overview of movies", max_length=600)
   year: int = Field(gt=0, description="The year of movie in Cinemas")
-  rating: Union[float, int, None] = None
-  category: str
+  rating: Union[float, int, None] = Field(ge=1, le=10)
+  category: str = Field(min_length=1, max_length=15)
 
 # === Movies DataAPI & Pattern Singleton & Herencia => Polimorfirmo === 
 class MovieSingleton: 
@@ -125,7 +125,7 @@ async def get_movie(id: int):
   
 
 @app.get("/movie/year/{year}", status_code=status.HTTP_200_OK, tags=["movie"])
-async def get_year(year: int):
+async def get_year(year: int = Path(ge=1985, le=2010)):
   year_movie = next((y for y in movie_singleton.get_movies_object() if y.year == year), None)
   try: 
     if year_movie:
