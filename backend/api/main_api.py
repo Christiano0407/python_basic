@@ -1,10 +1,5 @@
 ###########
 #* 1)
-#?: "**": Son los operadores de expansión de diccionario. Estos operadores permiten pasar todos los valores de un diccionario a un objeto de Pydantic.
-#?: Union es una herramienta en el módulo typing de Python que permite indicar que una variable, parámetro o atributo puede tener uno de varios tipos posibles. 
-#?: Optional es otra construcción útil del módulo typing en Python y se utiliza para indicar que una variable o parámetro puede ser de un tipo específico o None.  es útil para expresar la posibilidad de que una variable pueda tener un valor o no, y ayuda a mejorar la claridad en la lectura del código y en el sistema de tipado estático.
-#? Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
-#* __new__ es un método especial en Python que se utiliza para crear una nueva instancia de una clase.
 ###########
 from fastapi import FastAPI, HTTPException, Request, status, Path
 from fastapi.responses import HTMLResponse
@@ -12,6 +7,7 @@ import os
 import pandas as pd
 from pydantic import BaseModel, Field
 from typing import List, Union, Optional
+from typing_extensions import Annotated
 
 # === Instance App API ===
 app = FastAPI()
@@ -108,7 +104,7 @@ async def get_all_movie():
 
 #==== Path Parameters:
 @app.get("/movie/{id}", status_code=status.HTTP_200_OK, tags=["movie"])
-async def get_movie(id: int):
+async def get_movie(id: Annotated[int, Path(..., title="Movie ID", description="The ID of the Movie", ge=0)] ):
   '''
   movie_id = filter(lambda movie: movie.id == id, movies_api)
   Web Server (Endpoints): http://127.0.0.1:8000/movie/1

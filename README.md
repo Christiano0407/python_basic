@@ -687,6 +687,35 @@ if __name__ == "__main__":
 
 ### Backend Web Server With Fast API
 
+> Términos Usados en FastAPI
+
+```python
+#: "**": Son los operadores de expansión de diccionario. Estos operadores permiten pasar todos los valores de un diccionario a un objeto de Pydantic.
+#: Union es una herramienta en el módulo typing de Python que permite indicar que una variable, parámetro o atributo puede tener uno de varios tipos posibles. 
+#: Optional es otra construcción útil del módulo typing en Python y se utiliza para indicar que una variable o parámetro puede ser de un tipo específico o None.  es útil para expresar la posibilidad de que una variable pueda tener un valor o no, y ayuda a mejorar la claridad en la lectura del código y en el sistema de tipado estático.
+# Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
+# __new__ es un método especial en Python que se utiliza para crear una nueva instancia de una clase.
+
+```
+
+```PYTHON
+# Fast API & Uvicorn 
+# Siempre que llamamos a un Servidor tiene que ser Asíncrona 
+# Use: /home/?query_param=Home
+#Static: Para todo tipo de assets. (http://127.0.0.1:8000/static/images/astronauta_nave.jpg).Cuando tienes muchos archivos (imágenes) y vas a usar StaticFiles, es importante tener en cuenta el rendimiento. El StaticFiles de FastAPI está diseñado para ser eficiente con archivos pequeños, pero puede ser menos eficiente con archivos grandes. Puedes usar un CDN (Cloudinary).
+#*OAuth 2.0 es un protocolo de autorización que permite a los usuarios autorizar a aplicaciones de terceros a acceder a sus datos sin tener que compartir sus credenciales de inicio de sesión.OAuth 2.0 funciona mediante la creación de un flujo de autorización en el que el usuario autoriza a la aplicación de terceros a acceder a sus datos.
+```
+
+```python
+# @app.get("/") define una ruta en la raíz de tu aplicación. async def read_csv(): es la función que se ejecutará cuando se realice una solicitud GET a la ruta especificada. return {"data": df.head(5).to_dict(orient="records")} devuelve las primeras 5 filas del DataFrame df como un diccionario JSON.
+# En el contexto de la función to_dict de pandas, el parámetro orient especifica el formato en el que se devolverá el diccionario. El valor "records" significa que los datos se representarán como una lista de registros, donde cada registro es un diccionario que contiene los datos de una fila del DataFrame.
+# OS: Path => System Operator
+# Prefixed => Ya no es necesario poner todo el "output".
+# Tags => Dividir por parámetros la documentación (API) y ("path operations in this router").
+#Query Parameters: Los parámetros de consulta son aquellos que se incluyen en la URL después del signo de interrogación ? y se separan por el símbolo &.
+
+```
+
 > Fast API & Uvicorn
 
 ```python
@@ -1208,5 +1237,30 @@ try:
     print(person)
 except ValidationError as e:
     print(e.json())
+
+```
+>  Puedes agregar validación a este parámetro de ruta usando la clase Path de FastAPI 
+
+> Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
+
+
+```python
+from typing import Union
+
+from fastapi import FastAPI, Path, Query
+from typing_extensions import Annotated
+
+app = FastAPI()
+
+
+@app.get("/items/{item_id}")
+async def read_items(
+    item_id: Annotated[int, Path(title="The ID of the item to get")],
+    q: Annotated[Union[str, None], Query(alias="item-query")] = None,
+):
+    results = {"item_id": item_id}
+    if q:
+        results.update({"q": q})
+    return results
 
 ```
