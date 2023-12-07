@@ -1243,6 +1243,11 @@ except ValidationError as e:
 
 > Annotated se utiliza para agregar anotaciones adicionales a un tipo de variable.  Una o más anotaciones adicionales que se pueden utilizar para proporcionar información adicional sobre la variable.
 
+> Path y Query para validar parámetros en FastAPI. Ambos son usados para manejar diferentes tipos de parámetros, y puedes aplicar validaciones a ambos.
+
+> Path se utiliza para parámetros de ruta, que son parte de la URL.
+
+> Query se utiliza para parámetros de consulta, que se pasan como parte de la URL después del signo de interrogación (?).
 
 ```python
 from typing import Union

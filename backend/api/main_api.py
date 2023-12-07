@@ -1,7 +1,7 @@
 ###########
 #* 1)
 ###########
-from fastapi import FastAPI, HTTPException, Request, status, Path
+from fastapi import FastAPI, HTTPException, Request, status, Path, Query
 from fastapi.responses import HTMLResponse
 import os 
 import pandas as pd
@@ -60,6 +60,38 @@ class MovieSingleton:
     "year": 2022,
     "rating": 7.5, 
     "category": "Acción" 
+  },
+  {
+    "id": 3, 
+    "title": "Star Wars: episodio IV - una nueva esperanza", 
+    "overview": "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales al mando del temible Darth Vader. Antes de ser atrapada, Leia consigue introducir un mensaje en su robot R2-D2, quien acompañado de su inseparable C-3PO logra escapar.", 
+    "year": 1977,
+    "rating": 8.5, 
+    "category": "Aventura" 
+  },
+  {
+    "id": 4, 
+    "title": "Star Wars: El imperio contraataca", 
+    "overview": "Aunque la Estrella de la Muerte ha sido destruida, las tropas imperiales han hecho salir a las fuerzas rebeldes de sus bases ocultas y los persiguen a través de la galaxia. Mientras, el grupo de rebeldes de Skywalker se esconde en un planeta helado.", 
+    "year": 1980,
+    "rating": 8, 
+    "category": "Aventura" 
+  },
+  {
+    "id": 5, 
+    "title": "Star Wars: El retorno del Jedi", 
+    "overview": "Luke Skywalker, ahora un experimentado caballero Jedi, intenta descubrir la identidad de Darth Vader..", 
+    "year": 1983,
+    "rating": 8, 
+    "category": "Aventura" 
+  }, 
+   {
+    "id": 7, 
+    "title": "El Gran Showman", 
+    "overview": "El gran showman es un musical que celebra el nacimiento del show business y cuenta la historia de P.T. Barnum, un visionario showman y empresario circense que surgió de la nada para crear un espectáculo que se convirtió en una sensación mundial y que fue conocido como El mayor espectáculo en la Tierra.", 
+    "year": 2017,
+    "rating": 7, 
+    "category": "Drama" 
   }
 ]
   
@@ -134,7 +166,7 @@ async def get_year(year: int = Path(ge=1985, le=2010)):
 
 #==== Query Parameters:
 @app.get("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
-async def query_movie(id: int, title: str, category: str):
+async def query_movie(id: int = Query(title="Movie ID", ge=0), title: str = Query(title="Movie Title"), category: str = Query(title="Category Title")):
   '''
   WebServer (Endpoints): http://127.0.0.1:8000/movie/?id=1&title=Avatar or movie/?id=1&title=Avatar&category=Acci%C3%B3n (Acción)
   titles => O(n) Algorithm Lineal 
@@ -147,11 +179,25 @@ async def query_movie(id: int, title: str, category: str):
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Sorry! your movie tittle {title} it's not searching")
   except Exception as e:
     raise HTMLResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Server Error..., {str(e)}")
-  
+
+
+def movie_filtered(movies, category = None):
+    if category is None or category not in movies:
+       return [] 
+    filtered_movies = [movie for movie in movies if movie.category == category]
+    return filtered_movies
+
 
 @app.get("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
-async def get_movies_category(category: str): 
-  return {item for item in movie_singleton.get_movies_object() if item["category"] == category}
+async def get_movies_category(category: str = Query(None, title="Category Movie")): 
+  try: 
+    filtered_movies = movie_filtered(movie_singleton.get_movies_object(), category=category) 
+    if filtered_movies:
+      return filtered_movies
+    else: 
+      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Sorry, your movie category not found")
+  except Exception as e: 
+    raise HTMLResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Server Error..., {str(e)}")
 
 
 #===POST
