@@ -1269,3 +1269,45 @@ async def read_items(
     return results
 
 ```
+
+> FastAPI & JSONResponse (Pydantic)
+
+[FastAPI](https://fastapi.tiangolo.com/tutorial/response-model/?h=jsonresponse#return-a-response-directly)
+
+> La conversión a JSON es un paso común cuando estás construyendo APIs RESTful. Cuando tu aplicación FastAPI devuelve datos, especialmente datos que pueden ser consumidos por otros sistemas o clientes web, generalmente se prefiere el formato JSON para la respuesta.
+
+> serializar a JSON & APIs RESTful
+
+```python
+@app.get("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
+async def get_all_movie(): 
+  '''
+  he utilizado la función dict() de Pydantic para convertir cada objeto Movies a un diccionario antes de devolver la respuesta JSON.
+  '''
+  #return movie_singleton.get_movies_object()
+  movies_objects = movie_singleton.get_movies_object()
+  # Convertir los objetos Movies a diccionarios antes de serializar
+  json_response_movie = [movie.dict() for movie in movies_objects]
+  return JSONResponse(content=json_response_movie)
+```
+
+> Podemos conectar nuestra API con frontend e usarla (APIs RESTful) 
+
+> La conversión a JSON es un paso común cuando estás construyendo APIs RESTful. Cuando tu aplicación FastAPI devuelve datos, especialmente datos que pueden ser consumidos por otros sistemas o clientes web, generalmente se prefiere el formato JSON para la respuesta.
+
+> En este contexto:
+
+> Interoperabilidad: JSON (JavaScript Object Notation) es un formato de intercambio de datos ligero y ampliamente aceptado. La mayoría de los lenguajes de programación pueden trabajar fácilmente con datos en formato JSON, lo que facilita la interoperabilidad entre diferentes sistemas.
+
+> Legibilidad: JSON es fácil de leer y entender tanto para humanos como para máquinas. Al devolver datos en formato JSON, facilitas a los desarrolladores y a las herramientas de consumo de APIs procesar y trabajar con los datos de manera eficiente.
+
+> Compatibilidad con el estándar HTTP: La mayoría de las bibliotecas y herramientas que trabajan con HTTP/APIs esperan o pueden manejar respuestas en formato JSON. Esto incluye bibliotecas en el lado del cliente (como axios en JavaScript) y herramientas de prueba de APIs.
+
+> En resumen, convertir los datos a JSON al devolverlos en una respuesta de API hace que la API sea más fácil de consumir y utilizar en un contexto web o de servicios. FastAPI proporciona funcionalidades integradas para la serialización automática de objetos Pydantic a JSON cuando se devuelven en respuestas de ruta.
+
+> Nota: 
+
+```
+1.FastAPI manejará la serialización automáticamente.
+2.FastAPI maneja automáticamente la serialización de objetos Pydantic a JSON, no necesitas envolver tu respuesta en JSONResponse 
+```

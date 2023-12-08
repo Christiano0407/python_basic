@@ -2,7 +2,7 @@
 #* 1)
 ###########
 from fastapi import FastAPI, HTTPException, Request, status, Path, Query
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 import os 
 import pandas as pd
 from pydantic import BaseModel, Field
@@ -95,7 +95,7 @@ class MovieSingleton:
   }
 ]
   
-#===#
+#=== === #
 movie_singleton = MovieSingleton()
 
 # Parsear la lista movies_api en una lista de objetos Movies
@@ -132,7 +132,14 @@ async def get_movies():
 #===#
 @app.get("/movie/", status_code=status.HTTP_200_OK, tags=["movie"])
 async def get_all_movie(): 
-  return movie_singleton.get_movies_object()
+  '''
+  he utilizado la función dict() de Pydantic para convertir cada objeto Movies a un diccionario antes de devolver la respuesta JSON.
+  '''
+  #return movie_singleton.get_movies_object()
+  movies_objects = movie_singleton.get_movies_object()
+  # Convertir los objetos Movies a diccionarios antes de serializar
+  json_response_movie = [movie.dict() for movie in movies_objects]
+  return JSONResponse(content=json_response_movie)
 
 #==== Path Parameters:
 @app.get("/movie/{id}", status_code=status.HTTP_200_OK, tags=["movie"])
@@ -141,11 +148,13 @@ async def get_movie(id: Annotated[int, Path(..., title="Movie ID", description="
   movie_id = filter(lambda movie: movie.id == id, movies_api)
   Web Server (Endpoints): http://127.0.0.1:8000/movie/1
   Reemplacé m["id"] con m.id para acceder al atributo id de la instancia de la clase Movies.
+  JSONResponse => este último enfoque es innecesario en este caso específico, ya que FastAPI maneja la serialización a JSON automáticamente.
   '''
   movie_id = next((m for m in movie_singleton.get_movies_object() if m.id == id), None)
+  #print(type(movie_id)) # Agrega esta línea para imprimir el tipo. => <class 'main_api.Movies'>
   try: 
     if movie_id: 
-      return movie_id
+      return movie_id #JSONResponse(content=movie_id)
     else: 
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Sorry! Your movie {id} not exist.")
   except Exception as e: 
@@ -193,7 +202,7 @@ async def get_movies_category(category: str = Query(None, title="Category Movie"
   try: 
     filtered_movies = movie_filtered(movie_singleton.get_movies_object(), category=category) 
     if filtered_movies:
-      return filtered_movies
+      return JSONResponse(content=filtered_movies)
     else: 
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Sorry, your movie category not found")
   except Exception as e: 
