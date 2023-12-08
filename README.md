@@ -1162,12 +1162,22 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 
 ![](https://supertokens.com/static/b0172cabbcd583dd4ed222bdb83fc51a/9af93/jwt-structure.png)
 
+> Autenticación basada en tokens
+
+![](https://static.platzi.com/media/user_upload/autenticaci%C3%B3nBasadaEnTokens-9088a5af-4c44-43f8-8e4f-bc944c04e6dc.jpg)
+
 > PyJWT
 
 > PyJWT (Python JSON Web Token) es una biblioteca de Python que se utiliza para codificar y decodificar tokens JWT (JSON Web Token). Un token JWT es un objeto de seguridad que se utiliza para autenticar a los usuarios en aplicaciones web y móviles. Los tokens JWT se emiten por un servidor de autenticación y luego se envían al cliente, que los utiliza para demostrar su identidad al acceder a recursos protegidos en el servidor.
 
 [PyJWT](https://pyjwt.readthedocs.io/en/stable/#)
 
+> Como buenas practicas: 1- La información contenida en el payload es facilmente detectable, por lo que es importante que no vaya información sencible o podra ser hackeada. 2- La llave es gran parte de lo que da la seguridad en jwt, por lo que no debe quedar expuesta en el código y es sano usar un .env depronto con la libreria
+
+
+```
+pip install dotenv
+```
 
 > Validación de Datos con Pydantic
 
