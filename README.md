@@ -1311,3 +1311,38 @@ async def get_all_movie():
 1.FastAPI manejará la serialización automáticamente.
 2.FastAPI maneja automáticamente la serialización de objetos Pydantic a JSON, no necesitas envolver tu respuesta en JSONResponse 
 ```
+
+> RedirectResponse
+
+[RedirectResponse](https://fastapi.tiangolo.com/tutorial/response-model/?h=jsonresponse#return-a-response-directly)
+
+> RedirectResponse en FastAPI se utiliza para redirigir a los clientes a otra URL. Puedes usarlo cuando quieras redirigir al usuario a una nueva ubicación después de que se ha realizado una acción, como un envío de formulario o cualquier otra operación.
+
+```python
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+app = FastAPI()
+
+@app.get("/")
+async def read_root():
+    # Al acceder a la ruta "/", el usuario será redirigido a "/docs"
+    return RedirectResponse(url="/docs")
+
+```
+
+```python
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+app = FastAPI()
+
+
+@app.get("/teleport")
+async def get_teleport() -> RedirectResponse:
+    return RedirectResponse(url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+```
+
+> En este ejemplo, cuando alguien accede a la ruta principal ("/"), se le redirigirá a la ruta "/docs". Puedes personalizar la URL de redirección según tus necesidades.
+
+> Esto puede ser útil, por ejemplo, después de que un usuario ha enviado un formulario y deseas redirigirlo a una página de confirmación o a otra ubicación específica.
