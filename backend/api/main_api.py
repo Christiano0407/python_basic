@@ -135,11 +135,11 @@ async def get_all_movie():
   '''
   he utilizado la función dict() de Pydantic para convertir cada objeto Movies a un diccionario antes de devolver la respuesta JSON.
   '''
-  #return movie_singleton.get_movies_object()
-  movies_objects = movie_singleton.get_movies_object()
+  return movie_singleton.get_movies_object()
+  """ #movies_objects = movie_singleton.get_movies_object()
   # Convertir los objetos Movies a diccionarios antes de serializar
-  json_response_movie = [movie.dict() for movie in movies_objects]
-  return JSONResponse(content=json_response_movie)
+  #json_response_movie = [movie.dict() for movie in movies_objects]
+  #return JSONResponse(content=json_response_movie) """
 
 #==== Path Parameters:
 @app.get("/movie/{id}", status_code=status.HTTP_200_OK, tags=["movie"])

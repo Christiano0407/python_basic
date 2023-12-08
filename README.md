@@ -1160,6 +1160,15 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 
 [JWT](https://jwt.io/)
 
+![](https://supertokens.com/static/b0172cabbcd583dd4ed222bdb83fc51a/9af93/jwt-structure.png)
+
+> PyJWT
+
+> PyJWT (Python JSON Web Token) es una biblioteca de Python que se utiliza para codificar y decodificar tokens JWT (JSON Web Token). Un token JWT es un objeto de seguridad que se utiliza para autenticar a los usuarios en aplicaciones web y móviles. Los tokens JWT se emiten por un servidor de autenticación y luego se envían al cliente, que los utiliza para demostrar su identidad al acceder a recursos protegidos en el servidor.
+
+[PyJWT](https://pyjwt.readthedocs.io/en/stable/#)
+
+
 > Validación de Datos con Pydantic
 
 > Pydantic es la biblioteca de validación de datos más utilizada para Python.
@@ -1180,6 +1189,10 @@ from fastapi import FastAPI, HTTPException, Request, status
 ```
 
 [status](https://fastapi.tiangolo.com/es/reference/status/?h=status#fastapi.status.HTTP_404_NOT_FOUND)
+
+[MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+[HTTP_CAT](https://http.cat/)
 
 > Para pasar de JSON (tienes datos) e utilizar una instancia (POO), puedes pasar toda esa información a un dict()
 
