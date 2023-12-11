@@ -1465,3 +1465,61 @@ def __new__(cls):
       cls._instance.movies_objects = [Movies.parse_obj(movie) for movie in cls._instance.movie_data] # Json => Parsear a Obj / dict
       return cls._instance  
 ```
+
+> [!NOTE]
+
+> Nota: Depends. 
+
+```
+En el contexto de la autenticación OAuth2 en FastAPI, Depends se utiliza para declarar las dependencias necesarias para autenticar y autorizar a un usuario. Al utilizar Depends con funciones de seguridad proporcionadas por FastAPI, puedes asegurarte de que ciertas condiciones se cumplan antes de que la ruta protegida se ejecute.
+
+Un ejemplo común es el uso de Depends con la función oauth2_scheme proporcionada por FastAPI para manejar la autenticación OAuth2. Aquí hay un ejemplo básico
+```
+
+```python
+oauth2_scheme = OAuth2AuthorizationCodeBearer(tokenUrl="token")
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    # Aquí podrías realizar la validación del token y devolver el usuario actual
+    # o lanzar una excepción HTTPException si la autenticación falla.
+    return token
+
+@app.get("/private-data/")
+async def get_private_data(current_user: str = Depends(get_current_user)):
+    return {"message": "Accedido a datos privados", "user": current_user}
+
+```
+
+> [!NOTE]
+
+```python
+claims = jwt.decode(token, secret, algorithm=["HS256"])
+```
+
+```
+jwt: Se refiere al módulo o la biblioteca que estás utilizando para manejar tokens JWT. En este caso, parece que estás utilizando la biblioteca PyJWT. Asegúrate de haber importado el módulo antes de usarlo, por ejemplo: import jwt.
+
+token: Es el token JWT que deseas decodificar. Este es el token que ha sido generado previamente y que contiene información cifrada.
+
+secret: Es la clave secreta utilizada para firmar el token JWT. En el caso de algoritmos de firma como "HS256" (HMAC con SHA-256), se utiliza una clave secreta compartida entre el emisor (quien crea el token) y el receptor (quien lo valida).
+
+algorithm=["HS256"]: Indica el algoritmo de firma que se utilizó para generar el token JWT. En este caso, se está especificando que el algoritmo es HMAC con SHA-256 (HS256). La lista proporcionada en algorithm permite especificar varios algoritmos en caso de que el token esté firmado con más de uno.
+
+El resultado de jwt.decode() es un diccionario que representa las reclamaciones (claims) contenidas en el token JWT. Las reclamaciones son declaraciones sobre una entidad (por ejemplo, un usuario) y pueden incluir información como la identificación del usuario, el tiempo de expiración del token, roles, etc. El nombre claims se utiliza comúnmente para referirse a estas declaraciones en el contexto de los tokens JWT. Después de la decodificación, puedes acceder a la información contenida en el token a través del diccionario claims.
+```
+
+```python
+if "exp" in claims and claims["exp"] < time.time():
+    raise HTTPException(
+      status_code=status.HTTP_401_UNAUTHORIZED,
+      detail="Expired Authentication Token." #Token de autenticación caducado
+    )
+```
+
+```
+"exp" : Expiración del Token. 
+```
+
+```python
+username = claims["sub"] #Subject == Sujeto
+```
