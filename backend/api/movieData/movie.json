@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1, 
+    "title": "Avatar", 
+    "overview": "vatar es una franquicia de medios estadounidense creada por James Cameron, que consiste en una serie planificada de películas épicas de ciencia ficción producidas por Lightstorm Entertainment y distribuidas por 20th Century Studios, así como productos relacionados, videojuegos y atracciones de parques temáticos", 
+    "year": 2009,
+    "rating": 7.8, 
+    "category": "Acción" 
+  }, 
+  {
+    "id": 2, 
+    "title": "Avatar: The Way of Water", 
+    "overview": "ake Sully y Ney'tiri han formado una familia y hacen todo lo posible por permanecer juntos. Sin embargo, deben abandonar su hogar y explorar las regiones de Pandora cuando una antigua amenaza reaparece.", 
+    "year": 2022,
+    "rating": 7.5, 
+    "category": "Acción" 
+  },
+  {
+    "id": 3, 
+    "title": "Star Wars: episodio IV - una nueva esperanza", 
+    "overview": "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales al mando del temible Darth Vader. Antes de ser atrapada, Leia consigue introducir un mensaje en su robot R2-D2, quien acompañado de su inseparable C-3PO logra escapar.", 
+    "year": 1977,
+    "rating": 8.5, 
+    "category": "Aventura" 
+  },
+  {
+    "id": 4, 
+    "title": "Star Wars: El imperio contraataca", 
+    "overview": "Aunque la Estrella de la Muerte ha sido destruida, las tropas imperiales han hecho salir a las fuerzas rebeldes de sus bases ocultas y los persiguen a través de la galaxia. Mientras, el grupo de rebeldes de Skywalker se esconde en un planeta helado.", 
+    "year": 1980,
+    "rating": 8, 
+    "category": "Aventura" 
+  },
+  {
+    "id": 5, 
+    "title": "Star Wars: El retorno del Jedi", 
+    "overview": "Luke Skywalker, ahora un experimentado caballero Jedi, intenta descubrir la identidad de Darth Vader..", 
+    "year": 1983,
+    "rating": 8, 
+    "category": "Aventura" 
+  }, 
+   {
+    "id": 7, 
+    "title": "El Gran Showman", 
+    "overview": "El gran showman es un musical que celebra el nacimiento del show business y cuenta la historia de P.T. Barnum, un visionario showman y empresario circense que surgió de la nada para crear un espectáculo que se convirtió en una sensación mundial y que fue conocido como El mayor espectáculo en la Tierra.", 
+    "year": 2017,
+    "rating": 7, 
+    "category": "Drama" 
+  }
+]

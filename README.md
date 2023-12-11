@@ -1428,3 +1428,21 @@ import dotenv
 ```python
 dotenv.load(".env")
 ```
+
+> Importar un formato "JSON" y Agregarlo a la instancia de Clase. 
+
+```python
+movies_dir = os.path.dirname(__file__)
+movies_api = os.path.join(movies_dir, "movieData", "movie.json")
+with open(movies_api, "r") as f:
+  movie_data = json.load(f)
+```
+
+```python
+def __new__(cls): 
+    if not cls._instance:
+      cls._instance = super().__new__(cls) # Herencia Polimorfismo
+      cls._instance.movie_data = movie_data
+      cls._instance.movies_objects = [Movies.parse_obj(movie) for movie in cls._instance.movie_data] # Json => Parsear a Obj / dict
+      return cls._instance  
+```
