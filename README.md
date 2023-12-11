@@ -1213,6 +1213,25 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 
 > Como buenas practicas: 1- La información contenida en el payload es facilmente detectable, por lo que es importante que no vaya información sencible o podra ser hackeada. 2- La llave es gran parte de lo que da la seguridad en jwt, por lo que no debe quedar expuesta en el código y es sano usar un .env depronto con la libreria
 
+> Tip: Autenticación, Autorización y Token. 
+
+```
+
+En general, la autenticación debe venir primero, seguida de la autorización.
+
+La autenticación es el proceso de verificar la identidad de un usuario. Este proceso suele implicar la solicitud de un nombre de usuario y una contraseña. Una vez que el usuario proporciona esta información, el sistema de autenticación la compara con una base de datos de usuarios válidos. Si la información coincide, el usuario se considera autenticado.
+
+La autorización es el proceso de determinar qué recursos o acciones puede realizar un usuario. Este proceso suele implicar la asignación de roles o permisos a los usuarios. Un rol es un conjunto de permisos que determina qué puede hacer un usuario. Un permiso es la capacidad de realizar una acción específica.
+
+En el contexto de un sistema de API, la autenticación se utiliza para verificar que el usuario que está realizando una solicitud es quien dice ser. La autorización se utiliza para determinar si el usuario tiene permiso para realizar la solicitud.
+
+Por lo tanto, la secuencia lógica para desarrollar un sistema de autenticación y autorización es la siguiente:
+
+Definir los roles y permisos necesarios. ¿Qué roles se necesitan en el sistema? ¿Qué permisos se asignan a cada rol?
+Implementar el proceso de autenticación. ¿Cómo se verificará la identidad de los usuarios? ¿Qué datos se solicitarán a los usuarios?
+Implementar el proceso de autorización. ¿Cómo se determinarán los permisos de los usuarios?
+En el caso específico de la creación de un token, la creación del token se puede realizar en cualquier momento durante el proceso de desarrollo. Sin embargo, es importante tener en cuenta que el token debe ser compatible con el proceso de autenticación y autorización.
+```
 
 ```
 pip install dotenv
