@@ -2,6 +2,7 @@
 #* 1)
 ###########
 from fastapi import APIRouter, FastAPI, HTTPException, Request, status, Path, Query
+from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse, JSONResponse
 import os 
 import json
@@ -16,14 +17,15 @@ app.title = "My API with FastAPI"
 app.version = "0.0.1"
 # === Router ===
 router = APIRouter()
+# ==== OAuth2 ==== 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-
-# === Data Frame Data ===
+# === Data Frame Data (Disney) ===
 script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, "data_movies", "disney_movies.csv")
 df = pd.read_csv(file_path)
 
-
+# = My Data JSON =
 movies_dir = os.path.dirname(__file__)
 movies_api = os.path.join(movies_dir, "movieData", "movie.json")
 with open(movies_api, "r") as f:
