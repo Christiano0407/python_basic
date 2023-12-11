@@ -1043,6 +1043,45 @@ from routers.products import router as product_router
 app.include_router(product_router)
 ```
 
+> APIRouter
+
+[APIRouter](https://fastapi.tiangolo.com/reference/apirouter/?h=apirout)
+
+```python
+from fastapi import APIRouter, FastAPI
+
+app = FastAPI()
+router = APIRouter()
+
+
+@router.get("/users/", tags=["users"])
+async def read_users():
+    return [{"username": "Rick"}, {"username": "Morty"}]
+
+
+app.include_router(router)
+```
+
+> Bigger Applications - Multiple Files
+
+[multiple_files](https://fastapi.tiangolo.com/tutorial/bigger-applications/)
+
+```
+.
+├── app                  # "app" is a Python package
+│   ├── __init__.py      # this file makes "app" a "Python package"
+│   ├── main.py          # "main" module, e.g. import app.main
+│   ├── dependencies.py  # "dependencies" module, e.g. import app.dependencies
+│   └── routers          # "routers" is a "Python subpackage"
+│   │   ├── __init__.py  # makes "routers" a "Python subpackage"
+│   │   ├── items.py     # "items" submodule, e.g. import app.routers.items
+│   │   └── users.py     # "users" submodule, e.g. import app.routers.users
+│   └── internal         # "internal" is a "Python subpackage"
+│       ├── __init__.py  # makes "internal" a "Python subpackage"
+│       └── admin.py     # "admin" submodule, e.g. import app.internal.admin
+
+```
+
 > Para Obtener e trabajar con Data (CSV)
 
 [Kaggle](https://www.kaggle.com/)
@@ -1369,3 +1408,23 @@ async def get_teleport() -> RedirectResponse:
 > En este ejemplo, cuando alguien accede a la ruta principal ("/"), se le redirigirá a la ruta "/docs". Puedes personalizar la URL de redirección según tus necesidades.
 
 > Esto puede ser útil, por ejemplo, después de que un usuario ha enviado un formulario y deseas redirigirlo a una página de confirmación o a otra ubicación específica.
+
+> Python Dotenv
+
+```python
+pip install python-dotenv
+```
+
+> Python-dotenv es una biblioteca de Python que permite leer y escribir variables de entorno desde un archivo .env. El archivo .env es un archivo de texto simple que contiene pares clave-valor, donde la clave es el nombre de la variable de entorno y el valor es el valor de la variable.
+
+> Para usar python-dotenv, primero debe importar el módulo:
+
+```python
+import dotenv
+```
+
+> Puede llamar al método load() para leer el archivo .env:
+
+```python
+dotenv.load(".env")
+```

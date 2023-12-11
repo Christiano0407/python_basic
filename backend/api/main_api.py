@@ -1,7 +1,7 @@
 ###########
 #* 1)
 ###########
-from fastapi import FastAPI, HTTPException, Request, status, Path, Query
+from fastapi import APIRouter, FastAPI, HTTPException, Request, status, Path, Query
 from fastapi.responses import HTMLResponse, JSONResponse
 import os 
 import pandas as pd
@@ -13,6 +13,8 @@ from typing_extensions import Annotated
 app = FastAPI()
 app.title = "My API with FastAPI"
 app.version = "0.0.1"
+# === Router ===
+router = APIRouter()
 
 
 # === Data Frame Data ===
@@ -108,21 +110,6 @@ movie_singleton = MovieSingleton()
 @app.get("/", status_code=status.HTTP_200_OK)
 async def message(): 
   return {"message": str("Hello World, Movies")}
-
-
-@app.get("/home", tags=["home"])
-async def read_home(): 
-  html_content = """
-    <html>
-        <head>
-            <title>API Movies and FastAPI and Web Server Uvicorn</title>
-        </head>
-        <body>
-            <h1>Hello World Movie API</h1>
-        </body>
-    </html>
-    """
-  return HTMLResponse(content=html_content, status_code=status.HTTP_200_OK)
 
 
 @app.get("/movies", status_code=status.HTTP_200_OK, tags=["movies"])
