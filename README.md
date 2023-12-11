@@ -1466,7 +1466,7 @@ def __new__(cls):
       return cls._instance  
 ```
 
-> [!NOTE]
+> Note: 
 
 > Nota: Depends. 
 
@@ -1490,7 +1490,7 @@ async def get_private_data(current_user: str = Depends(get_current_user)):
 
 ```
 
-> [!NOTE]
+> Note:
 
 ```python
 claims = jwt.decode(token, secret, algorithm=["HS256"])
