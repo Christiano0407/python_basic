@@ -6,7 +6,6 @@ from typing_extensions import Annotated
 from pydantic import BaseModel
 from typing import Optional
 from jose import JWTError, jwt
-import time
 import os 
 import dotenv # Importar el archivo de configuración
 

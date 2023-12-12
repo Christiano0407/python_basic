@@ -5,12 +5,15 @@ from fastapi import APIRouter, FastAPI, HTTPException, Request, status, Path, Qu
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
-from typing import Union
+from typing import Union,Optional
 from typing_extensions import Annotated
+from jose import JWTError, jwt
 from jwt_manager import get_current_user, User
+import pandas as pd
 import os 
 import json
-import pandas as pd
+import time
+""" import dotenv """
 """ import jwt
 import time """
 
@@ -33,6 +36,10 @@ movies_dir = os.path.dirname(__file__)
 movies_api = os.path.join(movies_dir, "movieData", "movie.json")
 with open(movies_api, "r") as f:
   movie_data = json.load(f)
+
+# === Token Secrete Key ===
+def get_secret_key(): 
+  return os.environ.get("SECRET_KEY")
 
 # === POO ===
 # Instancia de Objeto
@@ -69,7 +76,7 @@ movie_singleton = MovieSingleton()
 """ for movie_obj in movies_objects:
   print(movie_obj.dict()) """
 #=== GET Token === 
-@app.get("/user/me")
+@app.get("/user/me", tags=["auth"])
 async def read_user_me(
   current_user: Annotated[User, Depends(get_current_user)],
 ):
@@ -223,6 +230,30 @@ async def created_movies(movies: Movies):
 
   except Exception as e: 
     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error creating movie: {str(e)}")
+  
+# ==== Token User & oAuth ====
+
+@app.post("/login", tags=["auth"])
+async def login(user: User): 
+  '''
+  # Aquí deberías realizar la autenticación del usuario, verificar las credenciales, etc.
+  # Si las credenciales son válidas, puedes generar un token y devolverlo
+  # Devuelve el token en la respuesta
+  '''
+  token = generate_token(user.username, user.email)
+
+  return {"access_token": token, "token_type": "bearer"}
+
+
+def generate_token(username: str, email:Optional[str]):
+   # Define la clave secreta para firmar el token
+   secret_key = get_secret_key()
+   # Define las reclamaciones del token (puedes personalizar esto según tus necesidades)
+   claims = {"sub": username, "email": email, "exp": time.time() + 3600}  # Expire en 1 hora
+   #Generate Toke
+   token = jwt.encode(claims, secret_key, algorithm="HS256")
+
+   return token
 
 #===PUT
 #Function getMovieIndex
