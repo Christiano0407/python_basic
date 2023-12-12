@@ -1211,7 +1211,26 @@ Para enviar archivos con una solicitud multipart, utilice el método add_file() 
 
 [PyJWT](https://pyjwt.readthedocs.io/en/stable/#)
 
+[PyJWT_cryptography](https://cryptography.io/en/latest/)
+
+```
+pip install "python-jose[cryptography]"
+
+```
+
+```python
+from jose import JWTError, jwt
+```
+
 > Como buenas practicas: 1- La información contenida en el payload es facilmente detectable, por lo que es importante que no vaya información sencible o podra ser hackeada. 2- La llave es gran parte de lo que da la seguridad en jwt, por lo que no debe quedar expuesta en el código y es sano usar un .env depronto con la libreria
+
+> Install passlib
+
+[oAuth2_JWT](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
+
+```
+pip install "passlib[bcrypt]
+```
 
 > Tip: Autenticación, Autorización y Token. 
 

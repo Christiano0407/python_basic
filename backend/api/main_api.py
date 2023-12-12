@@ -5,13 +5,14 @@ from fastapi import APIRouter, FastAPI, HTTPException, Request, status, Path, Qu
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
-from typing import List, Union, Optional
+from typing import Union
 from typing_extensions import Annotated
+from jwt_manager import get_current_user, User
 import os 
 import json
 import pandas as pd
-import jwt
-import time
+""" import jwt
+import time """
 
 # === Instance App API ===
 app = FastAPI()
@@ -58,11 +59,8 @@ class MovieSingleton:
   def get_movies_object(self):
     return self.movies_objects
 
-
-class User(BaseModel):
-  username: str
   
-#=== === #
+#=== Movie Singleton === #
 movie_singleton = MovieSingleton()
 
 # Parsear la lista movies_api en una lista de objetos Movies
@@ -70,37 +68,7 @@ movie_singleton = MovieSingleton()
 # Ahora, movies_objects es una lista de objetos de la clase Movies
 """ for movie_obj in movies_objects:
   print(movie_obj.dict()) """
-
-#=== Token y oAuth2 ===
-def decode_token(token:str):
-  # Define la clave secreta para firmar el token
-  secret = "secret"
-  # Decodifica el token
-  claims = jwt.decode(token, secret, algorithm=["HS256"])
-  # Verifica la validez del token y El tiempo a expirar ("exp").
-  if "exp" in claims and claims["exp"] < time.time():
-    raise HTTPException(
-      status_code=status.HTTP_401_UNAUTHORIZED,
-      detail="Expired Authentication Token." #Token de autenticación caducado
-    )
-  
-  return claims
-
-
-async def get_current_user(
-    token:Annotated[str, Depends(oauth2_scheme)]
-):
-   # Decodifica el token
-   claims = decode_token(token)
-   # Extrae la información del usuario del token
-   username = claims["sub"] #Subject
-   # Crea un objeto User
-   user = User(username=username)
-
-   return user
-
-
-#===
+#=== GET Token === 
 @app.get("/user/me")
 async def read_user_me(
   current_user: Annotated[User, Depends(get_current_user)],
