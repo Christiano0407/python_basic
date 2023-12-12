@@ -1,5 +1,5 @@
 # #TODO: === Token ===
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, status, Depends,status
 from fastapi import status, Depends
 from fastapi.security import OAuth2PasswordBearer
 from typing_extensions import Annotated
@@ -10,7 +10,7 @@ import time
 import os 
 import dotenv # Importar el archivo de configuración
 
-# ==== OAuth2 ==== 
+# ==== OAuth2 ==== ==> Authenticated & Access <==
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # === DotEnv === 
@@ -25,30 +25,42 @@ class User(BaseModel):
   email: Optional[str] = None
   
 
-#=== Token y oAuth2 ===
+#=== Token y oAuth2 === 
 def decode_token(token:str):
-  # Define la clave secreta para firmar el token
-  secret_key = get_secret_key()
-  # Decodifica el token
-  claims = jwt.decode(token, secret_key, algorithm=["HS256"])
-  # Verifica la validez del token y El tiempo a expirar ("exp").
-  if "exp" in claims and claims["exp"] < time.time():
-    raise HTTPException(
-      status_code=status.HTTP_401_UNAUTHORIZED,
-      detail="Expired Authentication Token." #Token de autenticación caducado
-    )
-  
-  return claims
+  try: 
+    # Define la clave secreta para firmar el token
+    secret_key = get_secret_key()
+    # Decodifica el token
+    claims = jwt.decode(token, secret_key, algorithm=["HS256"])
+    username = claims["sub"]
+    email = claims.get("email") # Solo extrae el email si existe
+    return {"username": username, "email": email}
+    # Verifica la validez del token y El tiempo a expirar ("exp").
+  except JWTError:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid Token")
+
+""" if "exp" in claims and claims["exp"] < time.time():
+      raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Expired Authentication Token." #Token de autenticación caducado
+      )
+
+    return claims """
 
 
 async def get_current_user(
     token:Annotated[str, Depends(oauth2_scheme)]
 ):
-   # Decodifica el token
-   claims = decode_token(token)
-   # Extrae la información del usuario del token
-   username = claims["sub"] #Subject
-   # Crea un objeto User
-   user = User(username=username)
-
-   return user
+   try: 
+        # Decodifica el token
+        claims = decode_token(token)
+        # Extrae la información del usuario del token
+        username = claims["username"] #Subject
+        # Crea un objeto User (Instance POO)
+        user = User(username=username, email=claims.get("email"))
+  
+        return user
+   except HTTPException as e: 
+    raise e
+   except Exception as e: 
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
