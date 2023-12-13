@@ -1124,6 +1124,44 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 > OAuth 2.0 es un protocolo de autorización que permite a los usuarios autorizar a aplicaciones de terceros a acceder a sus datos sin tener que compartir sus credenciales de inicio de sesión.OAuth 2.0 funciona mediante la creación de un flujo de autorización en el que el usuario autoriza a la aplicación de terceros a acceder a sus datos.
 
+```
+OAuth 2.0 es un protocolo de autorización ampliamente utilizado en el mundo de la seguridad web para permitir que una aplicación acceda a recursos protegidos en nombre de un usuario. A continuación, te proporcionaré una visión general de cómo funciona OAuth 2.0 en el contexto de la autenticación y algunos consejos sobre seguridad.
+
+Flujo Básico de OAuth 2.0:
+Solicitud de Autorización (Authorization Request): La aplicación (cliente) solicita permiso al usuario para acceder a sus recursos protegidos.
+
+Redireccionamiento a la Autoridad de Autorización (Authorization Server): El usuario es redirigido a la autoridad de autorización, donde autentica al usuario y otorga permisos a la aplicación.
+
+Obtención del Código de Autorización (Authorization Code): Después de la autenticación exitosa, la aplicación recibe un código de autorización.
+
+Intercambio del Código de Autorización por Tokens de Acceso: La aplicación intercambia el código de autorización por tokens de acceso y, en algunos casos, un token de actualización.
+
+Uso del Token de Acceso: La aplicación utiliza el token de acceso para realizar solicitudes a los recursos protegidos en nombre del usuario.
+
+Consideraciones de Seguridad en OAuth 2.0:
+HTTPS: Todas las comunicaciones deben estar protegidas mediante el uso de HTTPS para evitar ataques de tipo "man-in-the-middle".
+
+Almacenamiento Seguro de Tokens: Los tokens deben almacenarse de forma segura. En el lado del cliente, se suelen almacenar en cookies seguras o en el almacenamiento local.
+
+Tiempo de Vida Limitado de Tokens: Los tokens deben tener tiempos de vida limitados para reducir el riesgo en caso de que sean interceptados.
+
+Validación de Tokens: Los servidores deben validar los tokens antes de confiar en su contenido. Esto incluye verificar firmas y asegurarse de que el emisor del token sea legítimo.
+
+Protección contra Ataques CSRF: Se deben implementar medidas para proteger contra ataques de Cross-Site Request Forgery (CSRF), como el uso de tokens anti-CSRF.
+
+Consentimiento del Usuario: Los usuarios deben estar informados y dar su consentimiento antes de otorgar permisos a una aplicación.
+
+Seguridad en la Aplicación: La aplicación debe implementar prácticas de seguridad sólidas, incluido el manejo seguro de secretos y la protección contra vulnerabilidades conocidas.
+
+Actualizaciones de Token: Utiliza tokens de actualización para obtener nuevos tokens de acceso cuando sea necesario sin requerir que el usuario vuelva a autenticarse.
+
+Revocación de Tokens: Implementa la capacidad de revocar tokens si es necesario (por ejemplo, si el usuario revoca los permisos de la aplicación).
+
+Escenarios de Concesión Apropiados: Utiliza el flujo de concesión más apropiado para tu aplicación (por ejemplo, el flujo de autorización de código para aplicaciones web).
+
+Es importante seguir las especificaciones y recomendaciones de seguridad de OAuth 2.0 y tener en cuenta las características específicas de tu aplicación al implementar la autenticación con OAuth 2.0.
+```
+
 [FastAPI_Security](https://fastapi.tiangolo.com/tutorial/security/)
 
 [FastAPI_oAuth2](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
@@ -1541,4 +1579,35 @@ if "exp" in claims and claims["exp"] < time.time():
 
 ```python
 username = claims["sub"] #Subject == Sujeto
+```
+
+> Starlette (Para hacer templates - Interfaz -Jinja2)
+
+[starlette](https://www.starlette.io/)
+
+> Middleware
+
+[FastAPI_Middleware](https://fastapi.tiangolo.com/tutorial/middleware/)
+
+[Advanced_Middleware]()
+
+```
+Un "middleware" es una función que funciona con cada solicitud antes de que sea procesada por cualquier operación de ruta específica . Y también con cada respuesta antes de devolverlo.
+```
+
+```python
+import time
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
 ```
