@@ -1611,3 +1611,9 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response
 ```
+
+> HTTP Tips & FastAPI HTTP
+
+[HowHTTP](https://howhttps.works/es/)
+
+[fastAPI_HTTP](https://fastapi.tiangolo.com/deployment/https/?h=call+http)
