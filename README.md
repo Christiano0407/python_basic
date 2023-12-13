@@ -1589,7 +1589,15 @@ username = claims["sub"] #Subject == Sujeto
 
 [FastAPI_Middleware](https://fastapi.tiangolo.com/tutorial/middleware/)
 
-[Advanced_Middleware]()
+[Advanced_Middleware](https://fastapi.tiangolo.com/advanced/middleware/)
+
+> Test Middleware 
+
+[test_middleware](https://jaketrent.com/post/test-middleware-header-fastapi/)
+
+> Middleware for Starlette/FastAPI 
+
+[starlette_github](https://github.com/open-telemetry/opentelemetry-python/issues/710)
 
 ```
 Un "middleware" es una función que funciona con cada solicitud antes de que sea procesada por cualquier operación de ruta específica . Y también con cada respuesta antes de devolverlo.
@@ -1610,6 +1618,33 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.time() - start_time
     response.headers["X-Process-Time"] = str(process_time)
     return response
+```
+
+```python
+from fastapi import Depends, HTTPException, Request
+from fastapi.middleware import BaseHTTPMiddleware
+
+class AuthMiddleware(BaseHTTPMiddleware):
+    async def setup(self, app: FastAPI) -> None:
+        print("AuthMiddleware: Setup")
+
+    async def handle(self, request: Request, call_next: Callable) -> HTTPResponse:
+        username, password = request.headers.get("Authorization", "").split(" ")
+        if not username or not password:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+
+        # Implementar la lógica de autenticación con username y password
+
+        # Si la autenticación es correcta:
+        response = await call_next(request)
+        return response
+
+        # Si la autenticación falla:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+app.add_middleware(AuthMiddleware())
+
+
 ```
 
 > HTTP Tips & FastAPI HTTP
