@@ -1652,3 +1652,24 @@ app.add_middleware(AuthMiddleware())
 [HowHTTP](https://howhttps.works/es/)
 
 [fastAPI_HTTP](https://fastapi.tiangolo.com/deployment/https/?h=call+http)
+
+> Importante: from starlette.middleware.base import BaseHTTPMiddleware ? 
+
+[starlette_Middleware](https://www.starlette.io/middleware/#httpsredirectmiddleware)
+
+```
+El motivo por el que tu código no leía from fastapi.middleware import BaseHTTPMiddleware y tuviste que pasar a from starlette.middleware.base import BaseHTTPMiddleware se debe a la estructura interna de FastAPI.
+
+FastAPI se basa en Starlette: FastAPI está construido sobre la base de Starlette, un framework web de alto rendimiento y flexible para Python. Esto significa que FastAPI hereda funcionalidades de Starlette, incluyendo la clase BaseHTTPMiddleware para crear middlewares.
+
+Importación en FastAPI: En las versiones recientes de FastAPI (0.67.0+), la clase BaseHTTPMiddleware se ha trasladado a Starlette para evitar la redundancia y simplificar la arquitectura interna. Por eso, ya no está directamente disponible en fastapi.middleware.
+
+Solución: Tu solución de utilizar from starlette.middleware.base import BaseHTTPMiddleware es correcta y ahora tu código debería funcionar sin problemas.
+
+Recomendaciones:
+
+Actualice su documentación: Si está trabajando con código o tutoriales escritos antes de la versión 0.67.0 de FastAPI, es importante tener en cuenta este cambio en la importación. Actualice su documentación y ejemplos de código para reflejar la nueva ubicación de la clase BaseHTTPMiddleware.
+Manténgase actualizado: Consulte la documentación oficial de FastAPI para obtener la información más reciente sobre cambios y actualizaciones.
+Comunidad de FastAPI: La comunidad de FastAPI es activa y servicial. Puede encontrar ayuda y recursos en el repositorio de GitHub, el canal de Discord y otros canales de la comunidad.
+Espero que esta explicación haya aclarado el porqué de la necesidad de cambiar la importación de la clase BaseHTTPMiddleware. Si tiene más preguntas, no dude en preguntar.
+```
