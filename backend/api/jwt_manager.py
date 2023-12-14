@@ -31,14 +31,21 @@ def decode_token(token:str):
   try: 
     # Define la clave secreta para firmar el token
     secret_key = get_secret_key()
+    
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     # Decodifica el token
     claims = jwt.decode(token, secret_key, algorithm=["HS256"])
-    username = claims["sub"]
-    email = claims.get("email") # Solo extrae el email si existe
-    return {"username": username, "email": email}
+    return claims
+    #username = claims["sub"]
+    #email = claims.get("email") # Solo extrae el email si existe
+    #return {"username": username, "email": email}
     # Verifica la validez del token y El tiempo a expirar ("exp").
   except JWTError:
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token")
+    return credentials_exception
 
 """ if "exp" in claims and claims["exp"] < time.time():
       raise HTTPException(
@@ -61,8 +68,8 @@ async def get_current_user(
         user = User(username=username, email=claims.get("email"))
   
         return user
-   except HTTPException as e: 
-    raise e
+   except JWTError: 
+    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Token")
    except Exception as e: 
     raise HTTPException(
       status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 

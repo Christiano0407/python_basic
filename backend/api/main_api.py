@@ -8,19 +8,29 @@ from pydantic import BaseModel, Field
 from typing import Union,Optional
 from typing_extensions import Annotated
 from jose import JWTError, jwt
-from jwt_manager import User, get_current_user
+from jwt_manager import AuthMiddleware, User, get_current_user
 import pandas as pd
 import os 
 import json
 import time
+#from starlette.middleware import Middleware
+#from starlette.applications import Starlette
 """ import dotenv """
 """ import jwt
 import time """
+
+# === Middleware === 
+""" middleware = [
+  Middleware(AuthMiddleware)
+]
+ """
 
 # === Instance App API ===
 app = FastAPI()
 app.title = "My API with FastAPI"
 app.version = "0.0.1"
+
+#app = Starlette(Middleware=middleware)
 # === Router ===
 router = APIRouter()
 # ==== OAuth2 ==== 
@@ -245,9 +255,12 @@ async def login(user: User):
   # Si las credenciales son válidas, puedes generar un token y devolverlo
   # Devuelve el token en la respuesta
   '''
-  token = generate_token(user.username, user.email)
+  try: 
+      token = generate_token(user.username, user.email)
 
-  return {"access_token": token, "token_type": "bearer"}
+      return {"access_token": token, "token_type": "bearer"}
+  except Exception as e:
+    raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
 
 
 def generate_token(username: str, email:Optional[str]):
