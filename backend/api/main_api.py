@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from typing import Union,Optional
 from typing_extensions import Annotated
 from jose import JWTError, jwt
-from jwt_manager import get_current_user, User
+from jwt_manager import User, get_current_user
 import pandas as pd
 import os 
 import json
@@ -76,7 +76,7 @@ movie_singleton = MovieSingleton()
 """ for movie_obj in movies_objects:
   print(movie_obj.dict()) """
 #=== GET Token === 
-@app.get("/user/me", tags=["auth"])
+""" @app.get("/user/me", tags=["auth"])
 async def read_user_me(
   current_user: Annotated[User, Depends(get_current_user)],
 ):
@@ -87,7 +87,12 @@ async def read_user_me(
         detail="Expired Authentication Token.",
       )
   # Accede a los datos del usuario después de la autorización
-  return get_current_user
+  return get_current_user """
+
+@app.get("/user/me", tags=["auth"])
+async def read_user_me(current_user: User = Depends(get_current_user)):
+  # Accede a los datos del usuario autenticado
+  return current_user
 
 # === API CRUD ===
 # ===GET
