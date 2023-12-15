@@ -1092,7 +1092,58 @@ app.include_router(router)
 
 [StaticFiles](https://fastapi.tiangolo.com/tutorial/static-files/?h=stati)
 
-> Cuando tienes muchos archivos (imágenes) y vas a usar StaticFiles, es importante tener en cuenta el rendimiento. El StaticFiles de FastAPI está diseñado para ser eficiente con archivos pequeños, pero puede ser menos eficiente con archivos grandes.
+```
+ Cuando tienes muchos archivos (imágenes) y vas a usar StaticFiles, es importante tener en cuenta el rendimiento. El StaticFiles de FastAPI está diseñado para ser eficiente con archivos pequeños, pero puede ser menos eficiente con archivos grandes.
+```
+
+> File y Staticfiles 
+
+```
+File y Staticfiles son dos tipos de datos diferentes en FastAPI que se utilizan para manejar archivos.
+
+File es un tipo de datos especial de FileUpload de FastAPI que proporciona información adicional sobre el archivo, como el nombre del archivo, el tamaño del archivo y el tipo del archivo. Se utiliza para recibir archivos subidos por los usuarios.
+
+Staticfiles es un tipo de datos que representa un archivo estático, como un archivo de imagen, CSS o JavaScript. Se utiliza para servir archivos estáticos a los usuarios.
+
+Diferencias:
+
+Propósito:
+File se utiliza para recibir archivos subidos por los usuarios.
+Staticfiles se utiliza para servir archivos estáticos a los usuarios.
+Información adicional:
+File proporciona información adicional sobre el archivo, como el nombre del archivo, el tamaño del archivo y el tipo del archivo.
+Staticfiles no proporciona ninguna información adicional sobre el archivo.
+Ubicación:
+File se almacena en la memoria del servidor o en un sistema de archivos externo.
+Staticfiles se almacena en un sistema de archivos externo, como un servidor web.
+Necesidad de subir imágenes:
+
+Si necesitas subir imágenes, debes usar el tipo de datos File. File te permite acceder al nombre del archivo, el tamaño del archivo y el tipo del archivo, que son necesarios para procesar y almacenar las imágenes.
+
+```
+
+> UploadFile
+
+[Uploadfiles](https://fastapi.tiangolo.com/reference/uploadfile/?h=up#fastapi.UploadFile.filename)
+
+```python
+from typing import Annotated
+
+from fastapi import FastAPI, File, UploadFile
+
+app = FastAPI()
+
+
+@app.post("/files/")
+async def create_file(file: Annotated[bytes, File()]):
+    return {"file_size": len(file)}
+
+
+@app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile):
+    return {"filename": file.filename}
+
+```
 
 > CDN (Content Delivery Network)
 
