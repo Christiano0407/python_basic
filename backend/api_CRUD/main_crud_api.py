@@ -8,7 +8,7 @@ app.title = "API REST & CRUD with FastAPI"
 app.version = "0.0.1"
 
 #=== Add Routes ===
-app.include_router(product_router)
+app.include_router(product_router, prefix="/products", tags=["products"])
 
 
 # === REST & CRUD ===
