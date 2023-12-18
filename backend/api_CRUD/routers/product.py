@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, status, HTTPException
 import pandas as pd
 import numpy as np
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 from typing import Union,Optional, List
 import os
 
@@ -29,21 +29,24 @@ class Product(BaseModel):
   category: Union[str, None] = Field(min_length=1, max_length=15)
   price: Union[int, None] = Field(gt=0, title="Prices Product", description="Prices of the Products")
   rating: Union[int, None] = Field(min_length=0, max_length=10, title="Rating of Product", description="Value of Client for Product")
-  color: [str, None] = Field(title="Color of Product")
-  size: [str, Union] = Field(title="Size of Product", description="Size of Product")
+  color: Union[str, None] = Field(title="Color of Product")
+  size: Union[int,None] = Field(title="Size of Product", description="Size of Product")
+
+
+""" df = df.rename(columns={"Size": "size"}) """
 
 
 #Asegúrate de que las columnas del DataFrame coincidan con los campos del modelo
-columns_data = ["user_id", "product_id", "product_name", "brand", "category", "price", "rating", "color", "size"] 
-if not set(columns_data).issubset(df):
-  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Sorry, your Data it's not found.")
+columns_data = ["User ID","Product ID","Product Name","Brand","Category","Price","Rating","Color","Size"] 
+
+if not set(columns_data).issubset(df.columns):
+  raise ValueError("Las columnas del DataFrame no coinciden con el modelo Pydantic")
 
 #Crea instancias del modelo Pydantic para cada fila del DataFrame y valida los datos
 def create_product_instance(row_data):
-  data_product = dict(row_data)
-  return Product(**data_product)
+  return Product(**row_data)
 
-product_validate = []
+product_validate = [] 
 products_invalidate = []
 
 #Ciclo para iterar en la lista de productos e comprobar e agregar. 
@@ -56,7 +59,7 @@ for _, row_data in df.iterrows():
 
 
 # Puedes trabajar con los productos válidos e inválidos según tus necesidades
-print("Products_Validates", product_validate)
+""" print("Products_Validates", product_validate) """
 
 #=== API ROOT REST CRUD ===
 @router.get("/", status_code=status.HTTP_200_OK, tags=["products"])
@@ -68,7 +71,7 @@ async def product():
       return product_data
     else: 
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Products Not Found")
-  except ValueError as ve: 
-    raise  HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Internal Server Error: {str(ve)}")
+  except ValidationError as ve: 
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.json()}")
   except Exception as e:
     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Internal Server Error..., {str(e)}")
