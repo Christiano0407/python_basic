@@ -1724,3 +1724,25 @@ Manténgase actualizado: Consulte la documentación oficial de FastAPI para obte
 Comunidad de FastAPI: La comunidad de FastAPI es activa y servicial. Puede encontrar ayuda y recursos en el repositorio de GitHub, el canal de Discord y otros canales de la comunidad.
 Espero que esta explicación haya aclarado el porqué de la necesidad de cambiar la importación de la clase BaseHTTPMiddleware. Si tiene más preguntas, no dude en preguntar.
 ```
+
+> Nota: 
+
+```python
+#df.iterrows() y df.columns son funciones de pandas, una biblioteca de Python para el análisis de datos. Aquí te explico qué significan:
+
+#df.iterrows(): Es un método de pandas que se utiliza para iterar sobre las filas de un DataFrame. Retorna un generador que proporciona índices de fila y Series correspondientes a las filas del DataFrame.
+
+for index, row in df.iterrows():
+    # index es el índice de la fila
+    # row es una Serie que contiene los datos de la fila
+    # Puedes acceder a los valores de la fila usando row['NombreColumna']
+
+```
+
+```
+La expresión for _, row in df.iterrows(): es una forma común en Python de iterar sobre las filas de un DataFrame usando el método iterrows() de pandas. Aquí se explica cada parte de la expresión.
+
+df.iterrows():: El método iterrows() de pandas se utiliza para iterar sobre las filas de un DataFrame. Retorna un generador que produce pares (índice, Serie) para cada fila del DataFrame. En este caso, el índice no se utiliza y la Serie (row) representa los datos de la fila actual.
+
+En resumen, la expresión for _, row in df.iterrows(): se utiliza para iterar sobre todas las filas de un DataFrame (df). En cada iteración, row contendrá los datos de la fila actual en forma de una Serie de pandas, y el índice correspondiente se descarta utilizando el guion bajo (_). Este enfoque es común cuando solo estás interesado en los datos de las filas y no necesitas utilizar los índices.
+```

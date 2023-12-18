@@ -33,6 +33,31 @@ class Product(BaseModel):
   size: [str, Union] = Field(title="Size of Product", description="Size of Product")
 
 
+#Asegúrate de que las columnas del DataFrame coincidan con los campos del modelo
+columns_data = ["user_id", "product_id", "product_name", "brand", "category", "price", "rating", "color", "size"] 
+if not set(columns_data).issubset(df):
+  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Sorry, your Data it's not found.")
+
+#Crea instancias del modelo Pydantic para cada fila del DataFrame y valida los datos
+def create_product_instance(row_data):
+  data_product = dict(row_data)
+  return Product(**data_product)
+
+product_validate = []
+products_invalidate = []
+
+#Ciclo para iterar en la lista de productos e comprobar e agregar. 
+for _, row_data in df.iterrows():
+  try: 
+    product_instance = create_product_instance(row_data)
+    product_validate.append(product_instance)
+  except Exception as e: 
+    products_invalidate.append({"error": str(e), "data": dict(row_data)})
+
+
+# Puedes trabajar con los productos válidos e inválidos según tus necesidades
+print("Products_Validates", product_validate)
+
 #=== API ROOT REST CRUD ===
 @router.get("/", status_code=status.HTTP_200_OK, tags=["products"])
 async def product(): 
