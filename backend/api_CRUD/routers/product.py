@@ -43,7 +43,7 @@ class Product(BaseModel):
     try: 
       return int(value)
     except ValueError:
-      return None
+      raise ValidationError("Size should be a valid integer")
 
 #===#
 """ df = df.rename(columns={"Size": "size"}) """
@@ -129,6 +129,21 @@ async def get_id(id: int = Path(..., title="Get ID User", description="Get ID Us
     #return Product(**product_id[0])
   else:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User ID Not Found") 
-  
+
+
+@router.get("/{brand}",response_model=Product, status_code=status.HTTP_200_OK, tags=["products"])
+async def get_brand(brand: str = Path(title="Products Brand", description="Get Brand")): 
+  product_brand = df[df["brand"] == brand].to_dict(orient="record")
+  try: 
+    if not product_brand:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Your Brand it's not found")
+        
+    product_instance = create_product_instance(product_brand[0])
+    return product_instance
+    
+  except ValidationError as ve: 
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.errors()}")
+
+    
 
 #===Query Parameters===

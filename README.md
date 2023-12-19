@@ -1752,3 +1752,29 @@ En resumen, la expresión for _, row in df.iterrows(): se utiliza para iterar so
 ```
 El decorador @validator en Pydantic te permite agregar validaciones personalizadas a los campos de tu modelo. Puedes utilizarlo para realizar acciones específicas antes de que los datos lleguen al modelo. En el ejemplo que te proporcioné, estoy utilizando @validator para realizar la conversión del campo size a un entero.
 ```
+
+> UUID (Identificador Único Universal) en Python
+
+[UUID](https://docs.python.org/es/3/library/uuid.html)
+
+[UUID_English](https://docs.python.org/3/library/uuid.html)
+
+```
+UUID (Identificador Único Universal) en Python es una clase que representa un identificador único de 128 bits. Estos identificadores son comúnmente utilizados para asignar identificadores únicos a objetos, evitando así posibles colisiones de identificadores en sistemas distribuidos. Los UUID son generados de manera que es muy improbable que dos UUID generados aleatoriamente sean iguales.
+
+Python proporciona el módulo uuid que contiene la clase UUID. Puedes utilizar esta clase para generar UUID aleatorios o basados en nombres, como strings o bytes.
+```
+
+```python
+import uuid
+
+# Generar un UUID aleatorio
+random_uuid = uuid.uuid4()
+print("UUID Aleatorio:", random_uuid)
+
+# Generar un UUID basado en el nombre (por ejemplo, un string)
+nombre = "Ejemplo de UUID"
+nombre_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, nombre)
+print("UUID basado en el nombre:", nombre_uuid)
+
+```
