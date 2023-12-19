@@ -1746,3 +1746,9 @@ df.iterrows():: El método iterrows() de pandas se utiliza para iterar sobre las
 
 En resumen, la expresión for _, row in df.iterrows(): se utiliza para iterar sobre todas las filas de un DataFrame (df). En cada iteración, row contendrá los datos de la fila actual en forma de una Serie de pandas, y el índice correspondiente se descarta utilizando el guion bajo (_). Este enfoque es común cuando solo estás interesado en los datos de las filas y no necesitas utilizar los índices.
 ```
+
+> @Validator 
+
+```
+El decorador @validator en Pydantic te permite agregar validaciones personalizadas a los campos de tu modelo. Puedes utilizarlo para realizar acciones específicas antes de que los datos lleguen al modelo. En el ejemplo que te proporcioné, estoy utilizando @validator para realizar la conversión del campo size a un entero.
+```
