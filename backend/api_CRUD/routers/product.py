@@ -1,10 +1,10 @@
-from fastapi import FastAPI, APIRouter, status, HTTPException, Path
-import pandas as pd
-import numpy as np
+from fastapi import APIRouter, status, HTTPException, Path
 from pydantic import BaseModel, Field, ValidationError, validator
 from typing import Union,Optional, List
 from typing_extensions import Annotated
 import os
+import pandas as pd
+import numpy as np
 
 
 # === App & Router === 
@@ -32,27 +32,30 @@ class Product(BaseModel):
   rating: Union[float, None] = Field(title="Rating of Product", description="Value of Client for Product")
   color: Union[str, None] = Field(title="Color of Product")
   size: Union[int,None] = Field(title="Size of Product", description="Size of Product")
-  
-  #=== Decorator Pydantic - Conversion ===#
-  @validator("size", pre=True, always=True)
-  def parse_size(cls, value):
-    if value is None: 
-      return None
-    if isinstance(value, int):
-      return value
-    try: 
-      return int(value)
-    except ValueError:
-      raise ValidationError("Size should be a valid integer")
 
-#===#
-""" df = df.rename(columns={"Size": "size"}) """
+  @staticmethod
+  def parse_size(value):
+      try:
+          if value is None or pd.isna(value): 
+            return {"value": None, "error": None}
+          
+          if value.isdigit():
+             size_value = int(value)
+             if size_value < 0: 
+               raise ValueError("Size should be positive integer")
+             return {"value": size_value, "error": None }
+          else:
+            return {"value": None, "error": "Size should be a valid integer"}
+      except (ValueError, TypeError) as e:
+        return {"value": None, "error": {str(e)}}
+
+
 
 #Asegúrate de que las columnas del DataFrame coincidan con los campos del modelo
 columns_data = ["User ID","Product ID","Product Name","Brand","Category","Price","Rating","Color","Size"] 
 
 if not set(columns_data).issubset(df.columns):
-  raise ValueError("Las columnas del DataFrame no coinciden con el modelo Pydantic")
+  raise ValueError("Las columnas del DataFrame no coinciden con el modelo de Base de Datos y Pydantic.")
 
 # Ajusta los nombres de las columnas para que coincidan con los nombres de los campos en el modelo Pydantic
 df.columns = [col.lower().replace(" ", "_") for col in df.columns]
@@ -77,13 +80,26 @@ df = df.rename(columns=column_mapping) """
 def create_product_instance(row_data):
   '''
   parse_size es un método y se debe llamar con paréntesis, no corchetes.
-  '''
-  # Redondea el valor del campo 'rating' a dos decimales
-  row_data["rating"] = round(row_data["rating"], 2)
-  # Usa el validador para el campo 'size'
-  row_data["size"] = Product.parse_size(row_data["size"])
+  ''' 
+   # Redondea el valor del campo 'rating' a dos decimales
+  try:
+      # Redondea el valor del campo 'rating' a dos decimales
+      row_data["rating"] = round(row_data["rating"], 2)
+
+      # Usa el validador para el campo 'size'
+      size_info = Product.parse_size(row_data["size"])
+
+      # Si hay un error, establece el tamaño en un valor predeterminado (por ejemplo, -1)
+      if size_info["error"]:
+          row_data["size"] = -1
+      else:
+          row_data["size"] = size_info["value"]
+
+      return Product(**row_data)
+  except (ValidationError, ValueError) as e:
+      raise ValueError(f"Error creating product instance: {str(e)}")
   
-  return Product(**row_data)
+
 
 product_validate = [] 
 products_invalidate = []
@@ -131,19 +147,18 @@ async def get_id(id: int = Path(..., title="Get ID User", description="Get ID Us
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User ID Not Found") 
 
 
-@router.get("/{brand}",response_model=Product, status_code=status.HTTP_200_OK, tags=["products"])
+@router.get("/brand/{brand}",response_model=Product, status_code=status.HTTP_200_OK, tags=["products"])
 async def get_brand(brand: str = Path(title="Products Brand", description="Get Brand")): 
-  product_brand = df[df["brand"] == brand].to_dict(orient="record")
-  try: 
-    if not product_brand:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Your Brand it's not found")
-        
-    product_instance = create_product_instance(product_brand[0])
-    return product_instance
-    
-  except ValidationError as ve: 
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.errors()}")
 
-    
+  product_brand = df[df["brand"] == brand].to_dict(orient="records")
+  
+  if product_brand:
+        try:
+            product_instance = create_product_instance(product_brand[0])
+            return product_instance
+        except ValueError as ve:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {str(ve)}")
+  else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Your Brand it's not found")
 
 #===Query Parameters===

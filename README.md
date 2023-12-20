@@ -1778,3 +1778,55 @@ nombre_uuid = uuid.uuid5(uuid.NAMESPACE_DNS, nombre)
 print("UUID basado en el nombre:", nombre_uuid)
 
 ```
+
+> Otra forma de trabajar con una Instancia de Clase e Métodos (@validator & @static). 
+
+```python
+  @staticmethod
+  def parse_size(value):
+      try:
+          if value is None or pd.isna(value): 
+            return {"value": None, "error": None}
+          
+          size__value = int(value)
+
+          if size__value < 0: 
+              raise ValueError("Size should be a positive integer")
+          
+          return {"value", size__value, "error": None} 
+      except (ValueError, TypeError) as e:
+        return {"value": None, "error": {str(e)}}
+
+```
+
+> Validar Int (Enteros)
+
+```python
+  if value.isdigit():
+             size_value = int(value)
+             if size_value < 0: 
+               raise ValueError("Size should be positive integer")
+             return {"value": size_value, "error": None }
+          else:
+            return {"value": None, "error": "Size should be a valid integer"}
+```
+
+```python
+  @validator("size", pre=True, always=True)
+  def parse_size(value):
+    if value is None: 
+      return None
+    if isinstance(value, int):
+      return value
+    try: 
+      return int(value)
+    except (ValueError, TypeError):
+      raise ValidationError("Size...should be a valid integer")
+
+```
+
+> Renombrar 
+
+```python
+df = df.rename(columns={"Size": "size"})
+```
