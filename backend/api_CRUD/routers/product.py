@@ -33,7 +33,7 @@ class Product(BaseModel):
   color: Union[str, None] = Field(title="Color of Product")
   size: Union[int,None] = Field(title="Size of Product", description="Size of Product")
 
-  @staticmethod
+  @staticmethod #@classmethod
   def parse_size(value):
       try:
           if value is None or pd.isna(value): 
@@ -198,19 +198,25 @@ async def post_product(product:Product):
    try:
       # Validar el producto con Pydantic
       product_dict = product.dict()
-      Product(**product_dict)
+      print("Received Products:", product_dict)
+      validate_product = Product(**product_dict)
+      print("validated product: ", validate_product.dict())
 
       # Asegúrate de que el ID del producto no exista ya en la base de datos
       if df[df["product_id"] == product.product_id].empty: 
         # Agregar el nuevo producto al DataFrame
-         df = df.append(product_dict, ignore_index = True)
+         df = df.append(product_dict, ignore_index=True)
         # Guardar el DataFrame de vuelta al archivo CSV (o tu base de datos externa)
          df.to_csv(file_path, index=False)
         # Devolver el nuevo producto creado
-         return product
-      else: 
-         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Product ID already exists.")      
+         return validate_product
+      else:
+          raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Product ID already exists.")
+   except ValidationError as ve:
+        print("Validation Error:", ve.errors())
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.errors()}")
    except Exception as e:
-      raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Internal Server Error...{str(e)}")
+        print("Internal Server Error:", str(e))
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Internal Server Error...{str(e)}")
 
 #=== Delete ===
