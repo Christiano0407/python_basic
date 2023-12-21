@@ -1830,3 +1830,42 @@ print("UUID basado en el nombre:", nombre_uuid)
 ```python
 df = df.rename(columns={"Size": "size"})
 ```
+
+> Nota: POST / Endpoint para agregar nuevos productos & El método .empty
+
+```python
+df = df.append(product_dict, ignore_index=True)
+df.to_csv(file_path, index=False)
+```
+
+```
+Cuando agregas un nuevo producto al DataFrame con ignore_index=True, estás asegurándote de que los índices se recalculen, y cuando guardas el DataFrame en un archivo CSV con index=False, estás evitando que los índices se guarden en el archivo CSV. Esto es típico cuando trabajas con datos tabulares y no necesitas incluir los índices en tu archivo de datos guardado.
+```
+
+```
+ignore_index=True y index=False son parámetros utilizados al agregar nuevos datos a un DataFrame en pandas.
+
+ignore_index=True: Este parámetro se utiliza al concatenar o agregar nuevos datos a un DataFrame. Si está establecido en True, se ignorarán los índices existentes y se generará un nuevo índice continuo. Esto es útil cuando estás agregando filas adicionales y no te importa mantener los índices originales.
+
+index=False: Este parámetro se utiliza al guardar un DataFrame a un archivo CSV. Cuando index se establece en False, los índices del DataFrame no se incluirán en el archivo CSV resultante. Esto es comúnmente útil si no necesitas conservar los índices en el archivo CSV.
+
+```
+
+```
+El método .empty se utiliza en pandas para verificar si un DataFrame o una Serie están vacíos, es decir, si no contienen ninguna fila.
+```
+
+```python
+import pandas as pd
+
+# Crear un DataFrame vacío
+df = pd.DataFrame()
+
+# Verificar si el DataFrame está vacío
+if df.empty:
+    print("El DataFrame está vacío.")
+else:
+    print("El DataFrame no está vacío.")
+
+```
+
