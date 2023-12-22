@@ -1,17 +1,19 @@
 #===Class
 class Pikachu: 
-  type = "electric & Lightning"
-
-  def __init__(self, name, level, health):
+  type = "electric & Lightning" #Attribute
+  #=== Methods of Instance ===
+  def __init__(self, name, level, health, power):
     '''
     Create Variables of Class. Parameters & Objects
+    Los métodos de instancia operan en instancias específicas de la clase
     '''
     self.name = name
     self.level = level
     self.health = health
-  #===Method===
+    self.power = power
+
   def __str__(self) -> str:
-    return f"This Pokemon is {self.name} with level {self.level} and his {self.health}"
+    return f"This Pokemon is {self.name} with level {self.level} and his {self.health} have power: {self.power}"
   
   def __repr__(self) -> str:
     return  f"Is {self.name} and Type of Pokemon is: {self.type} and increment level {self.level}."
@@ -19,12 +21,30 @@ class Pikachu:
   def increment_power(self, amount): 
     self.level += amount
 
+  def attack_power(self, powerAttack):
+     self.power -= powerAttack
+     self.level -= powerAttack
+  #==== Method Of Class ====
+  @classmethod
+  def method_of_class(cls):
+    '''
+    los métodos de clase operan en la clase en sí.
+    '''
+    return cls.type
+
+
 
 #===Object & Variables of Instance & Object===
-pokemon_1 = Pikachu("Pikachu", 9, 8) 
-pokemon_2 = Pikachu("Charmander", 5, 5)
+pokemon_1 = Pikachu("Pikachu", 9, 8, 10) 
+pokemon_2 = Pikachu("Charmander", 5, 5, 6)
 increment = pokemon_2.increment_power(5)
+attack = pokemon_1.attack_power(2)
+pokemon_3 = Pikachu("Newto", 10, 10, 10)
+new_method = pokemon_3.method_of_class()
 
 #=== Call ===
 print(pokemon_1)
 print(repr(pokemon_2))
+pokemon_2.attack_power(3)
+print(pokemon_2)
+print("New Method: ", new_method)

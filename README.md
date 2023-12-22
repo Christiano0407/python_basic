@@ -1869,3 +1869,47 @@ else:
 
 ```
 
+> Nota: POO (Métodos de Clase y de Instancia)
+
+```
+Método de Instancia:
+Definición: Un método de instancia opera en una instancia particular de la clase y tiene acceso a los atributos específicos de esa instancia.
+Sintaxis: Se define con la palabra clave def y toma self como el primer parámetro.
+Acceso: Puede acceder a atributos y métodos de la instancia a través de self.
+```
+
+```python
+class MiClase:
+    def __init__(self, atributo):
+        self.atributo = atributo
+
+    def metodo_de_instancia(self):
+        return f"Valor del atributo: {self.atributo}"
+
+# Uso del método de instancia
+objeto = MiClase("Hola")
+resultado = objeto.metodo_de_instancia()
+print(resultado)
+
+```
+
+```
+Método de Clase:
+Definición: Un método de clase opera en la clase en sí y no en una instancia particular. Tiene acceso a los atributos de la clase, pero no a los de instancias individuales.
+Sintaxis: Se define con la palabra clave @classmethod y toma cls como el primer parámetro.
+Acceso: Puede acceder a atributos y métodos de la clase a través de cls.
+```
+
+```python
+class MiClase:
+    atributo_de_clase = "Valor de clase"
+
+    @classmethod
+    def metodo_de_clase(cls):
+        return f"Valor del atributo de clase: {cls.atributo_de_clase}"
+
+# Uso del método de clase
+resultado = MiClase.metodo_de_clase()
+print(resultado)
+
+```
