@@ -69,6 +69,9 @@ class Item:
       return True
     else: 
       return False
+    
+
+#Hinheritance => Herencia => Polimorfismo (Polymorphism)
   
 
 #=== Variables ===
