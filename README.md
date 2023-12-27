@@ -1913,3 +1913,61 @@ resultado = MiClase.metodo_de_clase()
 print(resultado)
 
 ```
+
+> Leer un Documento CSV
+
+```python
+import csv
+
+# Leer un archivo CSV
+with open('archivo.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+
+# Escribir en un archivo CSV
+with open('nuevo_archivo.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Columna1', 'Columna2'])
+    writer.writerow(['Dato1', 'Dato2'])
+
+
+```
+
+> Tips: Para leer un Archivo "CSV", utilizando un Método de Clase (@classmethod)
+
+```python
+import csv 
+
+def __str__(self) -> str:
+    return f"This Iphone is: {self.name} and his price {self.price} and now in Store have these quantity {self.quantity} and Brand is {self.brand}"
+
+@classmethod
+  def read_from_csv(cls, file_path):
+    items = []
+
+    with open(file_path, "r") as file:
+      reader = csv.reader(file)
+      header = next(reader)  # Leer la primera fila como encabezado
+
+      for row in reader:
+        # Crear un diccionario con las claves del encabezado y los valores de la fila
+        item_data = dict(zip(header, row))
+
+        # Crear una instancia de Item y agregarla a la lista
+        item_instance = cls(**item_data)
+        items.append(item_instance)
+
+    return items
+```
+
+```python
+#Desde el archivo "data_poo"
+items_from_csv = Item.read_from_csv("./data_poo/poo_data.csv")
+
+for item in items_from_csv:
+  print(str(item))
+
+#Terminal: 
+#This Iphone is: IPhoneX and his price 15000 and now in Store have these quantity 5 and Brand is Apple Iphone
+```
