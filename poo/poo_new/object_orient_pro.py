@@ -9,7 +9,7 @@ class Item:
   #=== Methods of Instance ===
   def __init__(self, name:str, price:float, quantity:int, pay_rate: float = None): 
     # Run Validation Of Arguments
-    """ assert price > 0, f"Price {price} is not greater or equal to Zero" """
+    assert price >= 0, f"Price {price} is not greater or equal to Zero"
     # ===Instances of Object
     self.name = name
     self.price = price
@@ -31,7 +31,7 @@ class Item:
   #Attribute of Class & Instance
   def apply_pay_rate(self) -> float:
     return self.price * self.pay_rate
-  
+    
   #==== Method Of Class ====
   @classmethod
   def attribute(cls) -> str:
@@ -49,11 +49,26 @@ class Item:
         # Crear un diccionario con las claves del encabezado y los valores de la fila
         item_data = dict(zip(header, row))
 
+        # Convertir 'price' a float antes de crear la instancia de Item
+        item_data["price"] = float(item_data["price"])
+
         # Crear una instancia de Item y agregarla a la lista
         item_instance = cls(**item_data)
         items.append(item_instance)
 
     return items
+  
+  @staticmethod
+  def is_integer(num):
+    #We will count out the float that are point zero
+    #for i.e: 5.0, 10.0
+    if isinstance(num, float):
+      #count out the float that are point zero
+      return num.is_integer()
+    elif isinstance(num, int):
+      return True
+    else: 
+      return False
   
 
 #=== Variables ===
