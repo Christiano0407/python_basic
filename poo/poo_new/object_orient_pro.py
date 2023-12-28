@@ -16,12 +16,21 @@ class Iphone:
     self.name = name
     self.price = price
     self.quantity = quantity
-    self.pay_rate = pay_rate if pay_rate is not None else self.default_pay_rate
+    self._pay_rate = pay_rate if pay_rate is not None else self.default_pay_rate
 
     self.all__instances.append(self)
 
   def __str__(self) -> str:
     return f"This Iphone is: {self.name} and his price {self.price} and now in Store have these quantity {self.quantity} and Brand is {self.brand}"
+  
+  #Getter para obtener el valor del atributo _pay_rate
+  def get_payRate(self):
+    return self._pay_rate
+  
+  #Setter para modificar el valor del atributo _pay_rate
+  def set_payRate(self, new_pay_rate):
+    pay = self._pay_rate = new_pay_rate
+    return pay
     
   def calculate_total_price(self) -> int:
     return self.price * self.quantity
@@ -32,7 +41,7 @@ class Iphone:
 
   #Attribute of Class & Instance
   def apply_pay_rate(self) -> float:
-    return self.price * self.pay_rate
+    return self.price * self._pay_rate
   
   def __repr__(self) -> str:
     return f"{self.__class__.__name__}"
@@ -97,7 +106,7 @@ class Accessories(Iphone):
 #item2 = Item("Iphone7", 9000, 3)
 #item3 = Item.attribute()
 #item4 = Item("Mac Air", 35000, 1, 0.9) """
-item1 = Iphone("Iphone11",25000, 2, 0.6)
+iphone1 = Iphone("Iphone11",25000, 2, 0.6)
 items_from_csv = Iphone.read_from_csv("./data_poo/poo_data.csv")
 new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4)
 
@@ -116,10 +125,11 @@ if __name__ == "__main__":
 
   #print(Item.__dict__)#=== All Attributes of Class Level
   #print(item1.__dict__)#=== All Attributes for instance Level """
-print(item1)
+print(iphone1)
+print("Getters Pay Rate Access:", iphone1.get_payRate())
+print("Setters Pay Rate Changes:", iphone1.set_payRate(0.4))
 for item in items_from_csv:
   print(str(item))
-
 print(new_accessories)
 print(new_accessories.apply_pay_rate())
 print("Rep:", repr(new_accessories))
