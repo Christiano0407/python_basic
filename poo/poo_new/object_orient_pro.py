@@ -2,7 +2,7 @@
 #from data_poo.poo_data import *
 import csv 
 
-class Item: 
+class Iphone: 
   #=== Attributes of Class ===
   brand = "Apple Iphone"
   default_pay_rate = 0.6
@@ -71,15 +71,27 @@ class Item:
       return False
     
 
-#Hinheritance => Herencia => Polimorfismo (Polymorphism)
-  
+#Hinheritance => Herencia / Polimorfismo (Polymorphism)
+class Accessories(Iphone):
+  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str, name:str, price:float, quantity:int):
+    super().__init__(name, price, quantity)
+    self.seth = seth
+    self.airpod = airpod
+    self.airtag = airtag
+    self.wallet = wallet
+    self.adapter = adapter
+    self.wire = wire
+
+  def __str__(self) -> str:
+    return f"These are New Accessories for {self.name}: This is a new seth {self.seth} with the new {self.airpod} and {self.airtag}. This new {self.name} also bring {self.wallet}, one {self.adapter} and his wire {self.wire} for travels. All these products come {self.quantity} and unique price: {self.price} in Store."
 
 #=== Variables ===
 """ #item1 = Item("Iphone15", 22500, 2, 0.4) 
 #item2 = Item("Iphone7", 9000, 3)
 #item3 = Item.attribute()
 #item4 = Item("Mac Air", 35000, 1, 0.9) """
-items_from_csv = Item.read_from_csv("./data_poo/poo_data.csv")
+items_from_csv = Iphone.read_from_csv("./data_poo/poo_data.csv")
+new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2)
 
 #=== Call POO ===
 if __name__ == "__main__":
@@ -96,5 +108,8 @@ if __name__ == "__main__":
 
   #print(Item.__dict__)#=== All Attributes of Class Level
   #print(item1.__dict__)#=== All Attributes for instance Level """
+
 for item in items_from_csv:
   print(str(item))
+
+print(new_accessories)
