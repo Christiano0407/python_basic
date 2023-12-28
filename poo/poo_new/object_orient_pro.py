@@ -83,7 +83,9 @@ class Accessories(Iphone):
     self.wire = wire
 
   def __str__(self) -> str:
-    return f"These are New Accessories for {self.name}: This is a new seth {self.seth} with the new {self.airpod} and {self.airtag}. This new {self.name} also bring {self.wallet}, one {self.adapter} and his wire {self.wire} for travels. All these products come {self.quantity} and unique price: {self.price} in Store."
+    base_info = super().__str__()
+    additional_info = f"These are New Accessories for {self.name}: This is a new seth {self.seth} with the new {self.airpod} and {self.airtag}. This new {self.name} also bring {self.wallet}, one {self.adapter} and his wire {self.wire} for travels. All these products come {self.quantity} and unique price: {self.price} in Store."
+    return f"{base_info}\n{additional_info}"
 
 #=== Variables ===
 """ #item1 = Item("Iphone15", 22500, 2, 0.4) 
