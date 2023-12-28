@@ -6,6 +6,8 @@ class Iphone:
   #=== Attributes of Class ===
   brand = "Apple Iphone"
   default_pay_rate = 0.6
+  #=== All Instances ===
+  all__instances = []
   #=== Methods of Instance ===
   def __init__(self, name:str, price:float, quantity:int, pay_rate: float = None): 
     # Run Validation Of Arguments
@@ -16,7 +18,7 @@ class Iphone:
     self.quantity = quantity
     self.pay_rate = pay_rate if pay_rate is not None else self.default_pay_rate
 
-    #Item.all.append(self)
+    self.all__instances.append(self)
 
   def __str__(self) -> str:
     return f"This Iphone is: {self.name} and his price {self.price} and now in Store have these quantity {self.quantity} and Brand is {self.brand}"
@@ -31,6 +33,9 @@ class Iphone:
   #Attribute of Class & Instance
   def apply_pay_rate(self) -> float:
     return self.price * self.pay_rate
+  
+  def __repr__(self) -> str:
+    return f"{self.__class__.__name__}"
     
   #==== Method Of Class ====
   @classmethod
@@ -73,8 +78,8 @@ class Iphone:
 
 #Hinheritance => Herencia / Polimorfismo (Polymorphism)
 class Accessories(Iphone):
-  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str, name:str, price:float, quantity:int):
-    super().__init__(name, price, quantity)
+  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str, name:str, price:float, quantity:int, pay_rate: float):
+    super().__init__(name, price, quantity, pay_rate)
     self.seth = seth
     self.airpod = airpod
     self.airtag = airtag
@@ -92,8 +97,9 @@ class Accessories(Iphone):
 #item2 = Item("Iphone7", 9000, 3)
 #item3 = Item.attribute()
 #item4 = Item("Mac Air", 35000, 1, 0.9) """
+item1 = Iphone("Iphone11",25000, 2, 0.6)
 items_from_csv = Iphone.read_from_csv("./data_poo/poo_data.csv")
-new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2)
+new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4)
 
 #=== Call POO ===
 if __name__ == "__main__":
@@ -110,8 +116,10 @@ if __name__ == "__main__":
 
   #print(Item.__dict__)#=== All Attributes of Class Level
   #print(item1.__dict__)#=== All Attributes for instance Level """
-
+print(item1)
 for item in items_from_csv:
   print(str(item))
 
 print(new_accessories)
+print(new_accessories.apply_pay_rate())
+print("Rep:", repr(new_accessories))
