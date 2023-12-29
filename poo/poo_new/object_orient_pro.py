@@ -1,6 +1,7 @@
 #from data_poo import poo_data
 #from data_poo.poo_data import *
 import csv 
+import re
 
 class Iphone: 
   #=== Attributes of Class ===
@@ -8,7 +9,7 @@ class Iphone:
   default_pay_rate = 0.6
   #=== All Instances ===
   all__instances = []
-  #=== Methods of Instance ===
+  #=== Methods of Instance > Object ===
   def __init__(self, name:str, price:float, quantity:int, pay_rate: float = None): 
     # Run Validation Of Arguments
     assert price >= 0, f"Price {price} is not greater or equal to Zero"
@@ -87,7 +88,8 @@ class Iphone:
 
 #Hinheritance => Herencia / Polimorfismo (Polymorphism)
 class Accessories(Iphone):
-  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str,name:str, price:float, quantity:int, pay_rate: float, discount:float):
+  #=== Methods of Instance > Object ===
+  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str,name:str, price:float, quantity:int, pay_rate: float, discount:float, inventory_code:str):
     super().__init__(name, price, quantity, pay_rate)
     self.seth = seth
     self.airpod = airpod
@@ -96,7 +98,9 @@ class Accessories(Iphone):
     self.adapter = adapter
     self.wire = wire
     self.discount = discount
-
+    self._inventory_code = None
+    self.set_inventory_code(inventory_code)
+  
   def __str__(self) -> str:
     base_info = super().__str__()
     additional_info = f"These are New Accessories for {self.name}: This is a new seth {self.seth} with the new {self.airpod} and {self.airtag}. This new {self.name} also bring {self.wallet}, one {self.adapter} and his wire {self.wire} for travels. All these products come {self.quantity} and unique price: {self.price} in Store."
@@ -106,6 +110,26 @@ class Accessories(Iphone):
     print(f"Debug: Price:{self.price}, Discount: {self.discount}")
     prices_discounts = self.price - (self.price * self.discount)
     return prices_discounts
+  
+  # === Getters and Setters ===
+  def get_inventory_code(self) -> str:
+    return self._inventory_code
+  
+  def set_inventory_code(self, inventory_code) -> str:
+    # Expresión regular para validar el formato
+    regex_pattern = r"^[A-Z][a-z]-\d{6}$"
+    #Comprobar si el código de inventario cumple con el patrón de la expresión regular
+    if isinstance(inventory_code, str) and re.match(regex_pattern, inventory_code):
+      new_code_inventory = self._inventory_code = inventory_code
+      return new_code_inventory
+    else: 
+      raise ValueError("El código de inventario debe tener el formato 'Mx-xxxxxx', donde x son dígitos.")
+  
+  #==== Method Of Class ==== 
+  #Property Decorator = Read Only Attribute
+  @property
+  def get_inventory_read(self):
+    return self._inventory_code
 
 #=== Variables ===
 """ #item1 = Item("Iphone15", 22500, 2, 0.4, 10%) 
@@ -114,7 +138,9 @@ class Accessories(Iphone):
 #item4 = Item("Mac Air", 35000, 1, 0.9) """
 iphone1 = Iphone("Iphone11",25000, 2, 0.6)
 items_from_csv = Iphone.read_from_csv("./data_poo/poo_data.csv")
-new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4, 0.15)
+new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4, 0.15, "Mx-000001")
+value_read_instance = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4, 0.15, "Mx-000001")
+value_read = value_read_instance.get_inventory_code()
 
 #=== Call POO ===
 if __name__ == "__main__":
@@ -140,3 +166,6 @@ print(new_accessories)
 print(new_accessories.apply_pay_rate())
 print("Rep:", repr(new_accessories))
 print("Total (With Discount): ", new_accessories.price_discount())
+print("Code Inventory Principal:", new_accessories.get_inventory_code())
+print("Code Inventory New:", new_accessories.set_inventory_code("Mx-440777"))
+print(value_read)

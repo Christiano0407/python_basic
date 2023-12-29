@@ -1898,6 +1898,11 @@ Método de Clase:
 Definición: Un método de clase opera en la clase en sí y no en una instancia particular. Tiene acceso a los atributos de la clase, pero no a los de instancias individuales.
 Sintaxis: Se define con la palabra clave @classmethod y toma cls como el primer parámetro.
 Acceso: Puede acceder a atributos y métodos de la clase a través de cls.
+
+@classmethod
+@staticmethod
+@property
+
 ```
 
 ```python
