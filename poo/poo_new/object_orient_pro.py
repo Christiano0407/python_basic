@@ -37,7 +37,7 @@ class Iphone:
   
   def apply_discount(self) -> float: 
     #return self.price =  self.price * self.pay_rate
-    self.price = self.price * self.pay_rate
+    self.price = self.price * self._pay_rate
 
   #Attribute of Class & Instance
   def apply_pay_rate(self) -> float:
@@ -87,7 +87,7 @@ class Iphone:
 
 #Hinheritance => Herencia / Polimorfismo (Polymorphism)
 class Accessories(Iphone):
-  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str, name:str, price:float, quantity:int, pay_rate: float):
+  def __init__(self, seth:str, airpod:str, airtag:str, wallet:str, adapter:str, wire:str,name:str, price:float, quantity:int, pay_rate: float, discount:float):
     super().__init__(name, price, quantity, pay_rate)
     self.seth = seth
     self.airpod = airpod
@@ -95,20 +95,26 @@ class Accessories(Iphone):
     self.wallet = wallet
     self.adapter = adapter
     self.wire = wire
+    self.discount = discount
 
   def __str__(self) -> str:
     base_info = super().__str__()
     additional_info = f"These are New Accessories for {self.name}: This is a new seth {self.seth} with the new {self.airpod} and {self.airtag}. This new {self.name} also bring {self.wallet}, one {self.adapter} and his wire {self.wire} for travels. All these products come {self.quantity} and unique price: {self.price} in Store."
     return f"{base_info}\n{additional_info}"
+  
+  def price_discount(self) -> float:
+    print(f"Debug: Price:{self.price}, Discount: {self.discount}")
+    prices_discounts = self.price - (self.price * self.discount)
+    return prices_discounts
 
 #=== Variables ===
-""" #item1 = Item("Iphone15", 22500, 2, 0.4) 
+""" #item1 = Item("Iphone15", 22500, 2, 0.4, 10%) 
 #item2 = Item("Iphone7", 9000, 3)
 #item3 = Item.attribute()
 #item4 = Item("Mac Air", 35000, 1, 0.9) """
 iphone1 = Iphone("Iphone11",25000, 2, 0.6)
 items_from_csv = Iphone.read_from_csv("./data_poo/poo_data.csv")
-new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4)
+new_accessories = Accessories("Seth MagSafe", "AirPodsPro12", "AirtagPro", "FineWoven", "USB-C", "Adapter MagSafe", "Iphone15", 35000, 2, 0.4, 0.15)
 
 #=== Call POO ===
 if __name__ == "__main__":
@@ -133,3 +139,4 @@ for item in items_from_csv:
 print(new_accessories)
 print(new_accessories.apply_pay_rate())
 print("Rep:", repr(new_accessories))
+print("Total (With Discount): ", new_accessories.price_discount())
