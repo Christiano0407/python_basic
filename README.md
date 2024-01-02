@@ -1976,3 +1976,29 @@ for item in items_from_csv:
 #Terminal: 
 #This Iphone is: IPhoneX and his price 15000 and now in Store have these quantity 5 and Brand is Apple Iphone
 ```
+
+#### 
+
+> Tips Python: 
+
+> *args y **kwargs 
+
+```
+*args y **kwargs son convenciones en Python para pasar un número variable de argumentos a una función.
+
+*args se utiliza para pasar una lista variable de argumentos posicionales. Puedes pensar en *args como una forma de representar una lista de argumentos no clave.
+
+**kwargs se utiliza para pasar una lista variable de argumentos de palabras clave. Puedes pensar en **kwargs como una forma de representar un diccionario de argumentos de palabras clave.
+
+En este ejemplo, args recoge los argumentos posicionales (1, 2, 3), y kwargs recoge los argumentos de palabras clave (nombre="John", edad=25). Esto hace que la función sea flexible y pueda manejar una variedad de argumentos sin tener que especificarlos todos de antemano.
+```
+
+```python
+def ejemplo_funcion(*args, **kwargs):
+    print("Argumentos posicionales (*args):", args)
+    print("Argumentos de palabras clave (**kwargs):", kwargs)
+
+# Uso de la función con diferentes tipos de argumentos
+ejemplo_funcion(1, 2, 3, nombre="John", edad=25)
+
+```
