@@ -1977,9 +1977,43 @@ for item in items_from_csv:
 #This Iphone is: IPhoneX and his price 15000 and now in Store have these quantity 5 and Brand is Apple Iphone
 ```
 
+> @abstractmethod
+
+```
+@abstractmethod es un decorador en Python que se utiliza para definir un método abstracto en una clase abstracta. Un método abstracto es un método que no tiene implementación en la clase abstracta, y su implementación debe proporcionarse por las clases concretas que heredan de la clase abstracta. Este decorador se encuentra en el módulo abc (Abstract Base Classes) y se utiliza en conjunto con otras funcionalidades para definir clases y métodos abstractos.
+
+Cuando un método se marca con @abstractmethod, se indica que las clases derivadas deben proporcionar una implementación concreta de ese método. Si una clase derivada no proporciona dicha implementación, se considera una clase abstracta y no se puede instanciar.
+
+En este ejemplo, AbstractClass es una clase abstracta con un método abstracto abstract_method. La clase concreta ConcreteClass hereda de AbstractClass y proporciona una implementación concreta del método abstracto. Al intentar instanciar la clase abstracta directamente, se generará un TypeError. Solo se pueden instanciar clases concretas que implementen todos los métodos abstractos definidos en la clase abstracta.
+```
+
+```python
+from abc import ABC, abstractmethod
+
+# Clase abstracta con método abstracto
+class AbstractClass(ABC):
+    @abstractmethod
+    def abstract_method(self):
+        pass
+
+# Clase concreta que hereda de la clase abstracta
+class ConcreteClass(AbstractClass):
+    def abstract_method(self):
+        print("Implementation of abstract_method in ConcreteClass")
+
+# Intento de instanciar la clase abstracta (esto generará un error)
+# abstract_instance = AbstractClass()  # Generará un TypeError
+
+# Instanciar la clase concreta
+concrete_instance = ConcreteClass()
+concrete_instance.abstract_method()  # Salida: Implementation of abstract_method in ConcreteClass
+
+```
+
+
 #### 
 
-> Tips Python: 
+> Tips and Information of Python: 
 
 > *args y **kwargs 
 
@@ -2001,4 +2035,16 @@ def ejemplo_funcion(*args, **kwargs):
 # Uso de la función con diferentes tipos de argumentos
 ejemplo_funcion(1, 2, 3, nombre="John", edad=25)
 
+```
+
+> from abc import ABC, abstractmethod
+
+```
+ABC y abstractmethod son clases y decoradores, respectivamente, proporcionados por el módulo abc en Python, que se utiliza para trabajar con clases y métodos abstractos.
+
+ABC (Abstract Base Class): Es una clase base que se utiliza para declarar una clase abstracta. Una clase abstracta es una clase que no puede ser instanciada directamente y que puede contener métodos abstractos.
+
+abstractmethod: Es un decorador que se utiliza para declarar un método abstracto dentro de una clase abstracta. Un método abstracto es un método que debe ser implementado por cualquier subclase concreta de la clase abstracta que lo contiene.
+
+A continuación, te doy un ejemplo simple para ilustrar su uso:
 ```
