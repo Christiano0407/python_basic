@@ -2045,6 +2045,4 @@ ABC y abstractmethod son clases y decoradores, respectivamente, proporcionados p
 ABC (Abstract Base Class): Es una clase base que se utiliza para declarar una clase abstracta. Una clase abstracta es una clase que no puede ser instanciada directamente y que puede contener métodos abstractos.
 
 abstractmethod: Es un decorador que se utiliza para declarar un método abstracto dentro de una clase abstracta. Un método abstracto es un método que debe ser implementado por cualquier subclase concreta de la clase abstracta que lo contiene.
-
-A continuación, te doy un ejemplo simple para ilustrar su uso:
 ```
