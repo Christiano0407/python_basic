@@ -2046,3 +2046,93 @@ ABC (Abstract Base Class): Es una clase base que se utiliza para declarar una cl
 
 abstractmethod: Es un decorador que se utiliza para declarar un método abstracto dentro de una clase abstracta. Un método abstracto es un método que debe ser implementado por cualquier subclase concreta de la clase abstracta que lo contiene.
 ```
+
+#### POO - Información Extra (Complementaria) -
+
+> Poo: Herencia Múltiple: 
+
+```
+La herencia múltiple es un concepto en programación orientada a objetos (POO) que permite que una clase herede atributos y métodos de más de una clase base. En Python, la herencia múltiple se logra permitiendo que una clase tenga más de una clase padre. Esto significa que la clase hija hereda tanto de la primera clase como de la segunda clase, y así sucesivamente.
+
+Es importante tener en cuenta que la herencia múltiple puede conducir a situaciones llamadas "diamante" o "problema del diamante", que ocurren cuando una clase tiene dos clases base que comparten una clase común. Esto puede causar ambigüedades en la resolución de métodos y atributos. Python resuelve este problema utilizando un orden de resolución de clases llamado el "MRO" (Method Resolution Order).
+```
+
+```python
+# Definición de la primera clase base
+class Animal:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def hacer_sonido(self):
+        pass
+
+# Definición de la segunda clase base
+class Volador:
+    def volar(self):
+        print(f"{self.nombre} está volando")
+
+# Clase que hereda de ambas clases base (herencia múltiple)
+class Pajaro(Animal, Volador):
+    def hacer_sonido(self):
+        print(f"{self.nombre} hace un sonido de pájaro")
+
+# Crear una instancia de la clase Pajaro
+mi_pajaro = Pajaro("Piolín")
+
+# Acceder a métodos de las clases base
+mi_pajaro.hacer_sonido()  # Salida: Piolín hace un sonido de pájaro
+mi_pajaro.volar()         # Salida: Piolín está volando
+
+```
+
+> Example Two:
+
+```python
+class Animal:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def hacer_sonido(self):
+        pass
+
+# Definición de la segunda clase base
+class Volador:
+    def __init__(self, type):
+      self.type = type
+
+    def volar(self):
+        print(f"{self.nombre} está volando")
+
+# Clase que hereda de ambas clases base (herencia múltiple)
+class Pajaro(Animal, Volador):
+    def __init__(self, name, type, color):
+      Animal.__init__(self, name)
+      Volador.__init__(self, type)
+      self.color = color
+
+    def __str__(self) -> str:
+      print(f"My Animal {self.anima} is the type: {self.type} and color {self.color}")
+
+    def hacer_sonido(self):
+        print(f"{self.nombre} hace un sonido de pájaro")
+
+    def animal_fly(self):
+      return f"My Animal: {super().volar()}}"
+
+```
+
+> Tip: Los Patrones de Diseño (Pattern Design), pueden ayudar a evitar problemas con tu código (Herencia Múltiple). Checa los Patrones de Diseño: 
+
+[Pattern Design - Patrones de Diseño](https://refactoring.guru/es)
+
+> MRO" (Method Resolution Order).
+
+```
+El MRO determina el orden en el que se buscan los métodos y atributos en las clases base. Puedes obtener el MRO de una clase utilizando el atributo __mro__ o la función mro():
+```
+
+```python
+print(Pajaro.__mro__)
+# Salida: (<class '__main__.Pajaro'>, <class '__main__.Animal'>, <class '__main__.Volador'>, <class 'object'>)
+```
+
