@@ -2136,3 +2136,161 @@ print(Pajaro.__mro__)
 # Salida: (<class '__main__.Pajaro'>, <class '__main__.Animal'>, <class '__main__.Volador'>, <class 'object'>)
 ```
 
+> POO - Polimorfismo
+
+```
+Puedes usar Patrones de Diseño como: Creacionales (Factory Method o Abstract Factoy)
+```
+
+```
+1- Polimorfismo de Sobrecarga (Compile-time):
+
+También conocido como polimorfismo estático o de compilación.
+Se refiere a la capacidad de una clase para proporcionar múltiples métodos con el mismo nombre pero con diferentes firmas (número o tipo de parámetros).
+El compilador selecciona la función adecuada en función de la cantidad y tipo de argumentos.
+```
+
+```
+2- Polimorfismo de Sobrescritura (Run-time):
+
+También conocido como polimorfismo dinámico o de ejecución.
+Ocurre cuando una clase derivada proporciona una implementación específica para un método que ya está definido en su clase base.
+Se logra mediante el uso de punteros o referencias a la clase base.
+```
+
+> Duck Typing en Python:
+
+```
+"Duck Typing" es un concepto en programación que se refiere a la determinación del tipo de un objeto por sus métodos y propiedades en lugar de su tipo explícito o declaración de interfaz. La idea detrás de Duck Typing es que si un objeto se comporta como un pato (quack como un pato, camina como un pato), entonces trataremos ese objeto como un pato, sin importar su tipo real.
+
+En Python, un lenguaje de programación de tipado dinámico, el Duck Typing es una característica natural. Veamos un ejemplo para entender cómo se usa en POO:
+
+Respuesta: 
+En este ejemplo, tenemos tres clases (Pato, Perro y Robot) que tienen un método llamado hacer_sonido. Luego, tenemos una función hacer_sonido_del_animal que toma un objeto como argumento y llama a su método hacer_sonido. Aunque las clases no comparten una interfaz común formal, el código funciona gracias al Duck Typing: si el objeto tiene un método hacer_sonido, podemos tratarlo como un "animal".
+
+Beneficios en el Código:
+
+Flexibilidad y Simplificación del Código:
+
+Duck Typing permite que el código sea más flexible y menos dependiente de tipos específicos. Si un objeto tiene los métodos y atributos necesarios, se puede utilizar en un contexto específico sin preocuparse por su tipo real.
+Menos Dependencia de Jerarquías de Clases:
+
+No es necesario que las clases compartan una jerarquía común o implementen una interfaz explícita. Puedes trabajar con objetos basándote en su comportamiento más que en su tipo.
+Facilita la Reutilización de Código:
+
+Como no te limitas a trabajar con tipos específicos, puedes reutilizar código en situaciones diversas siempre que los objetos compartan el comportamiento necesario.
+Promueve el Principio "EAFP" (Easier to Ask for Forgiveness than Permission):
+
+Es una filosofía en Python que fomenta la escritura de código que simplemente intenta realizar una operación y maneja las excepciones si algo sale mal. Duck Typing se alinea bien con este principio ya que te permite asumir que los objetos tienen ciertas propiedades y métodos y manejar cualquier error que pueda surgir.
+En resumen, Duck Typing en Python es una herramienta poderosa que te permite escribir código más flexible, genérico y fácil de mantener al centrarte en el comportamiento de los objetos en lugar de su tipo concreto. Esto facilita la adaptabilidad del código a medida que evoluciona y se expande.
+```
+
+```python
+class Pato:
+    def hacer_sonido(self):
+        print("Quack, quack")
+
+class Perro:
+    def hacer_sonido(self):
+        print("Woof, woof")
+
+class Robot:
+    def hacer_sonido(self):
+        print("Beep, beep")
+
+def hacer_sonido_del_animal(animal):
+    animal.hacer_sonido()
+
+pato = Pato()
+perro = Perro()
+robot = Robot()
+
+hacer_sonido_del_animal(pato)  # Imprime: Quack, quack
+hacer_sonido_del_animal(perro)  # Imprime: Woof, woof
+hacer_sonido_del_animal(robot)  # Imprime: Beep, beep
+
+```
+
+> Encapsulamiento / Encapsulation - POO
+
+```
+Encapsulamiento en Programación Orientada a Objetos (POO) con Python:
+
+El encapsulamiento es uno de los principios fundamentales de la programación orientada a objetos (POO). Consiste en ocultar los detalles internos de un objeto y limitar el acceso a ciertos componentes, mientras se expone una interfaz clara y definida para interactuar con dicho objeto. En Python, el encapsulamiento se logra principalmente mediante el uso de atributos y métodos privados.
+
+Atributos y Métodos Privados:
+En Python, la convención para indicar que un atributo o método es privado es agregar un guion bajo doble (__) como prefijo al nombre del atributo o método.
+
+Respuesta: 
+En este ejemplo, __nombre y __edad son atributos privados de la clase Persona. Se proporcionan métodos públicos get_nombre y set_nombre para obtener y modificar el nombre, respectivamente. Además, hay un método privado llamado __metodo_privado, que solo puede ser llamado desde dentro de la propia clase.
+
+Beneficios del Encapsulamiento en Python:
+Control de Acceso:
+
+Los atributos y métodos privados permiten controlar el acceso a los detalles internos de una clase, evitando cambios no autorizados desde fuera de la clase.
+Prevención de Acceso Directo:
+
+Al utilizar métodos para acceder y modificar atributos, se evita el acceso directo a los atributos desde fuera de la clase, lo que facilita la gestión y evita problemas potenciales.
+Facilita el Cambio de Implementación:
+
+Al encapsular los detalles internos de una clase, se puede cambiar la implementación interna sin afectar el código que utiliza la clase. Los métodos públicos sirven como una interfaz estable para el resto del programa.
+Mejora la Legibilidad y Mantenimiento:
+
+Al proporcionar una interfaz clara y métodos bien definidos, el encapsulamiento mejora la legibilidad del código y facilita el mantenimiento a medida que el programa evoluciona.
+
+Tips: 
+
+Patrones de Diseño que se Benefician del Encapsulamiento:
+
+Patrón de Diseño Singleton:
+
+El encapsulamiento ayuda a implementar de manera efectiva el patrón Singleton, que garantiza que una clase tenga una única instancia y proporciona un punto global de acceso a ella. Al encapsular la creación y acceso a la instancia dentro de la propia clase, se controla el acceso y se evita la creación múltiple de instancias.
+Patrón de Diseño Factory Method:
+
+El encapsulamiento se utiliza en el patrón Factory Method para definir una interfaz para crear un objeto, pero deja que las subclases alteren el tipo de objetos que se crearán. La interfaz definida por el Factory Method actúa como una cápsula que encapsula la lógica de creación.
+Patrón de Diseño Observer:
+
+En el patrón Observer, el encapsulamiento se utiliza para permitir que un objeto (el sujeto) notifique a otros objetos (los observadores) sobre cambios en su estado sin revelar la implementación interna. Los observadores se suscriben al sujeto a través de una interfaz, lo que encapsula la comunicación.
+Algoritmos y Big O Notation:
+
+El encapsulamiento, en sí mismo, no está directamente relacionado con algoritmos específicos ni con la notación Big O. Sin embargo, puede influir en la eficiencia y organización del código, lo que puede afectar el rendimiento en términos de complejidad temporal y espacial.
+
+Algoritmos de Búsqueda y Ordenación:
+
+El encapsulamiento puede facilitar la implementación y mantenimiento de algoritmos de búsqueda y ordenación al proporcionar una interfaz clara para interactuar con estructuras de datos encapsuladas.
+Big O Notation:
+
+El encapsulamiento en sí mismo no determina la eficiencia de un algoritmo en términos de la notación Big O. Sin embargo, la forma en que se implementan y utilizan los métodos y atributos puede influir en la complejidad temporal y espacial del código.
+En general, el encapsulamiento es una buena práctica en la programación orientada a objetos que contribuye a la modularidad y la organización del código. Al seleccionar algoritmos, la elección de estructuras de datos y la implementación de patrones de diseño, se pueden considerar factores como la complejidad temporal y espacial para garantizar un rendimiento óptimo en diferentes situaciones. El encapsulamiento contribuye a la claridad y mantenimiento del código, lo que puede facilitar la optimización y mejora del rendimiento en el desarrollo y la evolución del software.
+```
+
+```python
+class Persona:
+    def __init__(self, nombre, edad):
+        self.__nombre = nombre   # Atributo privado
+        self.__edad = edad       # Atributo privado
+
+    def get_nombre(self):       # Método público
+        return self.__nombre
+
+    def set_nombre(self, nuevo_nombre):  # Método público
+        self.__nombre = nuevo_nombre
+
+    def __metodo_privado(self):  # Método privado
+        print("Este es un método privado")
+
+# Crear una instancia de la clase Persona
+persona = Persona("Juan", 25)
+
+# Acceder a un atributo privado usando un método público
+print(persona.get_nombre())  # Imprime: Juan
+
+# Modificar un atributo privado usando un método público
+persona.set_nombre("Ana")
+
+# Llamando a un método privado desde dentro de la clase
+persona._Persona__metodo_privado()  # Imprime: Este es un método privado
+
+```
+
+> Getters y Setters - POO
