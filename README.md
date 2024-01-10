@@ -2312,3 +2312,82 @@ persona._Persona__metodo_privado()  # Imprime: Este es un método privado
 ```
 
 > Getters y Setters - POO
+
+```
+Getters y Setters en Programación Orientada a Objetos (POO):
+
+Los getters y setters son métodos utilizados en la programación orientada a objetos para acceder y modificar los valores de atributos privados de una clase. Estos métodos permiten controlar el acceso a los atributos y aplicar lógica adicional, como validaciones o transformaciones, al obtener o establecer el valor de un atributo.
+
+Beneficios y Complemento con Encapsulamiento:
+Control de Acceso:
+
+Getters y setters permiten un control más granular sobre el acceso a los atributos. Puedes aplicar lógica específica, como validaciones, antes de permitir que el valor sea obtenido o modificado.
+Encapsulamiento Reforzado:
+
+Al utilizar getters y setters, refuerzas el encapsulamiento al proporcionar métodos específicos para acceder y modificar atributos. Esto evita el acceso directo a los atributos desde fuera de la clase.
+Validación y Lógica Adicional:
+
+Los setters permiten implementar lógica adicional al establecer un nuevo valor. Puedes realizar validaciones, conversiones u otras operaciones antes de asignar el valor al atributo.
+Compatibilidad con Interfaces Comunes:
+
+Al utilizar getters y setters, puedes seguir convenciones comunes de interfaces en tu código, facilitando la interoperabilidad y entendimiento del código por parte de otros programadores.
+```
+
+```python
+Getters:
+Un getter es un método que proporciona acceso a un atributo privado desde fuera de la clase. Su función principal es obtener el valor actual de un atributo. En Python, un getter típicamente tiene un nombre que comienza con "get" y seguido del nombre del atributo que representa.
+
+class Persona:
+    def __init__(self, nombre):
+        self.__nombre = nombre
+
+    def get_nombre(self):
+        return self.__nombre
+
+# Uso del getter
+persona = Persona("Juan")
+print(persona.get_nombre())  # Imprime: Juan
+
+
+Setters:
+Un setter es un método que permite modificar el valor de un atributo privado desde fuera de la clase. Su función principal es establecer un nuevo valor para un atributo. En Python, un setter típicamente tiene un nombre que comienza con "set" y seguido del nombre del atributo que representa.
+
+class Persona:
+    def __init__(self, nombre):
+        self.__nombre = nombre
+
+    def set_nombre(self, nuevo_nombre):
+        self.__nombre = nuevo_nombre
+
+# Uso del setter
+persona = Persona("Juan")
+persona.set_nombre("Ana")
+print(persona.get_nombre())  # Imprime: Ana
+
+
+```
+
+> (@) Decorators - Decoradores / Métodos de clase (Methods of class)
+
+```
+En programación orientada a objetos (POO) y en el contexto de Python, los decoradores son una característica que permite modificar o extender el comportamiento de funciones o métodos de manera declarativa. Los decoradores proporcionan una forma concisa de aplicar funciones adicionales a otras funciones o métodos.
+
+Sintaxis Básica de un Decorador:
+En Python, los decoradores se implementan utilizando funciones. Un decorador es una función que toma otra función como argumento y devuelve una nueva función. La sintaxis básica para aplicar un decorador a una función es utilizar el símbolo @ seguido del nombre del decorador justo encima de la definición de la función.
+
+Los decoradores no están limitados a funciones simples; también se pueden aplicar a métodos de clases. Esto puede ser útil en POO para extender el comportamiento de métodos específicos de una clase.
+
+Beneficios de Decoradores en POO:
+Reutilización de Código:
+
+Los decoradores permiten encapsular funcionalidades adicionales y aplicarlas a múltiples funciones o métodos sin repetir código.
+Extensibilidad:
+
+Puedes extender el comportamiento de funciones o métodos de manera fácil y modular mediante la aplicación de decoradores.
+Separación de Responsabilidades:
+
+Los decoradores permiten separar preocupaciones y mantener un código más limpio y organizado al dividir las funcionalidades adicionales en funciones decoradoras.
+Legibilidad del Código:
+
+Los decoradores pueden mejorar la legibilidad del código al eliminar la necesidad de incrustar lógica adicional directamente en la implementación de funciones o métodos.
+```
