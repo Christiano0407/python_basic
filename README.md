@@ -15,6 +15,24 @@
 > Roadmap
 [roadmap](https://roadmap.sh/python)
 
+> Topics Python - GitHub
+
+[Topics_Python](https://github.com/topics/python)
+
+> Awesome Python - GitHub
+
+[Awesome_Python](https://github.com/vinta/awesome-python?tab=readme-ov-file#awesome-python)
+
+> The Algorithm Python - GitHub
+
+[TheAlgorithm_Python](https://github.com/TheAlgorithms/Python)
+
+[The_Algorithm](https://github.com/TheAlgorithms)
+
+> Hugging Face Python  - GitHub
+
+[HuggingFace](https://github.com/huggingface)
+
 ## Herramienta Gitignore para Python
 
 > Gitignore
