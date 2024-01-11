@@ -1,7 +1,7 @@
 #=======#####
 #TODO: ====== Encapsulamiento / Encapsulation ======= 
 ####========#
-#* === Private: ("_")
+#* === Private: ("_") ===
 class Bank: 
   def __init__(self):
     self._credit_card = "BBVA"
@@ -10,7 +10,7 @@ class Bank:
 user = Bank()
 print(user._credit_card)
 
-#* ==== Very, Very Private: ("__")
+#* ==== Very, Very Private: ("__") ====
 class BankCard:
   # >= Attributes of Class <=
   country = "Mexico,City"
