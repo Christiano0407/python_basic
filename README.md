@@ -2391,3 +2391,23 @@ Legibilidad del Código:
 
 Los decoradores pueden mejorar la legibilidad del código al eliminar la necesidad de incrustar lógica adicional directamente en la implementación de funciones o métodos.
 ```
+
+> @cached_propert
+
+```
+@cached_property se encarga de almacenar en caché el resultado después de la primera vez que se calcula.
+
+Cuando se menciona que una propiedad es "costosa", se refiere a que calcular su valor puede requerir recursos computacionales significativos, como tiempo de CPU, acceso a bases de datos, llamadas a servicios web, operaciones de red u otras operaciones que consumen tiempo. En otras palabras, calcular el valor de la propiedad puede ser una operación que lleva tiempo o recursos.
+
+En el contexto de la programación, a veces es necesario calcular valores que no cambian frecuentemente, pero que son costosos de calcular. En estos casos, la memoización es una técnica que consiste en almacenar en caché el resultado de un cálculo para evitar tener que recalcularlo cada vez que se accede a la propiedad.
+```
+
+```python
+from functools import cached_property
+
+class MiClase:
+    @cached_property
+    def calcular_resultado_costoso(self):
+        # Lógica costosa
+        return resultado
+```
