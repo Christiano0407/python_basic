@@ -2411,3 +2411,26 @@ class MiClase:
         # Lógica costosa
         return resultado
 ```
+
+> SOLID 
+
+```
+"SOLID" es un acrónimo que representa un conjunto de cinco principios de diseño de software en el contexto de la programación orientada a objetos (POO). Estos principios fueron introducidos por Robert C. Martin y son considerados guías fundamentales para lograr un diseño de código limpio, modular y fácil de mantener. Cada letra en "SOLID" representa uno de estos principios:
+
+Principio de Responsabilidad Única (Single Responsibility Principle - SRP):
+
+Este principio establece que una clase debe tener una única razón para cambiar. En otras palabras, una clase debe tener una única responsabilidad o función dentro del sistema.
+Principio de Abierto/Cerrado (Open/Closed Principle - OCP):
+
+Este principio postula que una clase debe estar abierta para la extensión pero cerrada para la modificación. Significa que debes poder agregar nuevas funcionalidades sin cambiar el código existente.
+Principio de Sustitución de Liskov (Liskov Substitution Principle - LSP):
+
+Este principio establece que los objetos de una clase base deben poder ser reemplazados por objetos de una clase derivada sin afectar la integridad del programa.
+Principio de Segregación de Interfaces (Interface Segregation Principle - ISP):
+
+Este principio indica que una clase no debe verse obligada a implementar interfaces que no utiliza. En lugar de tener interfaces monolíticas, es preferible tener interfaces específicas para cada cliente.
+Principio de Inversión de Dependencias (Dependency Inversion Principle - DIP):
+
+Este principio establece que las clases de alto nivel no deben depender de clases de bajo nivel, sino de abstracciones. Además, las abstracciones no deben depender de detalles, sino de otras abstracciones.
+En conjunto, estos principios SOLID proporcionan pautas para diseñar software que es modular, fácil de entender, extensible y resistente a cambios. Siguiendo estos principios, los desarrolladores pueden crear sistemas más robustos y mantenibles a medida que evolucionan y crecen con el tiempo.
+```
