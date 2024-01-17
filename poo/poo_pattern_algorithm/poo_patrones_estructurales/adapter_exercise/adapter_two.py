@@ -1,16 +1,15 @@
 ######
 #TODO:2) ==== Adapter (Two) ====
 ######
-from module_adapter import main_travel, UserTransportTrip
+from module_adapter import main_travel, TripUser
 
 
 #* ==>  (La clase que necesitamos adaptar) <==
 class AdapterTrip:
   def user_travel(self): 
-     main = main_travel()
-     print("Main Data", main)
-     return main
-  
+     users = TripUser("Luisa Pamela Rosas")
+     #print("Go!!", users.name_user, users.name_traveler())
+     return f"Hello, I'm: {users.name_user}. {users.name_traveler()}"
 
 #! - Target (Interfaz que el cliente espera) - Herencia -
 class TargetTrip: 
@@ -40,5 +39,6 @@ adapter = Adapter(trip)
 #* ==== Main ====
 if __name__ == "__main__": 
   print("Adapter: Call Travel User")
+  main_travel()
   client_trip(adapter)
 
