@@ -5,7 +5,6 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 import os
-from datetime import datetime, timedelta
 
 #? ==== Data Base Prove ====
 script_dir = os.path.dirname(__file__)
@@ -55,6 +54,7 @@ class TripLodging(ABC):
 #! ===  Implementation Instance Of Object - Abstract Factory ===
 class TripUser(NameTraveler): 
   def __init__(self, name_user: str): 
+    super().__init__()
     self.name_user = name_user
 
   def name_traveler(self) -> str:
@@ -63,34 +63,36 @@ class TripUser(NameTraveler):
 
 class TripUserTransportation(TransportTrip): 
   def __init__(self, user_transport:str):
+    super().__init__()
     self.user_transport = user_transport
 
-  def transport_trip(self):
+  def transport_trip(self) -> str:
     return f"Hi!! Confirm Transport {self.user_transport}. Enjoy  will you Transport.Thank you."
   
 
 class TripUserLodging(LodgingTrip): 
-  def __init__(self, user_trip_lodging): 
+  def __init__(self, user_trip_lodging:str):
+    super().__init__() 
     self.user_trip_lodging = user_trip_lodging
 
-  def lodging_trip(self):
+  def lodging_trip(self) -> str:
     return f"Hi!!! Confirm that you Lodging {self.user_trip_lodging} it's Ok. Please, enjoy you Lodging."
   
 
   #! ==== Concrete Implementation Instance ====
 class UserNameTrip(ClientName):
   def get_name_traveler(self) -> ClientName:
-    return NameTraveler("John Smith")
+    return TripUser("John Smith")
 
 
 class UserTransportTrip(TripTransport): 
   def get_middle_transport(self) -> TripTransport:
-    return TransportTrip("Flight")
+    return TripUserTransportation("Flight")
 
 
 class UserLodgingTrip(TripLodging): 
-  def get_lodging(self) -> str:
-    return LodgingTrip("Hotel") 
+  def get_lodging(self) -> TripLodging:
+    return  TripUserLodging("Hotel") 
     
 
 #// ========= Variables & Function & Main ===========
@@ -101,7 +103,7 @@ user_lodging_trip = UserLodgingTrip()
 def main_travel(): 
   unique_travel = set()
 
-  for index, data_travel in df.head(5).iterrows():
+  for index, data_travel in df.head(10).iterrows():
     creator = None
     #-Variables of Data-
     plus_user_name = data_travel["Traveler name"]
@@ -129,7 +131,7 @@ def main_travel():
         print("User Name: ", trip_user.name_traveler())
       elif isinstance(creator, UserTransportTrip): 
         trip_user_transport = creator.get_middle_transport()
-        print("User Transport", trip_user_transport.transport_trip())
+        print("User Transport: ", trip_user_transport.transport_trip())
       elif isinstance(creator, UserLodgingTrip): 
         trip_user_lodging = creator.get_lodging()
         print("User Lodging: ", trip_user_lodging.lodging_trip())
