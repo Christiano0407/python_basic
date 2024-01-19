@@ -1,6 +1,6 @@
 #########
 #TODO: === Pattern Design Structural: Decorator ===
-#?: También llamado: Decorador, Envoltorio, Wrapper - Russian Doll (Muñeca Rusa) -
+#?: También llamado: Decorador, Envoltorio, Wrapper - type: Russian Doll (Muñeca Rusa) -
 #?: Decorator es un patrón de diseño estructural que te permite añadir funcionalidades a objetos colocando estos objetos dentro de objetos encapsuladores especiales que contienen estas funcionalidades.
 ##############
 #* 1) ==== Componente ====
