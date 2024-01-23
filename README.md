@@ -2434,3 +2434,30 @@ Principio de Inversión de Dependencias (Dependency Inversion Principle - DIP):
 Este principio establece que las clases de alto nivel no deben depender de clases de bajo nivel, sino de abstracciones. Además, las abstracciones no deben depender de detalles, sino de otras abstracciones.
 En conjunto, estos principios SOLID proporcionan pautas para diseñar software que es modular, fácil de entender, extensible y resistente a cambios. Siguiendo estos principios, los desarrolladores pueden crear sistemas más robustos y mantenibles a medida que evolucionan y crecen con el tiempo.
 ```
+
+#### Python Tests
+
+> Pytest
+
+[pytest](https://docs.pytest.org/en/7.1.x/getting-started.html)
+
+[pip_pytest](https://pypi.org/project/pytest/)
+
+> Install
+
+```
+pip install -U pytest
+```
+
+> Create your first test
+
+
+```python
+# content of test_sample.py
+def func(x):
+    return x + 1
+
+
+def test_answer():
+    assert func(3) == 5
+```
