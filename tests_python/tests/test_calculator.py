@@ -1,7 +1,7 @@
 ###
 #Todo: === Tests (02): Calculator ===
 ######
-from calculator import add
+from mycalculator import add
 
 
 def tests_add(): 
@@ -14,7 +14,7 @@ def tests_add():
 
 
 #* ==== Main ====
-if __name__ == "__main__":
-  print("Previous Test...") 
-  tests_add()
-  print("All Tests Passed...:)")
+""" if __name__ == "__main__": """
+print("Previous Test...") 
+tests_add()
+print("All Tests Passed...:)")
