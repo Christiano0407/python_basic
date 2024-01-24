@@ -85,6 +85,22 @@ http://127.0.0.1:8000/docs
 
 ```
 
+> Test with pytest in Python 
+
+[unittest](https://docs.python.org/3/library/unittest.html)
+
+[pytest](https://docs.pytest.org/en/7.4.x/how-to/usage.html)
+
+```
+# pytest (Global)
+
+# pytest /root
+
+# Siempre comenzar con: "test_module". Ejemplo:"test_main.py"
+
+# Importar e usar módulos: "from - import"
+```
+
 > Métodos HTTP
 
 ```
