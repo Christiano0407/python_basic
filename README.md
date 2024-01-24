@@ -2461,3 +2461,9 @@ def func(x):
 def test_answer():
     assert func(3) == 5
 ```
+
+> Puedes Ejecutar "Pytest" desde la raíz: 
+
+```
+pytest
+```
