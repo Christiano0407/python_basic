@@ -1,7 +1,7 @@
 ###
 #Todo: === Tests (02): Calculator ===
 ######
-from calculator import add
+from tests_python.calculator import add
 
 
 def tests_add(): 
