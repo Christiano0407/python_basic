@@ -2478,8 +2478,15 @@ def test_answer():
     assert func(3) == 5
 ```
 
-> Puedes Ejecutar "Pytest" desde la raíz: 
+> Puedes Ejecutar "pytest" desde la raíz o pytest -vv (ver una versión más detallada): 
+
+> pytest - @pytest.fixture
+
+[pytest_fixture](https://docs.pytest.org/en/7.1.x/how-to/fixtures.html)
 
 ```
-pytest
+@pytest.fixture es un decorador (decorator)
+
+@pytest.fixture es un decorador en el framework de pruebas pytest que se utiliza para definir fixtures. Las fixtures son funciones o métodos que se ejecutan antes de las pruebas y pueden realizar configuraciones iniciales, proporcionar datos de prueba o realizar cualquier tarea necesaria para preparar el entorno de prueba. También pueden realizar limpieza después de que se ejecuten las pruebas.
+
 ```
