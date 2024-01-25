@@ -6,6 +6,7 @@ from test.fruits import Fruit, FruitSalad
 
 
 #? >= Arrange - Fixture (Before call Test) - <=
+#=@Decorador=
 @pytest.fixture
 def fruit_bowl():
   return [Fruit("Apple"), Fruit("Banana"), Fruit("Avocado")]
