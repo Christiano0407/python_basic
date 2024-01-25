@@ -6,7 +6,9 @@ from test.trip import AgencyTravel
 @pytest.fixture
 def travel_agency(): 
   agency = AgencyTravel()
+  # Configuración inicial (puede incluirse aquí)
   yield agency
+  # Limpiar después de la prueba (puede incluirse aquí)
 
 
 def test_reservation_trip(travel_agency): 
@@ -18,9 +20,13 @@ def test_reservation_hotel(travel_agency):
   travel_agency.reserve_hotel("London") 
   assert travel_agency.hotel_reserved == "Ok! my Hotel at in this city London is good."
 
+def test_discounts(travel_agency): 
+  travel_agency.reserve_discount(1000, 0.10)
+  assert travel_agency.discount_travel == f"You pay with discount 900.0.Enjoy your trip."
 
 
-  #!==== Execute ====
+
+  #!==== === Execute === ====
   if __name__ == "___main__": 
     test_reservation_trip()
     test_reservation_hotel()
