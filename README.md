@@ -2490,3 +2490,136 @@ def test_answer():
 @pytest.fixture es un decorador en el framework de pruebas pytest que se utiliza para definir fixtures. Las fixtures son funciones o métodos que se ejecutan antes de las pruebas y pueden realizar configuraciones iniciales, proporcionar datos de prueba o realizar cualquier tarea necesaria para preparar el entorno de prueba. También pueden realizar limpieza después de que se ejecuten las pruebas.
 
 ```
+
+> Prueba que se marca como lenta (@pytest.mark.slow) y Prueba pendiente de implementación (@pytest.mark.skip)
+
+```
+Los marcadores (@pytest.mark) son una herramienta útil para organizar y filtrar pruebas según ciertos criterios. En el ejemplo que proporcionaste, se están utilizando dos marcadores específicos:
+
+@pytest.mark.slow:
+Este marcador indica que la prueba asociada (test_proceso_lento) es considerada lenta. Esto puede ser útil para clasificar y ejecutar pruebas de manera diferente en función de su velocidad. Puedes ejecutar solo las pruebas lentas, ignorarlas, o ajustar la ejecución en función de la velocidad.
+
+@pytest.mark.skip:
+Este marcador indica que la prueba asociada (test_pendiente) está pendiente de implementación. La prueba se omite durante la ejecución, y el motivo de la omisión se proporciona en la razón. Esto es útil cuando tienes pruebas que aún no están completamente implementadas y deseas que se ignoren en ciertos contextos.
+```
+
+```python
+
+@pytest.mark.slow
+def test_proceso_lento():
+    """Prueba que se marca como lenta."""
+    assert True
+
+@pytest.mark.skip(reason="Prueba pendiente de implementación")
+def test_pendiente():
+    """Esta prueba se marca como pendiente."""
+    assert False
+
+
+```
+
+> Ejecutar solo las pruebas lentas:
+
+```python
+pytest -k slow
+```
+
+> Ejecutar todas las pruebas excepto las lentas:
+
+```python
+pytest -k "not slow"
+```
+
+> Ejecutar solo las pruebas pendientes:
+
+```python
+pytest -k skip
+```
+
+> Ejecutar todas las pruebas excepto las pendientes:
+
+```python
+pytest -k "not skip"
+```
+
+> Tips: 
+
+```
+Úsalo con Moderación:
+No sobrecargues tus pruebas con demasiados marcadores. Utilízalos de manera efectiva y específica para su propósito. Un uso excesivo puede complicar la ejecución y comprensión de tus pruebas.
+
+Integración con Herramientas de CI/CD:
+Puedes aprovechar los marcadores al integrar pytest en tu flujo de trabajo de CI/CD para personalizar la ejecución de pruebas en función de los marcadores.
+```
+
+> En pytest, las funciones @pytest.mark y @pytest.mark.parametrize son herramientas poderosas para organizar y parametrizar pruebas.
+
+> @pytest.mark.parametrize
+Este decorador se utiliza para parametrizar las pruebas. Permite ejecutar la misma prueba con diferentes conjuntos de datos de entrada y verificar los resultados. Esto es útil para reducir la duplicación de código al escribir pruebas con escenarios similares.
+
+```python
+import pytest
+
+def suma(a, b):
+    return a + b
+
+@pytest.mark.parametrize("entrada, esperado", [(1, 2, 3), (2, 3, 5), (5, 5, 10)])
+def test_suma(entrada, esperado):
+    assert suma(entrada[0], entrada[1]) == esperado
+
+```
+
+> El "mocking" es una técnica que se utiliza en pruebas unitarias para simular el comportamiento de objetos o módulos reales
+
+```
+El "mocking" es una técnica que se utiliza en pruebas unitarias para simular el comportamiento de objetos o módulos reales. En Python, puedes implementar el "mocking" utilizando la biblioteca unittest.mock que proporciona el módulo unittest.mock en Python 3.3 y versiones posteriores. En pytest, puedes utilizar el "mocking" de unittest.mock para crear objetos simulados (mocks) y controlar su comportamiento durante las pruebas.
+```
+
+> Ejemplo: "mocking"
+
+```python
+# calculadora.py
+class Calculadora:
+    def suma(self, a, b):
+        return a + b
+
+def funcion_a_testear(calculadora, x, y):
+    resultado = calculadora.suma(x, y)
+    return resultado
+
+```
+
+```python
+import pytest
+from unittest.mock import Mock
+from proyecto.calculadora import Calculadora, funcion_a_testear
+
+def test_funcion_a_testear():
+    # Crear un objeto mock para la clase Calculadora
+    mock_calculadora = Mock(spec=Calculadora)
+    
+    # Configurar el comportamiento simulado (en este caso, la suma devuelve 5)
+    mock_calculadora.suma.return_value = 5
+    
+    # Llamar a la función que utiliza la calculadora
+    resultado = funcion_a_testear(mock_calculadora, 2, 3)
+    
+    # Verificar que la función devuelva el resultado esperado
+    assert resultado == 5
+    
+    # Verificar que la función suma de la calculadora fue llamada correctamente
+    mock_calculadora.suma.assert_called_once_with(2, 3)
+
+```
+
+```
+Cuándo Usar "Mocking":
+Aislamiento de Dependencias:
+Utiliza "mocking" para aislar la unidad que estás probando de las dependencias externas, como servicios web, bases de datos u otros módulos.
+
+Simulación de Comportamientos Específicos:
+Puedes utilizar mocks para simular comportamientos específicos de objetos o funciones, lo que facilita la creación de escenarios de prueba controlados.
+
+Mejora de la Eficiencia en las Pruebas:
+Al utilizar mocks, puedes evitar la ejecución de código real que no es relevante para la prueba en cuestión, mejorando así la eficiencia de tus pruebas unitarias.
+```
