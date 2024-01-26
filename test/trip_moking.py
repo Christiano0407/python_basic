@@ -20,10 +20,15 @@ class AgencyTravel:
     print(f"Reserve {hotel} in {self.country}")
      # ... lógica de reservación ...
     return f"Reserve hotel {hotel} in this country {self.country}"
+  
+  def reserve_transport(self, transport): 
+    return f"My new transport: {transport}"
 
 
-def travel_destiny(agency, destiny, hotel): 
+#* === Función para usar (probar) en el test ===
+def travel_destiny(agency, destiny, hotel, transport): 
   travel_to_destiny = agency.reserve_travel(destiny)
   travel_to_hotel = agency.reserve_hotel(hotel)
+  travel_to_transport = agency.reserve_transport(transport)
 
-  return travel_to_destiny, travel_to_hotel
+  return travel_to_destiny, travel_to_hotel, travel_to_transport
