@@ -1,7 +1,10 @@
 from fastapi import APIRouter, status, HTTPException, Path, Query
-import os
+from abc import ABC, abstractmethod
+from pydantic import BaseModel, Field
+from typing import Union, Optional 
 import pandas as pd
 import numpy as np
+import os
 
 #* === app & API Router ===
 router = APIRouter()
@@ -17,6 +20,46 @@ print(df.iloc[:, :5])
 df.replace([np.inf - np.inf], np.nan, inplace=True)
 df.dropna(inplace=True)
 
+
+#? ==== === Instance Of Class / Pattern: Abstract Factory === ====
+#1) = Family of Objects =
+class Trip(ABC):
+  @abstractmethod
+  def trip_user(self):
+    pass
+
+
+class TripDuration(ABC): 
+  @abstractmethod
+  def trip_date(self): 
+    pass
+
+
+class TripTransportLodging(ABC): 
+  @abstractmethod
+  def trip_transport_lodging(self): 
+    pass
+
+
+#2) = Abstract Factory for create families of Objects =
+class UserTrip(ABC): 
+  def create_trip_user(self) -> Trip: 
+    pass
+
+
+class DurationTrip(ABC): 
+  def create_date_trip(self) -> TripDuration: 
+    pass
+
+
+class TransportLodging(ABC): 
+  def create_transport_lodging() -> TripTransportLodging: 
+    pass
+  
+
+#3) Instance of Class Principal 
+class Travels(): 
+  pass
 
 #? ==== API ROOT / REST / CRUD ====
 @router.get("/", status_code=status.HTTP_200_OK, tags=["travels"])
