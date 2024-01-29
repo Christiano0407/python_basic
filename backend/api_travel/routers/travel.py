@@ -59,7 +59,10 @@ class TransportLodging(ABC):
 
 #3) Instance of Class Principal 
 class Travels(BaseModel): 
-  pass
+  trip_user = Union[Trip, None] = Field(..., gt=0, description="Information of the User Trip")
+  trip_duration = Union[TripDuration, None] = Field(description="Information of the Duration Travel")
+  trip_transport_lodging = Union[TripTransportLodging, None] = Field(description="All Information about Transport and Lodging")
+
 
 #? ==== API ROOT / REST / CRUD ====
 @router.get("/", status_code=status.HTTP_200_OK, tags=["travels"])
