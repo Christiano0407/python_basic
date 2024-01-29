@@ -58,7 +58,7 @@ class TransportLodging(ABC):
   
 
 #3) Instance of Class Principal 
-class Travels(): 
+class Travels(BaseModel): 
   pass
 
 #? ==== API ROOT / REST / CRUD ====
