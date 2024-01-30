@@ -74,6 +74,17 @@ class TripFirst(Trip):
   def trip_user(self, id):
     id_user_new = (df[df["Trip ID"] == id].iloc[:, :5].to_dict(orient="records"))
     return id_user_new
+  
+
+class DurationTravel(DurationTrip): 
+  def create_date_trip(self) -> TripDuration:
+    return DurationFirst()
+  
+
+class DurationFirst(TripDuration): 
+  def trip_duration(self, duration): 
+    duration_user_new = (df[df["Duration (days)"] == duration].iloc[:, :5].to_dict(orient="records"))
+    return duration_user_new
 
 
 #? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
@@ -95,3 +106,25 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
     raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.json()}")
   except Exception as e: 
     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=F"Internal Server: {str(e)}")
+  
+
+#=== Query Parameter ===
+@router.get("/duration/", status_code=status.HTTP_200_OK, tags="travelers")
+async def query_destiny(duration: str = Query(title="Duration Travel", description="Duration Travel Information Destination")):
+  
+  duration_travel = DurationTravel().create_date_trip()
+  duration_travel_user = duration_travel.trip_duration(duration) if duration_travel else None
+
+  # === http://127.0.0.1:8000/travels/duration/?duration=5 => Endpoint === 
+  print(f"Duration To Travel: {duration}")
+  print(f"Duration User Travel: {duration_travel_user}")
+
+  try: 
+    if duration_travel_user: 
+      return Travels(trip_duration=duration_travel_user)
+    else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Duration to Travel Not Found")
+  except ValidationError as ve:
+    raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.join()}")
+  except Exception as e: 
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Internal Server: {str(e)}")
+
