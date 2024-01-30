@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Path, Query
 from abc import ABC, abstractmethod
 from pydantic import BaseModel, Field, ValidationError
-from typing import Union, Optional 
+from typing import Union, Optional, List, Dict
 import pandas as pd
 import numpy as np
 import os
@@ -15,14 +15,13 @@ script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, "../../data_base", "Travel details dataset.csv")
 df = pd.read_csv(file_path)
 print(df.iloc[:, :5])
-
 #! ==> Clean of values: "NAN" and "Infinites" <== 
 df.replace([np.inf - np.inf], np.nan, inplace=True)
 df.dropna(inplace=True)
 
 
 #? ==== === Instance Of Class / Pattern: Abstract Factory === ====
-#1) = Family of Objects =
+#*1) = Family of Objects =
 class Trip(ABC):
   @abstractmethod
   def trip_user(self):
@@ -31,17 +30,17 @@ class Trip(ABC):
 
 class TripDuration(ABC): 
   @abstractmethod
-  def trip_date(self): 
+  def trip_date(self) -> None: 
     pass
 
 
 class TripTransportLodging(ABC): 
   @abstractmethod
-  def trip_transport_lodging(self): 
+  def trip_transport_lodging(self) -> None: 
     pass
 
 
-#2) = Abstract Factory for create families of Objects =
+#*2) == Abstract Factory for create families of Objects ==
 class UserTrip(ABC): 
   def create_trip_user(self) -> Trip: 
     pass
@@ -55,9 +54,16 @@ class DurationTrip(ABC):
 class TransportLodging(ABC): 
   def create_transport_lodging(self) -> TripTransportLodging: 
     pass
-  
 
-#3) ===  Implementation Concrete ===
+
+
+#* CP) ==> Instance of Class Principal <== 
+class Travels(BaseModel): 
+  trip_user: List[Dict[str, Union[int, str, float]]] = Field(description="Information of the User Trip")
+  #trip_user: Union[int, None] = Field(description="Information of the User Trip")
+
+
+#*3) ===  Implementation Concrete ===
 class TravelFly(UserTrip): 
   def create_trip_user(self) -> Trip:
     return TripFirst()
@@ -65,41 +71,21 @@ class TravelFly(UserTrip):
 
 class TripFirst(Trip): 
   def trip_user(self, id):
-    id_user_new = (df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records"))
+    id_user_new = (df[df["Trip ID"] == id].iloc[:, :5].to_dict(orient="records"))
     return id_user_new
-
-
-#*Instance of Class Principal 
-class Travels(BaseModel): 
-  trip_user: Union[int, None] = Field(description="Information of the User Trip")
-  #trip_duration = Union[TripDuration, None] = Field(default=None, description="Information of the Duration Travel")
-  #trip_transport_lodging = Union[TripTransportLodging, None] = Field(default=None, description="All Information about Transport and Lodging")
 
 
 #? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
 #=== Path Parameter ===
 @router.get("/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
 async def travel_id(id:int = Path(..., title="Get ID Of The User", description="User ID that Trip")): 
-  unique_id = set()
-  #Data Base
-  #If Exist Equal ID with Data Base
-  #id_trip = df[df["Trip Id"] == id].to_dict(orient="records")
 
-  #Lógica para obtener los datos que deseas devolver
-  #Puedes utilizar las clases del patrón Abstract Factory para crear las instancias necesarias
-  user_trip_instance = UserTrip().create_trip_user()
-  duration_trip_instance = DurationTrip().create_date_trip()
-  transport_lodging_instance = TransportLodging().create_transport_lodging()
-
-  # Lógica para obtener los datos de cada instancia según tus necesidades, utilizando el DataFrame df
-  #index = next((i for i, movie in enumerate(movie_singleton.get_movies_object()) if movie.id == movie_id), None)
-  #id_user_trip = user_trip_instance.trip_user(df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records")) if user_trip_instance else None
+  user_trip_instance = TravelFly().create_trip_user()
   id_user_trip = user_trip_instance.trip_user(id) if user_trip_instance else None
-  #duration_trip = duration_trip_instance.trip_date()
-  
-  print(f"ID del Usuario {id}")
-  print(f"User Information : {id_user_trip}")
 
+  print(f"ID del Usuario {id}")
+  print(f"User Information: {id_user_trip}")
+  
   try: 
     if id_user_trip: 
       return Travels(trip_user = id_user_trip) 
