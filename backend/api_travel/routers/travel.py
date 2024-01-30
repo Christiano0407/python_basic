@@ -90,6 +90,7 @@ class DurationFirst(TripDuration):
 
 #? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
 #=== Path Parameter ===
+#Endpoint: http://127.0.0.1:8000/travels/user/1
 @router.get("/user/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
 async def travel_id(id:int = Path(..., title="Get ID Of The User", description="User ID that Trip")): 
 
@@ -98,8 +99,6 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
 
   print(f"ID del Usuario {id}")
   print(f"User Information: {id_user_trip}")
-
-  #Endpoint: http://127.0.0.1:8000/travels/user/1
   
   try: 
     if id_user_trip: 
@@ -112,16 +111,15 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
   
 
 #=== Query Parameter ===
-@router.get("/duration", status_code=status.HTTP_200_OK, tags=["travels"])
-async def query_destiny(duration:int = Query(title="Duration Travel", description="Duration Travel Information Destination")):
+#Endpoint: http://127.0.0.1:8000/travels/duration?duration=5
+@router.get("/time/duration", status_code=status.HTTP_200_OK, tags=["travels"])
+async def get_destiny(duration:int = Query(title="Duration Travel", description="Duration Travel Information Destination")):
   
   duration_travel = DurationTravel().create_date_trip()
   duration_travel_user = duration_travel.trip_date(duration) if duration_travel else None
   # === http://127.0.0.1:8000/travels/duration/?duration=5 => Endpoint === 
   print(f"Duration To Travel: {duration}")
   print(f"Duration User Travel: {duration_travel_user}")
-
-  #Endpoint: http://127.0.0.1:8000/travels/duration?duration=5
 
   try: 
     if duration_travel_user: 
@@ -131,3 +129,12 @@ async def query_destiny(duration:int = Query(title="Duration Travel", descriptio
      return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
   except Exception as e: 
       return JSONResponse(content={"detail": f"Internal Server: {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+  
+
+  @router.get("/trip/transport", status_code=status.HTTP_200_OK, tags=["travels"])
+  async def get_transport(transport:str = Query(title="Travel Transport", description="Travel Transport for the User")): 
+    pass
+  
+  @router.get("/lodging/lodging", status_code=status.HTTP_200_OK, tags=["travels"])
+  async def get_lodging(lodging:str = Query(title="Lodging Travel", description="Lodging Travel for User")):
+    pass
