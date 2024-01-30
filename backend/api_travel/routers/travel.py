@@ -109,7 +109,7 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
   
 
 #=== Query Parameter ===
-@router.get("/duration/", status_code=status.HTTP_200_OK, tags="travelers")
+@router.get("/duration", status_code=status.HTTP_200_OK, tags="travels")
 async def query_destiny(duration: str = Query(title="Duration Travel", description="Duration Travel Information Destination")):
   
   duration_travel = DurationTravel().create_date_trip()
