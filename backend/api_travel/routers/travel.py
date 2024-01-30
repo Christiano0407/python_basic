@@ -87,7 +87,6 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
   # Lógica para obtener los datos de cada instancia según tus necesidades, utilizando el DataFrame df
   id_user_trip = user_trip_instance.trip_user(df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records")) if user_trip_instance else None
   #duration_trip = duration_trip_instance.trip_date()
-
   
   try: 
     if id_user_trip and duration_trip_instance and transport_lodging_instance: 
