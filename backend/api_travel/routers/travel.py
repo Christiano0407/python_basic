@@ -11,14 +11,14 @@ router = APIRouter()
 
 
 #! === Call Data Base ==
-""" script_dir = os.path.dirname(__file__)
+script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, "../../data_base", "Travel details dataset.csv")
 df = pd.read_csv(file_path)
 print(df.iloc[:, :5])
 
 #! ==> Clean of values: "NAN" and "Infinites" <== 
 df.replace([np.inf - np.inf], np.nan, inplace=True)
-df.dropna(inplace=True) """
+df.dropna(inplace=True)
 
 
 #? ==== === Instance Of Class / Pattern: Abstract Factory === ====
@@ -53,28 +53,35 @@ class DurationTrip(ABC):
 
 
 class TransportLodging(ABC): 
-  def create_transport_lodging() -> TripTransportLodging: 
+  def create_transport_lodging(self) -> TripTransportLodging: 
     pass
   
 
-#3) Instance of Class Principal 
+#3) ===  Implementation Concrete ===
+class TravelFly(UserTrip): 
+  def create_trip_user(self) -> Trip:
+    return TripFirst()
+  
+
+class TripFirst(Trip): 
+  def trip_user(self, id):
+    id_user_new = (df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records"))
+    return id_user_new
+
+
+#*Instance of Class Principal 
 class Travels(BaseModel): 
-  trip_user = Union[Trip, None] = Field(..., gt=0, description="Information of the User Trip")
-  trip_duration = Union[TripDuration, None] = Field(description="Information of the Duration Travel")
-  trip_transport_lodging = Union[TripTransportLodging, None] = Field(description="All Information about Transport and Lodging")
+  trip_user: Union[int, None] = Field(description="Information of the User Trip")
+  #trip_duration = Union[TripDuration, None] = Field(default=None, description="Information of the Duration Travel")
+  #trip_transport_lodging = Union[TripTransportLodging, None] = Field(default=None, description="All Information about Transport and Lodging")
 
 
 #? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
 #=== Path Parameter ===
 @router.get("/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
 async def travel_id(id:int = Path(..., title="Get ID Of The User", description="User ID that Trip")): 
+  unique_id = set()
   #Data Base
-  script_dir = os.path.dirname(__file__)
-  file_path = os.path.join(script_dir, "../../data_base", "Travel details dataset.csv")
-  df = pd.read_csv(file_path)
-
-  df.replace([np.inf - np.inf], np.nan, inplace=True)
-  df.dropna(inplace=True)
   #If Exist Equal ID with Data Base
   #id_trip = df[df["Trip Id"] == id].to_dict(orient="records")
 
@@ -85,17 +92,19 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
   transport_lodging_instance = TransportLodging().create_transport_lodging()
 
   # Lógica para obtener los datos de cada instancia según tus necesidades, utilizando el DataFrame df
-  id_user_trip = user_trip_instance.trip_user(df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records")) if user_trip_instance else None
+  #index = next((i for i, movie in enumerate(movie_singleton.get_movies_object()) if movie.id == movie_id), None)
+  #id_user_trip = user_trip_instance.trip_user(df[df["Trip Id"] == id].iloc[:, :5].to_dict(orient="records")) if user_trip_instance else None
+  id_user_trip = user_trip_instance.trip_user(id) if user_trip_instance else None
   #duration_trip = duration_trip_instance.trip_date()
   
+  print(f"ID del Usuario {id}")
+  print(f"User Information : {id_user_trip}")
+
   try: 
-    if id_user_trip and duration_trip_instance and transport_lodging_instance: 
-      return id_user_trip, duration_trip_instance, transport_lodging_instance
+    if id_user_trip: 
+      return Travels(trip_user = id_user_trip) 
     else : HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id User Trip Not Found")
   except ValidationError as ve:
     raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Validation Error: {ve.json()}")
   except Exception as e: 
     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=F"Internal Server: {str(e)}")
-
-
-  return Travels(trip_user = id_user_trip) 
