@@ -13,5 +13,5 @@ app.include_router(travel_router, prefix="/travels", tags=["travels"])
 
 #? ===== REST & CRUD =====
 @app.get("/", status_code=status.HTTP_200_OK, tags=["home"])
-async def root(): 
-  return {"message": str("Hello! Welcome at Home")}
+async def home(): 
+  return {"message": str("Hello! Welcome at Home. Enjoy To Travel")}

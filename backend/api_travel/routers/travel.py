@@ -61,7 +61,8 @@ class TransportLodging(ABC):
 class Travels(BaseModel): 
   trip_user: List[Dict[str, Union[int, str, float]]] = Field(description="Information of the User Trip")
   #trip_user: Union[int, None] = Field(description="Information of the User Trip")
-
+  trip_duration: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to the duration travel")
+  trip_transport_lodging: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to transport and lodging")
 
 #*3) ===  Implementation Concrete ===
 class TravelFly(UserTrip): 
