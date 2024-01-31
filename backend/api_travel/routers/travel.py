@@ -218,6 +218,28 @@ async def get_lodging(lodging:str = Query(title="Lodging Travel", description="L
 
 
 #===POST
+@router.post("/user/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
+async def post_travels(id:int, travels_input:Travels): 
+  #=== Validar los "travels" en Pydantic >
+  try: 
+    travel_flight = travels_input.dict()
+    print("Execute Travel, Ok: ", travel_flight)
+    validation_travel = Travels(**travel_flight)
+    print("Validation Of Travel: ", validation_travel)
+
+    # Asegúrate de que el ID del producto o Travel no exista ya en la base de datos
+    if df[df["Trip ID"] == id].iloc[:, :5].empty:
+    # Agregar el nuevo producto al DataFrame
+      df = df.append(travel_flight, ignore_index=True)
+    # Guardar el DataFrame de vuelta al archivo CSV (o tu base de datos externa)
+      df.to_csv(file_path, index=False)
+      return validation_travel
+    else: 
+     raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Travels ID. All ID of Users Travel")
+  except ValidationError as ve: 
+    return JSONResponse(content={"details": f"Validation Error {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+  except Exception as e: 
+    return JSONResponse(content={"details": f"Internal Server {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 #===PUT
