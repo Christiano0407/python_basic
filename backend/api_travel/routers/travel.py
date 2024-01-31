@@ -243,6 +243,8 @@ async def post_travels(id:int, travels_input:Travels):
 
 
 #===PUT
-  
+@router.put("/user/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
+async def update_travel(id:int, travels_update:Travels): 
+  pass
 
 #===Delete
