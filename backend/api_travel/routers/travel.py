@@ -245,6 +245,23 @@ async def post_travels(id:int, travels_input:Travels):
 #===PUT
 @router.put("/user/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
 async def update_travel(id:int, travels_update:Travels): 
-  pass
+  try: 
+  # Verificar si el ID del viaje existe en la base de datos
+    if not df[df["Trip ID"] == id].empty: #empty es un método de los objetos de pandas, que se utiliza para verificar si un DataFrame está vacío, es decir, si no contiene ninguna fila.
+  # Actualizar los campos del viaje en el DataFrame
+    #loc es un método de acceso basado en etiquetas en pandas. Permite seleccionar y asignar valores a un DataFrame utilizando etiquetas de fila y columna.
+      df.loc[df["Trip ID"] == id, "trip_users"] = travels_update.trip_users
+      df.loc[df["Trip ID"] == id, "trip_duration"] = travels_update.trip_duration
+      df.loc[df["Trip ID"] == id, "trip_transport"] = travels_update.trip_transport
+      df.loc[df["Trip ID"] == id, "trips_lodging"] = travels_update.trips_lodging 
+  # Guardar el DataFrame de vuelta al archivo CSV (o tu base de datos externa)
+      df.to_csv(file_path, index=False)
+      return {"Message:": f"Travel With ID {id} Update Successfully"}
+    else:
+      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Travel with the ID {id} not found")
+  except ValidationError as ve: 
+    return JSONResponse(content={"details": f"Validation Error {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+  except Exception as e: 
+    return JSONResponse(content={"details": f"Internal Server {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)    
 
 #===Delete
