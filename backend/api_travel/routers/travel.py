@@ -35,9 +35,15 @@ class TripDuration(ABC):
     pass
 
 
-class TripTransportLodging(ABC): 
+class TripTransport(ABC): 
   @abstractmethod
-  def trip_transport_lodging(self) -> None: 
+  def trip_transport(self) -> None: 
+    pass
+
+
+class TripLodging(ABC): 
+  @abstractmethod
+  def trip_lodging(self) -> None: 
     pass
 
 
@@ -52,8 +58,13 @@ class DurationTrip(ABC):
     pass
 
 
-class TransportLodging(ABC): 
-  def create_transport_lodging(self) -> TripTransportLodging: 
+class TransportTrip(ABC): 
+  def create_transport(self) -> TripTransport: 
+    pass
+
+
+class LodgingTrip(ABC): 
+  def create_lodging(self) -> TripLodging:
     pass
 
 
@@ -63,7 +74,9 @@ class Travels(BaseModel):
   trip_user: List[Dict[str, Union[int, str, float]]] = Field(description="Information of the User Trip")
   #trip_user: Union[int, None] = Field(description="Information of the User Trip")
   trip_duration: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to the duration travel")
-  trip_transport_lodging: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to transport and lodging")
+  trip_transport: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to transport and lodging")
+  trip_lodging: List[Dict[str, Union[int, str, float]]] = Field(description="Information about the Lodging Travel User")
+
 
 #*3) ===  Implementation Concrete ===
 class TravelFly(UserTrip): 
@@ -86,6 +99,29 @@ class DurationFirst(TripDuration):
   def trip_date(self, duration): 
     duration_user_new = (df[df["Duration (days)"] == duration].iloc[:, :5].to_dict(orient="records"))
     return duration_user_new
+  
+
+class TransportTravel(TransportTrip):
+  def create_transport(self) -> TripTransport:
+    return TransportFirst()
+  
+
+class TransportFirst(TripTransport): 
+  def trip_transport(self, transport): 
+    transport_user_new = (df[df["Transportation type"] == transport].iloc[:, :5].to_dict(orient="records"))
+    return transport_user_new
+
+
+class LodgingTravel(LodgingTrip): 
+  def create_lodging() -> TripLodging:
+    return LodgingFirst()
+
+
+class LodgingFirst(TripLodging): 
+   def trip_lodging(self, lodging): 
+     lodging_user_new = (df[df["Accommodation type"] == lodging].iloc[:, :5].to_dict(orient="records"))
+     return lodging_user_new
+
 
 
 #? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
@@ -102,7 +138,7 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
   
   try: 
     if id_user_trip: 
-      return Travels(trip_user = id_user_trip, trip_duration=[], trip_transport_lodging=[]) 
+      return Travels(trip_user = id_user_trip, trip_duration=[], trip_transport=[], trip_lodging=[]) 
     else : HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id User Trip Not Found")
   except ValidationError as ve:
     return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -123,7 +159,7 @@ async def get_destiny(duration:int = Query(title="Duration Travel", description=
 
   try: 
     if duration_travel_user: 
-      return Travels( trip_user=[], trip_duration=duration_travel_user, trip_transport_lodging=[])
+      return Travels( trip_user=[], trip_duration=duration_travel_user, trip_transport=[], trip_lodging=[])
     else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Duration to Travel Not Found")
   except ValidationError as ve:
      return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -133,8 +169,37 @@ async def get_destiny(duration:int = Query(title="Duration Travel", description=
 
   @router.get("/trip/transport", status_code=status.HTTP_200_OK, tags=["travels"])
   async def get_transport(transport:str = Query(title="Travel Transport", description="Travel Transport for the User")): 
-    pass
+    
+    transport_travel = TransportTravel().create_transport()
+    transport_travel_user = transport_travel.trip_transport(transport) if transport_travel else None
+
+    print(f"Transport Travel: {transport}")
+    print(f"Transport User Travel: {transport_travel_user}")
+
+    try: 
+      if transport_travel_user: 
+        return Travels(trip_user=[], trip_duration=[], trip_transport=transport_travel_user, trip_lodging=[])
+      else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transport Not Found...")
+    except ValidationError as ve: 
+      return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    except Exception as e: 
+      return JSONResponse(content={"details": f"Internal Server: {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
   
   @router.get("/lodging/lodging", status_code=status.HTTP_200_OK, tags=["travels"])
   async def get_lodging(lodging:str = Query(title="Lodging Travel", description="Lodging Travel for User")):
-    pass
+    
+    lodging_travel = LodgingTravel().create_lodging()
+    lodging_travel_user = lodging_travel.trip_lodging(lodging) if lodging_travel else None
+
+    print(f"Lodging Travel: {lodging}")
+    print(f"Lodging User Travel: {lodging_travel_user}")
+
+    try: 
+      if lodging_travel_user: 
+        return Travels(trip_user=[], trip_duration=[], trip_transport=[], trip_lodging=lodging_travel_user)
+      else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lodging It's not Found or Not Contract...")
+    except ValidationError as e: 
+      return JSONResponse(content={"details": f"Validation Error {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    except Exception as e: 
+      return JSONResponse(content={"details": f"Internal Server {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
