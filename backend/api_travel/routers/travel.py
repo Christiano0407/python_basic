@@ -69,12 +69,22 @@ class LodgingTrip(ABC):
 
 
 #* CP) ==> Instance of Class Principal <== 
+#=== Method Of Instance the Object >
 class Travels(BaseModel): 
-  trip_user: List[Dict[str, Union[int, str, float]]] = Field(description="Information of the User Trip")
+  trip_users: List[Dict[str, Union[int, str, float]]] = Field(description="Information of the User Trip")
   #trip_user: Union[int, None] = Field(description="Information of the User Trip")
   trip_duration: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to the duration travel")
   trip_transport: List[Dict[str, Union[int, str, float]]] = Field(description="Information about to transport and lodging")
   trips_lodging: List[Dict[str, Union[int, str, float]]] = Field(description="Information about the Lodging Travel User")
+
+  # > Getters <
+  def getters_get(self) -> str: 
+    return f"This Information about the User Trip is private {self.trip_users}. Thank you for contact to us"
+  
+  #=== Method Of Instance Of Class - Decorators >
+  @property
+  def get_private_trip_user(self) -> str:
+    return self.trip_users
 
 
 #*3) ===  Implementation Concrete ===
@@ -123,7 +133,8 @@ class LodgingFirst(TripLodging):
 
 
 
-#? ==== API ROOT / REST / CRUD ==== Path Parameters or Query Parameters ===
+#? ==== API / REST / CRUD / Root & Routers ==== Path Parameters or Query Parameters ===
+#===GET
 #=== Path Parameter ===
 #Endpoint: http://127.0.0.1:8000/travels/user/1
 @router.get("/user/{id}", status_code=status.HTTP_200_OK, tags=["travels"])
@@ -131,13 +142,15 @@ async def travel_id(id:int = Path(..., title="Get ID Of The User", description="
 
   user_trip_instance = TravelFly().create_trip_user()
   id_user_trip = user_trip_instance.trip_user(id) if user_trip_instance else None
+  #>Call Private: Getter <
+  #private_users_trip = Travels().get_private_trip_user
 
   print(f"ID del Usuario {id}")
   print(f"User Information: {id_user_trip}")
   
   try: 
     if id_user_trip: 
-      return Travels(trip_user = id_user_trip, trip_duration=[], trip_transport=[], trips_lodging=[]) 
+      return f"{Travels(trip_users = id_user_trip, trip_duration=[], trip_transport=[], trips_lodging=[])}"
     else : HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id User Trip Not Found")
   except ValidationError as ve:
     return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -158,7 +171,7 @@ async def get_destiny(duration:int = Query(title="Duration Travel", description=
 
   try: 
     if duration_travel_user: 
-      return Travels( trip_user=[], trip_duration=duration_travel_user, trip_transport=[], trips_lodging=[])
+      return Travels(trip_users=[], trip_duration=duration_travel_user, trip_transport=[], trips_lodging=[])
     else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Duration to Travel Not Found")
   except ValidationError as ve:
      return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -177,7 +190,7 @@ async def get_transport(transport:str = Query(title="Travel Transport", descript
 
   try: 
     if transport_travel_user: 
-      return Travels(trip_user=[], trip_duration=[], trip_transport=transport_travel_user, trips_lodging=[])
+      return Travels(trip_users=[], trip_duration=[], trip_transport=transport_travel_user, trips_lodging=[])
     else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transport Not Found...")
   except ValidationError as ve: 
     return JSONResponse(content={"detail": f"Validation Error: {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -196,9 +209,18 @@ async def get_lodging(lodging:str = Query(title="Lodging Travel", description="L
 
   try: 
     if lodging_travel_user: 
-      return Travels(trip_user=[], trip_duration=[], trip_transport=[], trips_lodging=lodging_travel_user)
+      return Travels(trip_users=[], trip_duration=[], trip_transport=[], trips_lodging=lodging_travel_user)
     else: HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lodging It's not Found or Not Contract...")
   except ValidationError as ve: 
     return JSONResponse(content={"details": f"Validation Error {ve.json()}"}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
   except Exception as e: 
     return JSONResponse(content={"details": f"Internal Server {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+#===POST
+
+
+#===PUT
+  
+
+#===Delete
