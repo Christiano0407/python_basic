@@ -2623,3 +2623,70 @@ Puedes utilizar mocks para simular comportamientos específicos de objetos o fun
 Mejora de la Eficiencia en las Pruebas:
 Al utilizar mocks, puedes evitar la ejecución de código real que no es relevante para la prueba en cuestión, mejorando así la eficiencia de tus pruebas unitarias.
 ```
+
+> FastAPI : Test Client - TestClient
+
+[TestClient](https://fastapi.tiangolo.com/reference/testclient/?h=test)
+
+```
+TestClient es una clase proporcionada por FastAPI para realizar pruebas de integración en tus aplicaciones web construidas con FastAPI. Te permite simular solicitudes HTTP y recibir respuestas de tu aplicación sin necesidad de ejecutar un servidor real. Esto es útil para automatizar pruebas y asegurarte de que tu aplicación se comporte como se espera.
+
+¿Cuándo usar TestClient?
+Pruebas de Integración: Se utiliza para realizar pruebas de extremo a extremo en tu aplicación, asegurándote de que todas las partes se integren correctamente.
+
+Pruebas de Rutas y Lógica de Negocio: Es útil para probar rutas y la lógica de negocio de tu aplicación sin necesidad de un servidor real.
+
+```
+
+> Creación de una instancia:
+Creas una instancia de TestClient pasándole tu aplicación FastAPI. Por ejemplo:
+
+```python
+from fastapi.testclient import TestClient
+from main import app  # Reemplaza "main" con el nombre real de tu módulo principal
+
+client = TestClient(app)
+
+```
+
+> Realización de solicitudes HTTP:
+Utilizas los métodos de la instancia de TestClient (get, post, put, delete, etc.) para realizar solicitudes HTTP a rutas específicas de tu aplicación.
+
+```python
+response = client.get("/example")
+
+```
+
+> Verificación de respuestas:
+Verificas la respuesta recibida utilizando aserciones en el objeto response. Puedes verificar el código de estado, el contenido del cuerpo, encabezados y más.
+
+```python
+assert response.status_code == 200
+assert response.json() == {"key": "value"}
+```
+
+> Tip: 
+
+```
+Diferencias con pytest y unittest:
+TestClient vs pytest y unittest:
+
+TestClient se centra en realizar solicitudes HTTP a tu aplicación FastAPI y verificar las respuestas. Está diseñado específicamente para pruebas de integración en aplicaciones web construidas con FastAPI.
+pytest y unittest son marcos de prueba más generales que admiten diferentes tipos de pruebas, no están específicamente diseñados para pruebas de aplicaciones web.
+Interacción entre TestClient, pytest y unittest:
+
+TestClient se utiliza comúnmente junto con pytest para realizar pruebas de integración en el ecosistema FastAPI. Puedes integrar pruebas de TestClient en tus archivos de prueba pytest.
+unittest es otro marco de prueba que tiene su propia sintaxis y estructura. No es tan común usar TestClient directamente con unittest en el contexto de FastAPI.
+Elección entre pytest y unittest:
+pytest:
+
+Es un marco de prueba popular y flexible con características avanzadas.
+Permite parametrizar pruebas, proporciona un sistema de plugins extensible y ofrece una sintaxis clara y concisa.
+Es ampliamente adoptado en la comunidad de Python.
+unittest:
+
+Forma parte de la biblioteca estándar de Python y sigue la convención de pruebas unitarias.
+Ofrece una estructura más formal y orientada a objetos para organizar las pruebas.
+A veces se elige si se trabaja en un entorno que prefiere herramientas de la biblioteca estándar.
+La elección entre pytest y unittest generalmente se basa en preferencias personales y en la complejidad de las pruebas que estás realizando. Ambos son efectivos, pero pytest es más popular y ofrece más funcionalidades avanzadas. En el contexto de FastAPI, la combinación de TestClient y pytest es una opción común y efectiva para realizar pruebas de integración.
+```
