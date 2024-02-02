@@ -1,3 +1,4 @@
 #####
-#TODO: Token:  ==== Authentication & Token === === JWT & Auth ===
+#TODO: Token:  === JWT & Auth ===
+#* - Acceso único (Por un tiempo estimado) -
 #######
