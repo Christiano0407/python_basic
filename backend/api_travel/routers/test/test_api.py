@@ -25,11 +25,11 @@ def test_get_user_id():
   assert response.status_code == 200
 
 def test_get_user_id():
-  response = client.get("/travels/trip/transport", params={"transport": 5})
+  response = client.get("/travels/trip/transport", params={"transport": "Flight"})
   assert response.status_code == 200
 
 def test_get_user_id():
-  response = client.get("/travels/users/lodging", params={"lodging": 5})
+  response = client.get("/travels/users/lodging", params={"lodging": "Hotel"})
   assert response.status_code == 200
 
 """ def test_post_user_id(): 
