@@ -4,6 +4,10 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError
 from typing import Union, Optional, List, Dict
 from typing_extensions import Annotated
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from datetime import datetime, timedelta
+from routers.jwt_auth.auth import get_current_user
+from routers.jwt_auth.jwt_token import authenticate_user, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 import pandas as pd
 import numpy as np
 import os
@@ -266,3 +270,25 @@ async def update_travel(id:int, travels_update:Travels):
     return JSONResponse(content={"details": f"Internal Server {str(e)}"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)    
 
 #===Delete
+  
+#* === Login Auth & Token Access / Protected Login Route ===
+router.post("/token", response_model=dict,  status_code=status.HTTP_200_OK, tags=["travels"])
+async def login_token_access(form_data: OAuth2PasswordRequestForm = Depends()):
+  # - Verificar las Credenciales del Usuario -
+  if not await authenticate_user(form_data.username, form_data.password):
+    raise HTTPException(
+      status_code=status.HTTP_401_UNAUTHORIZED,
+      detail="Could Not Validate Credentials",
+      headers={"WWW-Authenticate": "Bearer"},
+    )
+  # Si las credenciales son válidas, generar un token de acceso
+  access_token_expire = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+  access_token = create_access_token(
+    data={"sub": form_data.username}, expire_delta=access_token_expire
+  )
+  return {"access_token": access_token, "token_type": "bearer"}
+  
+
+router.app("protected-route")
+async def protected_route(current_user: dict = Depends(get_current_user)): 
+   return {"message": "This route is protected and only accessible to authenticated users."}
