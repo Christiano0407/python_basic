@@ -272,7 +272,7 @@ async def update_travel(id:int, travels_update:Travels):
 #===Delete
   
 #* === Login Auth & Token Access / Protected Login Route ===
-router.post("/token", response_model=dict,  status_code=status.HTTP_200_OK, tags=["travels"])
+@router.post("/access/token", response_model=dict,  status_code=status.HTTP_200_OK, tags=["travels"])
 async def login_token_access(form_data: OAuth2PasswordRequestForm = Depends()):
   # - Verificar las Credenciales del Usuario -
   if not await authenticate_user(form_data.username, form_data.password):
@@ -289,6 +289,7 @@ async def login_token_access(form_data: OAuth2PasswordRequestForm = Depends()):
   return {"access_token": access_token, "token_type": "bearer"}
   
 
-router.app("protected-route")
-async def protected_route(current_user: dict = Depends(get_current_user)): 
+@router.get("/token/protected-route", tags=["travels"])
+async def protected_route(current_user : str = Depends(get_current_user)): 
    return {"message": "This route is protected and only accessible to authenticated users."}
+#current_user es el nombre del parámetro que representa al usuario autenticado

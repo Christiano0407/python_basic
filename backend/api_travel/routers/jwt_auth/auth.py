@@ -4,9 +4,10 @@
 #? - Authentication & Authorization -
 #? - Token of Access -
 #######===######
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, status
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.exceptions import HTTPException
 from typing_extensions import Annotated
 from jose import JWTError, jwt
 from dotenv import load_dotenv
@@ -35,3 +36,4 @@ def get_current_user(token:str = Depends(oauth2_scheme)):
     return username
   except JWTError:
     raise credentials_exceptions
+    
