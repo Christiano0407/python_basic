@@ -14,10 +14,9 @@ import os
 
 # === Auth & env ===
 load_dotenv()
-
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
-
+# Esquema de OAuth2 para manejar la autenticación mediante nombre de usuario y contraseña
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # === Get User Auth & Token ====
@@ -33,5 +32,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     username: str = payload.get("sub") # sub = subname
     if username is None: 
       raise credentials_exceptions # HTTP 401
+    return username
   except JWTError:
     raise credentials_exceptions
