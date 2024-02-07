@@ -2690,3 +2690,36 @@ Ofrece una estructura más formal y orientada a objetos para organizar las prueb
 A veces se elige si se trabaja en un entorno que prefiere herramientas de la biblioteca estándar.
 La elección entre pytest y unittest generalmente se basa en preferencias personales y en la complejidad de las pruebas que estás realizando. Ambos son efectivos, pero pytest es más popular y ofrece más funcionalidades avanzadas. En el contexto de FastAPI, la combinación de TestClient y pytest es una opción común y efectiva para realizar pruebas de integración.
 ```
+
+##### Backend & Frontend 
+
+> Tip: Para conectar tu backend (API desarrollada con FastAPI) a tu frontend, puedes seguir estos pasos generales:
+
+```
+Despliega tu backend: Antes de poder conectar tu frontend, asegúrate de que tu backend esté desplegado y accesible en algún lugar. Puedes usar servicios en la nube como Heroku, AWS, Google Cloud, o cualquier otro proveedor que prefieras. Alternativamente, puedes ejecutar tu backend localmente mientras pruebas tu frontend.
+
+Crea tu frontend: Desarrolla tu frontend utilizando la tecnología que prefieras, como React.js, Angular, Vue.js, o cualquier otro framework o biblioteca que elijas. Por ejemplo, si decides usar React.js, puedes configurar un nuevo proyecto usando Create React App.
+
+Configura tu frontend para consumir la API: En tu frontend, configura las solicitudes HTTP para consumir los endpoints de tu API. Puedes usar la función fetch de JavaScript o bibliotecas como Axios para realizar solicitudes HTTP a tu backend. Por ejemplo, para obtener datos de un endpoint en tu API:
+```
+
+```javascript
+fetch('https://tu-api.com/travels/duration?duration=5')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Haz algo con los datos recibidos
+  })
+  .catch(error => console.error('Error:', error));
+
+```
+
+```
+Protege las credenciales del usuario (si es necesario): Si tu aplicación requiere autenticación de usuario, asegúrate de manejar correctamente las credenciales del usuario. Puedes usar tokens de acceso JWT y enviarlos en el encabezado de autorización de tus solicitudes HTTP.
+
+Prueba la integración: Una vez que hayas configurado tu frontend para consumir la API, asegúrate de probar la integración para asegurarte de que todo funcione correctamente. Verifica que tu frontend pueda enviar solicitudes a tu backend y manejar las respuestas correctamente.
+
+Maneja los errores y casos límite: Asegúrate de manejar correctamente los errores y casos límite en tu frontend. Esto puede incluir errores de red, respuestas de error del servidor, datos faltantes o incorrectos, entre otros.
+
+Optimiza el rendimiento (si es necesario): Si experimentas problemas de rendimiento, considera optimizar tu frontend y backend para mejorar la velocidad de carga y la capacidad de respuesta de tu aplicación. Esto puede incluir técnicas como la optimización de imágenes, la reducción del tamaño de los archivos estáticos, el almacenamiento en caché de datos, entre otros.
+```
