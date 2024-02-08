@@ -2732,8 +2732,14 @@ Optimiza el rendimiento (si es necesario): Si experimentas problemas de rendimie
 
 [pip_pyqt5](https://pypi.org/project/PyQt5/)
 
+[qt_python](https://doc.qt.io/)
+
 ```
+# Para Windows:
 pip install PyQt5
+
+#Ubuntu:
+sudo apt-get install python3-pyqt5
 ```
 
 > Tip:
@@ -2742,6 +2748,24 @@ pip install PyQt5
 Convertir el archivo .ui a código Python: Utiliza la herramienta pyuic para convertir el archivo .ui en un archivo Python que contenga el código correspondiente a la interfaz gráfic
 ```
 
-```
+```bash
 pyuic5 tu_interfaz.ui -o tu_interfaz.py
+```
+
+```
+Si pyuic5 no se encuentra en tu sistema después de instalar python3-pyqt5, es posible que el paquete pyqt5-tools no esté instalado. Este paquete proporciona utilidades, incluido pyuic5, para trabajar con PyQt5.
+```
+
+```bash
+sudo apt-get install pyqt5-dev-tools
+```
+
+```
+Puedes intentar ubicar la ubicación del comando pyuic5 en tu sistema utilizando el comando whereis o which. 
+```
+
+```bash
+whereis pyuic5
+
+which pyuic5
 ```
