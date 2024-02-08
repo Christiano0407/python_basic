@@ -2691,7 +2691,7 @@ A veces se elige si se trabaja en un entorno que prefiere herramientas de la bib
 La elección entre pytest y unittest generalmente se basa en preferencias personales y en la complejidad de las pruebas que estás realizando. Ambos son efectivos, pero pytest es más popular y ofrece más funcionalidades avanzadas. En el contexto de FastAPI, la combinación de TestClient y pytest es una opción común y efectiva para realizar pruebas de integración.
 ```
 
-##### Backend & Frontend 
+#### Backend & Frontend 
 
 > Tip: Para conectar tu backend (API desarrollada con FastAPI) a tu frontend, puedes seguir estos pasos generales:
 
@@ -2790,3 +2790,7 @@ Para verificar si tkinter está disponible en tu sistema, puedes abrir un intér
 ```bash
 python3 -c "import tkinter"
 ```
+
+#### Types Collections (Tipos de Colecciones)
+
+> Collección: Grafos, Jerárquicas, Lineales, Desordenadas. 
