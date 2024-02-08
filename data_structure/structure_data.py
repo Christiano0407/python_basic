@@ -1,7 +1,7 @@
 ##########
 #TODO: === Structure Data (Estructura de Datos) ===
 #* === ==== Algorithms & POO ==== ===
-#! === Collección: Grafos, Jerárquicas, Lineales, Desordenadas.
+#* === Collección: Grafos, Jerárquicas, Lineales, Desordenadas.
 ########################
 #? === Types Collections === Lineal 
 list = ["Books", "Games", "Dogs", "Cats", "Marvel", "DC", "Technology", "Business"]
@@ -15,7 +15,7 @@ print(list)
 list.insert(8, "Tech IA");
 print(list)
 
-#=== ===
+#! === Función Recursiva (Atrás para adelante) ===
 def pyramid_sum(lower, upper, margin=0):
   blanks = " " * margin
   print(blanks, lower, upper)
