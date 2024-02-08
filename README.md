@@ -2723,3 +2723,25 @@ Maneja los errores y casos límite: Asegúrate de manejar correctamente los erro
 
 Optimiza el rendimiento (si es necesario): Si experimentas problemas de rendimiento, considera optimizar tu frontend y backend para mejorar la velocidad de carga y la capacidad de respuesta de tu aplicación. Esto puede incluir técnicas como la optimización de imágenes, la reducción del tamaño de los archivos estáticos, el almacenamiento en caché de datos, entre otros.
 ```
+
+> Interfaz Gráfica (GUI)
+
+> PyQt5
+
+[pyqt](https://www.riverbankcomputing.com/static/Docs/PyQt5/)
+
+[pip_pyqt5](https://pypi.org/project/PyQt5/)
+
+```
+pip install PyQt5
+```
+
+> Tip:
+
+```
+Convertir el archivo .ui a código Python: Utiliza la herramienta pyuic para convertir el archivo .ui en un archivo Python que contenga el código correspondiente a la interfaz gráfic
+```
+
+```
+pyuic5 tu_interfaz.ui -o tu_interfaz.py
+```
