@@ -2769,3 +2769,8 @@ whereis pyuic5
 
 which pyuic5
 ```
+
+```bash
+#PyQT UI Design (XML)
+sudo apt-get install qttools5-dev-tools
+```
