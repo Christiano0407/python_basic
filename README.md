@@ -2774,3 +2774,19 @@ which pyuic5
 #PyQT UI Design (XML)
 sudo apt-get install qttools5-dev-tools
 ```
+
+> Tkinter (Interface Python - GUI)
+
+```bash
+pip install requests tkinter
+```
+
+[tkinter_python](https://docs.python.org/es/3/library/tkinter.html#module-tkinter)
+
+```
+Para verificar si tkinter está disponible en tu sistema, puedes abrir un intérprete de Python e intentar importarlo:
+```
+
+```bash
+python3 -c "import tkinter"
+```
