@@ -23,4 +23,5 @@ class Array:
     return self.items[index]
   
   def __setitem__(self, index, new_item): 
-    self.items[index] = new_item
+    value = self.items[index] = new_item
+    return value
