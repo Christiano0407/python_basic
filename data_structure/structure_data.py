@@ -29,3 +29,27 @@ def pyramid_sum(lower, upper, margin=0):
   
 
 pyramid_sum(1, 4)
+
+#! === Types Of Data Structure ===
+list_types = ["Books", "Games", "Dogs", "Cats", "Marvel", "DC", "Technology", "Business"]
+list = list_types
+print(type(list))
+
+tuples = "Books", "Games", "Dogs", "Cats", "Marvel", "DC", "Technology", "Business"
+
+my_tuple = tuple(tuples)
+my_tuples = (4, 7, "Luisa", "Pamela")
+print(type(my_tuple))
+print(type(my_tuples))
+
+
+dicts = {"name": "Luisa", "age": 33, "Work": "Journalist"}
+my_dict = dict(dicts)
+print(type(my_dict))
+
+sets = "Books", "Games", "Dogs", "Cats", "Marvel", "DC", "Technology", "Business", 4, 7
+my_set = set(sets)
+my_sets = {"Natalia", "Alma", 7, 4}
+print(type(my_set))
+
+
