@@ -6,7 +6,7 @@ from create_array import Array
 if __name__ == "__main__":
   menu = Array(10)
   iterator = menu.__iter__()
-  print("Array:", menu)
+  print(menu)
   print(menu.items)
   print("Length:", menu.__len__())
   print("string:", menu.__str__())
