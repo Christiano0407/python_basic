@@ -2791,6 +2791,64 @@ Para verificar si tkinter está disponible en tu sistema, puedes abrir un intér
 python3 -c "import tkinter"
 ```
 
-#### Types Collections (Tipos de Colecciones)
+#### Types Collections (Tipos de Colecciones) / Structure Data (Estructura de Datos)
 
 > Collección: Grafos, Jerárquicas, Lineales, Desordenadas. 
+
+> Tip (Recomendado por un Estudiante en Platzi): 
+
+```
+Es muy importante saber cuando usar una cierta colección, ya que de ello depende tanto el tamaño que ocupará en memoría como la velocidad en ciertas tareas. De forma general es recomendable usar tuplas en lugar de listas siempre que no se requiera estar cambiando los valores, ya que ocupan menos espacio en memoría. Así como usar sets o diccionarios para busqueda de un elemento, ya que son más rapidos.
+```
+
+```python
+import sys
+
+colecciones = {"list": list(), "tuple": tuple(), "dict": dict(), "set": set()}
+
+for name, value in colecciones.items():
+    print(f'{name} = {sys.getsizeof(value)} bytes')
+```
+
+> Recordar: 
+
+```
+En Python, una tupla es una colección ordenada e inmutable de elementos. Se diferencia de una lista en que una vez creada, no se pueden modificar, agregar ni eliminar elementos individualmente. Sin embargo, al igual que las listas, las tuplas pueden contener elementos de diferentes tipos de datos, como enteros, cadenas, flotantes, otras tuplas, etc.
+```
+
+```python
+mi_tupla = (1, 2, 3, "cuatro", 5.5)
+```
+
+```
+En Python, un conjunto (set) es una colección desordenada y mutable de elementos únicos. Esto significa que un conjunto no permite elementos duplicados y se puede modificar agregando o eliminando elementos, pero no permite acceder a los elementos por índice, ya que no tienen un orden definido.
+
+Los conjuntos se crean utilizando llaves {} o la función set(), y los elementos se separan por comas ,. Aquí tienes un ejemplo de cómo crear un conjunto:
+
+```
+
+```python
+mi_set = {1, 2, 3, 4, 5}
+```
+
+```
+En Python, dict es una estructura de datos que representa un diccionario, es decir, una colección de pares clave-valor, donde cada clave está asociada a un valor. Los diccionarios son mutables, lo que significa que puedes modificar, agregar o eliminar elementos una vez que han sido creados. Sin embargo, las claves en un diccionario deben ser únicas e inmutables, mientras que los valores pueden ser de cualquier tipo de datos y pueden ser mutables.
+
+Los diccionarios se crean utilizando llaves {} y los pares clave-valor se separan por dos puntos :. Aquí tienes un ejemplo de cómo crear un diccionario:
+
+```
+
+```python
+mi_dict = {"nombre": "Juan", "edad": 30, "ciudad": "Madrid"}
+```
+
+```
+En Python, una lista (list) es una estructura de datos que permite almacenar una colección ordenada de elementos. Las listas son mutables, lo que significa que puedes modificar, agregar o eliminar elementos después de que la lista haya sido creada. Además, las listas pueden contener elementos de diferentes tipos de datos, como números, cadenas, booleanos, otras listas, tuplas, diccionarios, etc.
+
+Las listas se crean utilizando corchetes [] y los elementos se separan por comas ,. Aquí tienes un ejemplo de cómo crear una lista:
+
+```
+
+```python
+mi_lista = [1, 2, 3, "cuatro", 5.5]
+```
