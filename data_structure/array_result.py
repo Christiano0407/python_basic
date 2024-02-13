@@ -8,7 +8,7 @@ from array_cube import Cube
 
 menu = Array(10)
 twoDimension = Grid(3,3)
-threeDimension = Cube(2,2,2)
+threeDimension = Cube(2, 2, 2)
 
 
 # = 2D: Transform int(row & col) =
