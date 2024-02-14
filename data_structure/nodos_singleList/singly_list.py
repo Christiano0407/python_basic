@@ -6,8 +6,8 @@ from nodos_singleList import Node
 
 
 class SinglyLinkedList: 
-  def __init__(self):
-    self.head = None
+  def __init__(self, head=None):
+    self.head = head
 
   def append(self, data): 
     new_node = Node(data)
@@ -16,6 +16,7 @@ class SinglyLinkedList:
       return
     
     last_node = self.head
+    
     while last_node.next:
       last_node = last_node.next
     last_node.next = new_node
