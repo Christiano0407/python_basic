@@ -1,6 +1,5 @@
 ########
 #Todo: 2) POO ====== === Nodos (Messy List / Lista Desordenada) & Single List === ======
-#TODO: Linked list" (lista enlazada) es una estructura de datos lineal que consiste en una secuencia de elementos llamados nodos.O(n) Lineal
 #########
 #? ===== === Singly Linked List === =====
 from nodos_singleList import Node

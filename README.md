@@ -2852,3 +2852,15 @@ Las listas se crean utilizando corchetes [] y los elementos se separan por comas
 ```python
 mi_lista = [1, 2, 3, "cuatro", 5.5]
 ```
+
+> Estructura de Datos: Nodos y Linked List
+
+```
+- Nodo: Punto de Intersección. 
+
+- Linked list" (lista enlazada) es una estructura de datos lineal que consiste en una secuencia de elementos llamados nodos.O(n) Lineal
+
+- Las listas enlazadas son una estructura de datos que almacena datos en forma de cadena. La estructura de una lista enlazada es tal que cada dato tiene una conexión con el siguiente (y a veces también con los datos anteriores). Cada elemento de una lista enlazada se denomina nodo.
+```
+
+[Linked_list (Listas Enlazadas)](https://www.freecodecamp.org/news/introduction-to-linked-lists-in-python/)
