@@ -2863,4 +2863,18 @@ mi_lista = [1, 2, 3, "cuatro", 5.5]
 - Las listas enlazadas son una estructura de datos que almacena datos en forma de cadena. La estructura de una lista enlazada es tal que cada dato tiene una conexión con el siguiente (y a veces también con los datos anteriores). Cada elemento de una lista enlazada se denomina nodo.
 ```
 
+```
+En una lista enlazada, algunos de los métodos más comunes que se pueden agregar son:
+
+append(data): Agrega un nuevo nodo con el dato data al final de la lista.
+prepend(data): Agrega un nuevo nodo con el dato data al inicio de la lista.
+insert_after(node, data): Inserta un nuevo nodo con el dato data después del nodo node.
+delete(data): Elimina el primer nodo que contiene el dato data de la lista.
+delete_at_position(position): Elimina el nodo en la posición position de la lista.
+get_position(data): Devuelve la posición del primer nodo que contiene el dato data en la lista.
+get_size(): Devuelve el número de nodos en la lista.
+print_list(): Imprime los datos de todos los nodos en la lista.
+reverse(): Invierte el orden de los nodos en la lista.
+```
+
 [Linked_list (Listas Enlazadas)](https://www.freecodecamp.org/news/introduction-to-linked-lists-in-python/)
