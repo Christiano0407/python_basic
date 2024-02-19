@@ -2878,3 +2878,39 @@ reverse(): Invierte el orden de los nodos en la lista.
 ```
 
 [Linked_list (Listas Enlazadas)](https://www.freecodecamp.org/news/introduction-to-linked-lists-in-python/)
+
+> Estructuras de Datos (Más requeridas o usadas)
+
+```
+- Tabla hash
+
+- Listas
+
+- Pilas
+
+- Colas
+
+- Lista enlazada
+
+- Árbol
+
+- Árbol binario
+
+- Árbol binario de búsqueda
+
+- Grafos
+
+- Heap
+```
+
+```
+1. **append(data)**: Agrega un nuevo nodo con el dato **`data`** al final de la lista.
+2. **prepend(data)**: Agrega un nuevo nodo con el dato **`data`** al inicio de la lista.
+3. **insert_after(node, data)**: Inserta un nuevo nodo con el dato **`data`** después del nodo **`node`**.
+4. **delete(data)**: Elimina el primer nodo que contiene el dato **`data`** de la lista.
+5. **delete_at_position(position)**: Elimina el nodo en la posición **`position`** de la lista.
+6. **get_position(data)**: Devuelve la posición del primer nodo que contiene el dato **`data`** en la lista.
+7. **get_size()**: Devuelve el número de nodos en la lista.
+8. **print_list()**: Imprime los datos de todos los nodos en la lista.
+9. **reverse()**: Invierte el orden de los nodos en la lista.
+```

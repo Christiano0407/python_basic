@@ -49,6 +49,39 @@ class LinkedList:
    prev_node.next = current_node.next
    current_node = None
 
+ def insert(self, data, position): 
+   new_node = Node(data)
+   if position == 0:
+     new_node.next = self.head
+     self.head = new_node
+     return
+   
+   current_node = self.head
+   for _ in range(position - 1): 
+     if current_node is None:
+       raise IndexError("This element of Data, is out of Range")
+     current_node = current_node.next
+
+   if current_node is None: 
+     raise IndexError("This element is out of range of Data")
+   
+   new_node.next = current_node.next
+   current_node.next = new_node
+
+ def get_position(self, data):
+   current_node = self.head
+   position = 0
+
+   while current_node: 
+     if current_node.data[0] == data:
+       return position
+     position += 1
+     current_node = current_node.next
+
+   raise ValueError("Data Not Found In This List")
+   #return -1
+
+
  def print_list(self):
    current_node = self.head
    while current_node:
@@ -78,3 +111,5 @@ if __name__ == "__main__":
   print(linked_list.search(None, "Jon Favreau"))
   print(linked_list.search(None, "Louis Leterrier"))
   print(linked_list.search("The Avengers", None))
+  print(f"Position: {linked_list.get_position('Avengers: Age of Ultron')}"); 
+  print(f"Position: {linked_list.get_position('The Incredible Hulk')}"); 
