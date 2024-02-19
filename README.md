@@ -2914,3 +2914,35 @@ reverse(): Invierte el orden de los nodos en la lista.
 8. **print_list()**: Imprime los datos de todos los nodos en la lista.
 9. **reverse()**: Invierte el orden de los nodos en la lista.
 ```
+
+> Una lista enlazada circular
+
+```
+Una lista enlazada circular es una variante de la lista enlazada donde el último nodo apunta de nuevo al primer nodo en lugar de apuntar a None. Esto significa que no hay un final definido en la lista, y puedes recorrerla desde cualquier nodo hasta que vuelvas al nodo inicial.
+
+En una lista enlazada circular, cada nodo tiene un enlace (next) al siguiente nodo en la lista, y el último nodo enlaza de nuevo al primer nodo. Esto crea un ciclo continuo en la lista.
+
+Las listas enlazadas circulares pueden ser simples o dobles, dependiendo de si cada nodo tiene un solo enlace al siguiente nodo o si tiene enlaces tanto al siguiente nodo como al nodo anterior.
+
+Las listas enlazadas circulares tienen algunas ventajas sobre las listas enlazadas simples, como la capacidad de recorrer la lista sin necesidad de un puntero adicional para rastrear el final de la lista. Sin embargo, también tienen desventajas, como la complejidad adicional para manipular e insertar nodos en la lista.
+```
+
+> Una Doubly Linked List (Lista Doblemente Enlazada) 
+
+```
+Una Doubly Linked List (Lista Doblemente Enlazada) es una estructura de datos lineal similar a una Linked List simple, pero con la diferencia de que cada nodo tiene una referencia tanto al nodo siguiente como al nodo anterior en la secuencia. Esto permite recorrer la lista en ambas direcciones: hacia adelante (del primer al último nodo) y hacia atrás (del último al primer nodo).
+
+Cada nodo en una Doubly Linked List contiene tres campos:
+
+El dato a almacenar.
+Un puntero al nodo siguiente.
+Un puntero al nodo anterior.
+
+La principal diferencia entre una Doubly Linked List (Lista Doblemente Enlazada) y una Circular Linked List (Lista Circular) radica en cómo están estructurados los enlaces entre los nodos.
+
+En una Doubly Linked List, cada nodo tiene enlaces tanto al siguiente nodo como al nodo anterior en la secuencia. Esto permite recorrer la lista en ambas direcciones: hacia adelante (del primer al último nodo) y hacia atrás (del último al primer nodo).
+
+Por otro lado, en una Circular Linked List, el último nodo de la lista está enlazado de nuevo al primer nodo, formando un bucle. Esto significa que no hay un nodo "final" en la lista; se puede recorrer la lista indefinidamente en un bucle circular.
+
+En resumen, la principal diferencia es que una Doubly Linked List permite el movimiento en ambas direcciones a lo largo de la lista, mientras que una Circular Linked List permite recorrer la lista en un bucle continuo sin un final definido.
+```
