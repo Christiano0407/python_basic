@@ -18,6 +18,11 @@ class LinkedList:
     last_node = last_node.next
   last_node.next = new_node
 
+ def prepend(self, data):
+   new_node = Node(data)
+   new_node.next = self.head
+   self.head = new_node
+
  def search(self,movie, movie_director=None): 
    current_node = self.head
    
@@ -80,7 +85,14 @@ class LinkedList:
 
    raise ValueError("Data Not Found In This List")
    #return -1
-
+ 
+ def insert_after(self, node, data):
+   if node is None:
+     print("Previous Node Not Be None")
+     return
+   new_node = Node(data)
+   new_node.next = node.next
+   node.next = new_node
 
  def print_list(self):
    current_node = self.head
