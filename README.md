@@ -2946,3 +2946,15 @@ Por otro lado, en una Circular Linked List, el último nodo de la lista está en
 
 En resumen, la principal diferencia es que una Doubly Linked List permite el movimiento en ambas direcciones a lo largo de la lista, mientras que una Circular Linked List permite recorrer la lista en un bucle continuo sin un final definido.
 ```
+
+> Stack
+
+```
+Un "stack" es una estructura de datos que sigue el principio de LIFO (Last In, First Out), lo que significa que el último elemento que se inserta es el primero en ser eliminado. Funciona como una pila de platos en la que solo puedes agregar o quitar el plato más superior.
+```
+
+> Queue
+
+```
+Una cola (queue) es una estructura de datos que sigue el principio de "primero en entrar, primero en salir" (FIFO, por sus siglas en inglés: First In, First Out). Funciona como una fila de personas en un supermercado: la primera persona que llega es la primera en ser atendida.
+```

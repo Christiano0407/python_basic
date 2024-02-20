@@ -54,6 +54,7 @@ class DoubleLinkedList:
 ##! ====== Variables and Data ======
 data_new = df.head(12)
 new_list = df.head(2)
+data_on = df.head(4)
 
 double_linked_list = DoubleLinkedList()
 
@@ -62,4 +63,5 @@ for index, row  in data_new.iterrows():
 
 ##? === ===== Main & Call ===== ===
 double_linked_list.prepend(new_list)
+double_linked_list.prepend(data_on)
 double_linked_list.print_list()
