@@ -9,6 +9,8 @@ import os
 script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, "../../data", "mcu_box_office.csv")
 data_base = pd.read_csv(file_path)
+new_head_data = data_base.head(4) # = Traer Data =
+new_iloc_data = data_base.iloc[10:15] # = Traer Data por Individual =
 
 #* ==== Stack ====
 class Stack: 
@@ -74,3 +76,6 @@ if __name__ == "__main__":
   print(f"Stack Size: {stack.size()}")
   stack.push(four_data)
   print(f"New Stack {stack.peek()}")
+
+  print(f"New Data Head: {new_head_data}")
+  print(f"New Data Iloc:{new_iloc_data}");
