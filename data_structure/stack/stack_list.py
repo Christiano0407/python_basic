@@ -1,5 +1,5 @@
 #### 
-#?: Stack: === Un "stack" es una estructura de datos que sigue el principio de LIFO (Last In, First Out), lo que significa que el último elemento que se inserta es el primero en ser eliminado. Funciona como una pila de platos en la que solo puedes agregar o quitar el plato más superior. ===
+#?: Stack - (último en entrar...primero en salir): === Un "stack" es una estructura de datos que sigue el principio de LIFO (Last In, First Out), lo que significa que el último elemento que se inserta es el primero en ser eliminado. Funciona como una pila de platos en la que solo puedes agregar o quitar el plato más superior. ===
 #####
 #* === Data Base ===
 import pandas as pd
