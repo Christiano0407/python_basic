@@ -26,7 +26,8 @@ for character in string:
 print(new_string) # Big O: O(n) - Lineal -
 
 #? === Algorithm: two-pointer technique (Patrón de Dos Apuntadores) ===
-# - Buscar un par que sume un valor específico en un arreglo ordenado:
+# == Buscar un par que sume un valor específico en un arreglo ordenado ==
+# = Big O: O(n) - Lineal (array) - =
 def two_sum(array, target): 
   left,right = 0, len(array) - 1
 
