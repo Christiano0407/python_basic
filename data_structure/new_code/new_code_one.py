@@ -45,3 +45,33 @@ def two_sum(array, target):
 print(two_sum(list_num, 29 ))
 print(two_sum(list_num, 27 ))
 print(two_sum(list_num, 13 ))
+
+#! === Exercise 1: Verifying Alien Dictionary - Two-pointer Technique - ===
+def ordenar_lexicográficamente(palabras, orden_alfabetico):
+  orden = {letra: i for i, letra in enumerate(orden_alfabetico)};
+  
+  for i in range(len(palabras) - 1):
+    palabra_actual = palabras[i]
+    palabra_siguiente = palabras[i + 1]
+
+    for j in range(min(len(palabra_actual), len(palabra_siguiente))):
+      if palabra_actual[j] != palabra_siguiente[j]:
+        if orden[palabra_actual[j]] > orden[palabra_siguiente[j]]:
+          return False
+        break
+    else:
+      if len(palabra_actual > len[palabra_siguiente]):
+        return False
+
+  return True
+
+
+if __name__ == "__main__":
+  palabras_1 = ["alma", "luisa", "betty", "christina"]
+  palabras_2 = ["natalia", "luisa", "alma", "betty", "christina"]
+
+  orden_alfabetico_1 = "abcdefghijklmnopqrstuvwxyz"
+  orden_alfabetico_2 = "nlabcdefgijkmnopqrstuvwxyz"
+
+  print(ordenar_lexicográficamente(palabras_1, orden_alfabetico_1))
+  print(ordenar_lexicográficamente(palabras_2, orden_alfabetico_2))
